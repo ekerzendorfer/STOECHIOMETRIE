@@ -1,1 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stöchiometrie-Meister | Matura-Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bridge-active { stroke: #3b82f6; stroke-width: 4; filter: drop-shadow(0 0 8px #3b82f6); transition: all 0.5s ease; }
+        .step-active { border-color: #3b82f6; background-color: white; transition: all 0.5s ease; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
 
+    <div class="max-w-6xl mx-auto px-4 py-8">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-10 bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
+            <div>
+                <h1 class="text-3xl font-black text-blue-900 uppercase tracking-tighter">Stöchiometrie-Meister</h1>
+                <p class="text-slate-500 text-sm italic">„Vom Dutzend zum Mol“ – Interaktiver Guide</p>
+            </div>
+            <div class="flex items-center gap-3 bg-slate-100 p-2 rounded-2xl">
+                <span class="text-xs font-bold px-2 text-slate-500">SEK 1</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="modeToggle" class="sr-only peer">
+                    <div class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+                </label>
+                <span class="text-xs font-bold px-2 text-blue-600">SEK 2 / MATURA</span>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <div class="lg:col-span-4 space-y-6">
+                <div class="bg-white p-6 rounded-3xl shadow-xl border border-blue-100">
+                    <h2 class="text-lg font-bold text-blue-800 mb-4">🧪 Rechner</h2>
+                    <div class="space-y-4">
+                        <label class="block">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Stoff wählen</span>
+                            <select id="subSelect" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl focus:border-blue-500 outline-none"></select>
+                        </label>
+                        <div class="grid grid-cols-2 gap-4">
+                            <label class="block">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase text-blue-500 font-bold">m (Gramm)</span>
+                                <input type="number" id="inM" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="0.00">
+                            </label>
+                            <label class="block">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase text-blue-500 font-bold">n (Mol)</span>
+                                <input type="number" id="inN" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="0.00">
+                            </label>
+                        </div>
+                        <button id="calcBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl shadow-lg transition-all active:scale-95">Berechnen</button>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 p-6 rounded-3xl border border-amber-200">
+                    <h3 class="text-amber-800 font-bold text-sm mb-2 flex items-center gap-2">💡 Profi-Tipp</h3>
+                    <p id="tipDisplay" class="text-xs text-amber-900 leading-relaxed italic">Wähle einen Stoff für einen hilfreichen Hinweis.</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-8 space-y-6">
+                
+                <div id="resDiv" class="hidden bg-white p-8 rounded-3xl shadow-xl border-l-8 border-blue-600">
+                    <div class="flex justify-between items-end mb-6">
+                        <div>
+                            <span id="resName" class="text-2xl font-black text-slate-800 uppercase">---</span>
+                            <p id="resSubline" class="text-sm text-blue-500 font-mono"></p>
+                        </div>
+                        <div class="text-right">
+                            <span id="resVal" class="text-4xl font-black text-blue-600 tracking-tighter">-- mol</span>
+                        </div>
+                    </div>
+                    <div id="resInfo" class="p-4 bg-blue-50 rounded-2xl text-sm text-blue-900 leading-relaxed border border-blue-100"></div>
+                </div>
+
+                <div id="sek2Expert" class="hidden space-y-6">
+                    <div class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 overflow-hidden">
+                        <h3 class="text-xs font-bold text-slate-400 uppercase mb-4 tracking-widest">Die Drehscheibe (Referenz)</h3>
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left text-xs">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="py-2">System</th>
+                                        <th class="py-2 text-blue-600">Formel</th>
+                                        <th class="py-2">Matura-Tipp</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-slate-600">
+                                    <tr class="border-b">
+                                        <td class="py-3 font-bold">Feststoff</td>
+                                        <td class="py-3 font-mono">n = m / M</td>
+                                        <td class="py-3">Achte auf Reinheit/Massenanteil!</td>
+                                    </tr>
+                                    <tr class="border-b bg-slate-50/50">
+                                        <td class="py-3 font-bold">Gas (Ideal)</td>
+                                        <td class="py-3 font-mono">n = V / Vm</td>
+                                        <td class="py-3">Vm ist stoffunabhängig (nur p/T)!</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 font-bold">Lösung</td>
+                                        <td class="py-3 font-mono">n = c * V</td>
+                                        <td class="py-3">Bei Verdünnung bleibt n konstant!</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-8 rounded-3xl shadow-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-4 text-slate-700 font-black text-6xl opacity-20 pointer-events-none">MATURA</div>
+                        <h3 class="text-blue-400 font-bold mb-4 flex items-center gap-2">🎓 Expert-Challenge (van-der-Waals)</h3>
+                        <div class="space-y-4 text-sm opacity-90">
+                            <details class="group bg-white/5 p-4 rounded-xl border border-white/10">
+                                <summary class="cursor-pointer font-bold group-open:text-blue-400">1. CO2 vs. Helium: Warum abweichend?</summary>
+                                <p class="mt-2 text-xs text-slate-400 leading-relaxed">CO2 hat stärkere zwischenmolekulare Kräfte und ein größeres Eigenvolumen. Helium ist fast ideal.</p>
+                            </details>
+                            <details class="group bg-white/5 p-4 rounded-xl border border-white/10">
+                                <summary class="cursor-pointer font-bold group-open:text-blue-400">2. Warum ist realer Druck niedriger?</summary>
+                                <p class="mt-2 text-xs text-slate-400 leading-relaxed">Der Binnendruck (Anziehung zwischen Teilchen) bremst Stöße gegen die Wand ab.</p>
+                            </details>
+                            <details class="group bg-white/5 p-4 rounded-xl border border-white/10">
+                                <summary class="cursor-pointer font-bold group-open:text-blue-400">3. Grenzen des Modells: V = 0?</summary>
+                                <p class="mt-2 text-xs text-slate-400 leading-relaxed">Ideal würde V bei 0K auf 0 sinken. Reale Gase verflüssigen sich vorher wegen des Eigenvolumens.</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chemicals = {
+            "H2O": { m: 18.02, name: "Wasser", s1: "Ein guter Schluck (18ml).", s2: "Dichte-Check bei Verdünnung (Modul 3)." },
+            "NaCl": { m: 58.44, name: "Kochsalz", s1: "Ein Schnapsglas voll.", s2: "Molarität für Infusionen (c = n/V)." },
+            "O2": { m: 32.00, name: "Sauerstoff", s1: "Zwei Atome = Paar! (M verdoppelt).", s2: "Tauchflaschen-Druck (Gay-Lussac)." },
+            "Mg": { m: 24.31, name: "Magnesium", s1: "Gewicht eines Briefes (24g).", s2: "Modeling: Verbrennung zu MgO." },
+            "CO2": { m: 44.01, name: "CO2", s1: "Füllt 12 große Ballons.", s2: "Expert: Binnendruck bei Real-Gasen." }
+        };
+
+        const tips = [
+            "Die 'Zwerge' H-O-N-Cl-Br-I-F treten immer zu zweit auf!",
+            "n = m / M. Merk dir: 'Nicht macht Mief'!",
+            "Bei Verdünnungen ändert sich n niemals.",
+            "Einheiten-Falle: Rechne immer in Gramm, nicht mg!",
+            "Das Mol ist die Drehscheibe. Geh immer über n."
+        ];
+
+        const sel = document.getElementById('subSelect');
+        Object.keys(chemicals).forEach(k => {
+            let o = document.createElement('option'); o.value = k; o.innerText = `${chemicals[k].name} (${k})`; sel.appendChild(o);
+        });
+
+        document.getElementById('calcBtn').addEventListener('click', () => {
+            const sub = chemicals[sel.value];
+            const m = parseFloat(document.getElementById('inM').value);
+            const is2 = document.getElementById('modeToggle').checked;
+            
+            if(!m && !document.getElementById('inN').value) return alert("Wert eingeben!");
+            
+            const n = m ? m / sub.m : parseFloat(document.getElementById('inN').value);
+            
+            document.getElementById('resDiv').classList.remove('hidden');
+            document.getElementById('resName').innerText = sub.name;
+            document.getElementById('resSubline').innerText = `Molare Masse M = ${sub.m} g/mol`;
+            document.getElementById('resVal').innerText = n.toFixed(3) + " mol";
+            document.getElementById('resInfo').innerText = is2 ? sub.s2 : sub.s1;
+            document.getElementById('tipDisplay').innerText = tips[Math.floor(Math.random()*tips.length)];
+            
+            if(is2) document.getElementById('sek2Expert').classList.remove('hidden');
+            else document.getElementById('sek2Expert').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

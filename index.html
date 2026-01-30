@@ -9,68 +9,67 @@
         sub { font-size: 0.75em; vertical-align: sub; line-height: 0; }
         .scaffolding-step { opacity: 0.3; transition: all 0.4s; }
         .scaffolding-step.active { opacity: 1; transform: translateX(8px); color: #2563eb; font-weight: 800; }
+        select { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
 
     <div class="max-w-6xl mx-auto px-4 py-8">
-        <header class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 mb-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <header class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
                 <h1 class="text-3xl font-black text-blue-900 uppercase tracking-tighter">Stöchiometrie-Meister Pro</h1>
-                <p class="text-slate-500 text-sm italic">Präsentations-Tool: Chemie trifft KI</p>
+                <p class="text-slate-500 text-sm italic">Interaktives Reaktions-Labor & Quiz</p>
             </div>
             
-            <div class="flex flex-col items-center gap-2">
-                <div class="flex items-center gap-3 bg-slate-100 p-2 rounded-2xl border">
-                    <span class="text-[10px] font-bold px-2 text-slate-400 uppercase">Sek 1</span>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" id="modeToggle" class="sr-only peer">
-                        <div class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
-                    </label>
-                    <span class="text-[10px] font-bold px-2 text-blue-600 uppercase">Sek 2</span>
-                </div>
+            <div class="flex items-center gap-3 bg-slate-100 p-2 rounded-2xl border">
+                <span class="text-[10px] font-bold px-2 text-slate-400 uppercase">Sek 1</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                    <input type="checkbox" id="modeToggle" class="sr-only peer">
+                    <div class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+                </label>
+                <span class="text-[10px] font-bold px-2 text-blue-600 uppercase">Sek 2</span>
             </div>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div class="lg:col-span-4 space-y-6">
                 <div class="bg-white p-2 rounded-2xl shadow-sm border flex gap-1">
-                    <button id="tabSub" class="flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white transition-all">RECHNER</button>
+                    <button id="tabSub" class="flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white shadow-md">RECHNER</button>
                     <button id="tabReac" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50">LABOR</button>
                     <button id="tabQuiz" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50">QUIZ</button>
                 </div>
 
                 <div id="inputPanel" class="bg-white p-6 rounded-3xl shadow-xl border border-blue-100">
-                    <div id="subInputSection" class="space-y-4">
+                    <div id="subSection" class="space-y-4">
                         <label class="block">
                             <span class="text-[10px] font-bold text-slate-400 uppercase">Stoff wählen</span>
                             <select id="subSelect" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
-                        <div class="space-y-3">
-                            <input type="number" id="inM" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="Masse m (g)">
-                            <div class="text-center text-[10px] font-black text-slate-200 uppercase tracking-widest">ODER</div>
-                            <input type="number" id="inN" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="Stoffmenge n (mol)">
+                        <div class="space-y-2">
+                            <input type="number" id="inM" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Masse m (g)">
+                            <div class="text-center text-[10px] font-black text-slate-200">ODER</div>
+                            <input type="number" id="inN" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Stoffmenge n (mol)">
                         </div>
                     </div>
 
-                    <div id="reacInputSection" class="hidden space-y-4">
+                    <div id="reacSection" class="hidden space-y-4">
                         <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Reaktion</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Reaktion wählen</span>
                             <select id="reacSelect" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
-                        <input type="number" id="reacIn" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="Menge Edukt (g)">
+                        <input type="number" id="reacIn" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Menge Edukt (g)">
                     </div>
 
-                    <button id="mainActionBtn" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">ANALYSE STARTEN</button>
+                    <button id="mainBtn" class="w-full mt-6 bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">ANALYSE STARTEN</button>
                 </div>
 
                 <div id="scaffoldBox" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
-                    <h3 class="text-[10px] font-black text-slate-300 uppercase mb-4 tracking-widest">Lösungs-Leitfaden</h3>
-                    <div class="space-y-4" id="scaffoldList">
+                    <h3 class="text-[10px] font-black text-slate-300 uppercase mb-4 tracking-widest text-center">Lösungs-Leitfaden</h3>
+                    <div class="space-y-4">
                         <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step1"><span>1</span> Formel & M bestimmen</div>
-                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step2"><span>2</span> Gegebene Größe</div>
-                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step3"><span>3</span> Molverhältnis</div>
-                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step4"><span>4</span> Berechnung</div>
+                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step2"><span>2</span> Masse in Mol umrechnen</div>
+                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step3"><span>3</span> Molverhältnis nutzen</div>
+                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step4"><span>4</span> Zielgröße berechnen</div>
                     </div>
                 </div>
             </div>
@@ -80,151 +79,143 @@
                     <div id="resContent"></div>
                 </div>
 
-                <div id="quizDiv" class="hidden bg-blue-900 text-white p-8 rounded-3xl shadow-2xl">
-                    <h2 class="text-xl font-black mb-4 flex items-center gap-3">🎓 ACADEMY CHALLENGE</h2>
-                    <p id="quizQuest" class="text-blue-100 mb-6 text-lg italic"></p>
+                <div id="quizDiv" class="hidden bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
+                    <h2 class="text-xl font-black mb-2 flex items-center gap-3 text-blue-400">🎓 STÖCHIOMETRIE-QUIZ</h2>
+                    <div id="quizEquation" class="bg-white/10 p-4 rounded-xl font-mono text-center mb-6 text-xl"></div>
+                    <p id="quizText" class="text-blue-100 mb-6 text-lg italic"></p>
                     <div class="flex gap-4">
-                        <input type="number" id="quizIn" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-xl outline-none" placeholder="Ergebnis...">
-                        <button id="quizCheck" class="bg-white text-blue-900 font-black px-10 rounded-2xl hover:bg-blue-100">PRÜFEN</button>
+                        <input type="number" id="quizIn" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-xl outline-none" placeholder="Dein Ergebnis (g)...">
+                        <button id="quizCheck" class="bg-blue-600 text-white font-black px-10 rounded-2xl hover:bg-blue-500">PRÜFEN</button>
                     </div>
-                    <p id="quizFeedback" class="mt-4 font-bold h-6"></p>
+                    <p id="quizFeedback" class="mt-4 font-bold h-6 text-center"></p>
                 </div>
 
-                <div id="kiResBox" class="bg-amber-50 p-6 rounded-3xl border-2 border-dashed border-amber-200">
-                    <h3 class="text-amber-700 font-black text-xs uppercase mb-3">⚠️ KI-Resilienz: Kritik an Max</h3>
-                    <p id="maxError" class="text-sm text-amber-900 italic">Wähle eine Aktion aus.</p>
+                <div id="kiBox" class="bg-amber-50 p-6 rounded-3xl border-2 border-dashed border-amber-200">
+                    <h3 class="text-amber-700 font-black text-xs uppercase mb-2 flex items-center gap-2">⚠️ KI-Kritik</h3>
+                    <p id="maxError" class="text-sm text-amber-900 italic">Berechne etwas, um Max' Fehler zu sehen.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Formel-Helper (Unicode für Select, HTML für Anzeige)
+        // Formel-Helper (Unicode für Dropdowns, HTML für Anzeige)
         function toUni(s) {
             const map = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
             return s.replace(/[a-zA-Z](\d+)/g, (m) => m[0] + [...m.slice(1)].map(c => map[c]||c).join(''));
         }
         function toHTML(s) {
-            // Regex: Findet Zahlen, die direkt hinter Buchstaben stehen (Indices), ignoriert Koeffizienten am Wortanfang
+            // Index (Zahl nach Buchstabe) -> tiefgestellt. Koeffizient (Zahl am Anfang/nach Leerzeichen) -> normal.
             return s.replace(/([a-zA-Z])(\d+)/g, '$1<sub>$2</sub>');
         }
 
         const subDB = {
-            "H2": { name: "Wasserstoffgas", m: 2.016, s1: "Zwei H-Atome bilden ein Paar!", s2: "Haber-Bosch: N₂ + 3 H₂ → 2 NH₃." },
-            "He": { m: 4.003, name: "Helium", s1: "Ein Mol He füllt 24,5 L.", s2: "Keine Wechselwirkungen (ideales Gas)." },
-            "Li": { m: 6.941, name: "Lithium", s1: "Sehr leichtes Metall.", s2: "Stöchiometrie in Akkus." },
-            "C": { m: 12.01, name: "Kohlenstoff", s1: "12g Graphit = 1 Mol.", s2: "Referenz für die atomare Masse u." },
-            "N2": { m: 28.01, name: "Stickstoffgas", s1: "78% der Luft.", s2: "Sehr stabile Dreifachbindung." },
-            "O2": { m: 31.99, name: "Sauerstoffgas", s1: "Lebensnotwendig für Verbrennung.", s2: "In der Reaktionsgleichung immer O₂." },
-            "Na": { m: 22.99, name: "Natrium", s1: "Weiches Alkalimetall.", s2: "Bildet Na⁺ Ionen in Lösung." },
-            "Mg": { m: 24.31, name: "Magnesium", s1: "Brennt mit weißer Flamme.", s2: "MgO-Synthese ist Modeling-Klassiker." },
-            "Al": { m: 26.98, name: "Aluminium", s1: "Leichtmetall für Folien.", s2: "Dichte 2,7 g/cm³." },
-            "Cl2": { m: 70.90, name: "Chlorgas", s1: "Giftiges, gelbgrünes Gas.", s2: "Tritt immer als Cl₂ auf." },
-            "Fe": { m: 55.85, name: "Eisen", s1: "Ein Würfel von 56g.", s2: "Redox: Oxidation zu Fe₂O₃." },
-            "Cu": { m: 63.55, name: "Kupfer", s1: "Handvoll Cent-Münzen.", s2: "Standardelektrodenpotential beachten." },
-            "Ag": { m: 107.87, name: "Silber", s1: "Wertvolles Mol (108g).", s2: "Wichtig in der Analytik (Fällung)." },
-            "Au": { m: 196.97, name: "Gold", s1: "Wiegt fast 200g.", s2: "Extrem hohe Dichte." },
-            "H2O": { m: 18.02, name: "Wasser", s1: "Ein guter Schluck (18ml).", s2: "Polare Bindung, Dichte 1,0." },
-            "CO2": { m: 44.01, name: "Kohlenstoffdioxid", s1: "Füllt 12 große Ballons.", s2: "Gay-Lussac: Gasvolumina." },
-            "NaCl": { m: 58.44, name: "Kochsalz", s1: "Ein Esslöffel voll.", s2: "Molarität physiologischer Lösungen." },
-            "CH4": { m: 16.04, name: "Methan", s1: "Hauptteil von Erdgas.", s2: "Verbrennungsenthalpie berechnen." },
-            "C6H12O6": { m: 180.16, name: "Glucose", s1: "Ein Päckchen Zucker.", s2: "Photosynthese-Bilanz." },
-            "H2SO4": { m: 98.08, name: "Schwefelsäure", s1: "Schwere, ölige Flüssigkeit.", s2: "Titration: Zweiprotonige Säure." },
-            "HCl": { m: 36.46, name: "Salzsäure", s1: "Stechend riechendes Gas.", s2: "H⁺ Konzentration in Lösung." },
-            "NaOH": { m: 40.00, name: "Natriumhydroxid", s1: "Ätzend. Formt Seife.", s2: "Titerstellung von Säuren." },
-            "NH3": { m: 17.03, name: "Ammoniak", s1: "Düngemittel-Grundstoff.", s2: "Gleichgewichtsreaktion beachten." },
-            "MgO": { m: 40.30, name: "Magnesiumoxid", s1: "Weißes Pulver.", s2: "Resultat der Magnesiumverbrennung." },
-            "KMnO4": { m: 158.03, name: "Kaliumpermanganat", s1: "Tiefviolette Kristalle.", s2: "Starkes Oxidationsmittel (Redox)." }
+            "Al": { m: 26.98, name: "Aluminium" },
+            "Al2O3": { m: 101.96, name: "Aluminiumoxid" },
+            "NH3": { m: 17.03, name: "Ammoniak" },
+            "N2": { m: 28.01, name: "Stickstoff" },
+            "H2": { m: 2.016, name: "Wasserstoff" },
+            "CO": { m: 28.01, name: "Kohlenstoffmonoxid" },
+            "H2O": { m: 18.02, name: "Wasser" },
+            "NaCl": { m: 58.44, name: "Natriumchlorid" },
+            "HCl": { m: 36.46, name: "Salzsäure" },
+            "NaOH": { m: 40.00, name: "Natronlauge" },
+            "Fe2O3": { m: 159.69, name: "Eisen(III)-oxid" },
+            "Fe": { m: 55.85, name: "Eisen" },
+            "C": { m: 12.01, name: "Kohlenstoff" },
+            "CH4": { m: 16.04, name: "Methan" },
+            "CO2": { m: 44.01, name: "Kohlenstoffdioxid" },
+            "O2": { m: 31.99, name: "Sauerstoff" }
         };
 
         const reacDB = {
-            "R1": { name: "Methan-Verbrennung", eq: "CH4 + 2 O2 -> CO2 + 2 H2O", ratio: 1, edu: "CH4", prod: "CO2", mE: 16.04, mP: 44.01 },
-            "R2": { name: "Magnesium-Oxidation", eq: "2 Mg + O2 -> 2 MgO", ratio: 1, edu: "Mg", prod: "MgO", mE: 24.31, mP: 40.30 },
-            "R3": { name: "Knallgas-Reaktion", eq: "2 H2 + O2 -> 2 H2O", ratio: 1, edu: "H2", prod: "H2O", mE: 2.016, mP: 18.02 }
+            "R_AL": { name: "Aluminium-Verbrennung", eq: "4 Al + 3 O2 -> 2 Al2O3", ratio: 0.5, edu: "Al", prod: "Al2O3" }, // 4 mol Al -> 2 mol Al2O3
+            "R_NH3": { name: "Ammoniaksynthese", eq: "N2 + 3 H2 -> 2 NH3", ratio: 2, edu: "N2", prod: "NH3" }, // 1 mol N2 -> 2 mol NH3
+            "R_WATER": { name: "Wassergas-Reaktion", eq: "C + H2O -> CO + H2", ratio: 1, edu: "C", prod: "CO" },
+            "R_NEUT": { name: "Neutralisation", eq: "HCl + NaOH -> NaCl + H2O", ratio: 1, edu: "HCl", prod: "NaCl" },
+            "R_FE": { name: "Reduktion (Hochofen)", eq: "Fe2O3 + 3 CO -> 2 Fe + 3 CO2", ratio: 2, edu: "Fe2O3", prod: "Fe" }
         };
 
-        const errors = ["O2 wiegt 32g, nicht 16g!","m*M gerechnet statt m/M.","Koeffizienten ignoriert!","Dichte von Flüssigkeiten ignoriert."];
+        const errors = ["O2 wiegt 32g, nicht 16g!","m*M gerechnet statt m/M.","Koeffizienten der Gleichung beim Molverhältnis ignoriert."];
 
         const selS = document.getElementById('subSelect');
         const selR = document.getElementById('reacSelect');
 
         Object.keys(subDB).sort().forEach(k => {
-            let o = document.createElement('option'); o.value = k;
-            o.innerText = `${subDB[k].name} (${toUni(k)})`;
-            selS.appendChild(o);
+            let o = document.createElement('option'); o.value = k; o.innerText = `${subDB[k].name} (${toUni(k)})`; selS.appendChild(o);
         });
         Object.keys(reacDB).forEach(k => {
-            let o = document.createElement('option'); o.value = k; o.innerText = reacDB[k].name;
-            selR.appendChild(o);
+            let o = document.createElement('option'); o.value = k; o.innerText = reacDB[k].name; selR.appendChild(o);
         });
 
-        document.getElementById('tabSub').onclick = () => sw('sub');
-        document.getElementById('tabReac').onclick = () => sw('reac');
-        document.getElementById('tabQuiz').onclick = () => sw('quiz');
+        // Navigation
+        let activeTab = 'sub';
+        const tabs = ['tabSub', 'tabReac', 'tabQuiz'];
+        tabs.forEach(id => {
+            document.getElementById(id).onclick = () => {
+                activeTab = id.replace('tab','').toLowerCase();
+                document.getElementById('subSection').classList.toggle('hidden', activeTab !== 'sub');
+                document.getElementById('reacSection').classList.toggle('hidden', activeTab !== 'reac');
+                document.getElementById('quizDiv').classList.toggle('hidden', activeTab !== 'quiz');
+                document.getElementById('resDiv').classList.add('hidden');
+                document.getElementById('scaffoldBox').classList.toggle('hidden', activeTab === 'quiz');
+                tabs.forEach(t => document.getElementById(t).className = t===id ? "flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white shadow-md" : "flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500");
+                if(activeTab === 'quiz') startQuiz();
+            };
+        });
 
-        function sw(t) {
-            document.getElementById('subInputSection').classList.toggle('hidden', t !== 'sub');
-            document.getElementById('reacInputSection').classList.toggle('hidden', t !== 'reac');
-            document.getElementById('quizDiv').classList.toggle('hidden', t !== 'quiz');
-            document.getElementById('resDiv').classList.add('hidden');
-            document.getElementById('scaffoldBox').classList.toggle('hidden', t === 'quiz');
-            ['tabSub','tabReac','tabQuiz'].forEach(id => document.getElementById(id).className = id==='tab'+t.charAt(0).toUpperCase()+t.slice(1) ? "flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white shadow-md" : "flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50");
-            if(t==='quiz') stQ();
-        }
-
-        document.getElementById('mainActionBtn').onclick = () => {
-            const t = document.getElementById('reacInputSection').classList.contains('hidden') ? 'sub' : 'reac';
-            if(t==='sub') cS(); else cR();
+        // Berechnung
+        document.getElementById('mainBtn').onclick = () => {
+            if(activeTab === 'sub') calcSub(); else if(activeTab === 'reac') calcReac();
         };
 
-        function cS() {
-            const s = subDB[selS.value];
-            const im = parseFloat(document.getElementById('inM').value);
-            const inN = parseFloat(document.getElementById('inN').value);
-            const is2 = document.getElementById('modeToggle').checked;
+        function calcSub() {
+            const s = subDB[selS.value]; const im = parseFloat(document.getElementById('inM').value); const inN = parseFloat(document.getElementById('inN').value);
             if(!im && !inN) return alert("Wert eingeben!");
             const n = im ? im/s.m : inN; const m = inN ? inN*s.m : im;
-            shR(`<h2>${s.name}</h2><p class="text-blue-500 font-bold">${toHTML(selS.value)} | M = ${s.m} g/mol</p>`, 
-               `<div class="bg-blue-50 p-4 rounded-xl">n = ${n.toFixed(4)} mol</div><div class="bg-blue-50 p-4 rounded-xl">m = ${m.toFixed(2)} g</div><div class="bg-slate-50 p-4 rounded-xl col-span-2 text-xs">${is2?s.s2:s.s1}</div>`);
-            rSc(false);
+            showRes(`<h2>${s.name}</h2><p class="text-blue-500 font-bold">${toHTML(selS.value)} | M = ${s.m} g/mol</p>`, 
+                `<div class="bg-blue-50 p-4 rounded-xl text-center">n = ${n.toFixed(4)} mol</div><div class="bg-blue-50 p-4 rounded-xl text-center">m = ${m.toFixed(2)} g</div>`);
+            scaffold(false);
         }
 
-        function cR() {
-            const r = reacDB[selR.value];
-            const v = parseFloat(document.getElementById('reacIn').value);
-            if(!v) return alert("Menge Edukt eingeben!");
-            const mP = (v/r.mE)*r.ratio*r.mP;
-            shR(`<h2>${r.name}</h2><p class="text-blue-500 font-bold">${toHTML(r.eq)}</p>`,
-               `<div class="bg-blue-600 text-white p-6 rounded-xl col-span-2 text-center text-lg">Aus ${v}g ${toHTML(r.edu)} entsteht:<br><b class="text-2xl">${mP.toFixed(2)}g</b> ${toHTML(r.prod)}</div>`);
-            rSc(true);
+        function calcReac() {
+            const r = reacDB[selR.value]; const v = parseFloat(document.getElementById('reacIn').value);
+            if(!v) return alert("Eingabe fehlt!");
+            const mP = (v/subDB[r.edu].m)*r.ratio*subDB[r.prod].m;
+            showRes(`<h2>${r.name}</h2><p class="text-blue-500 font-bold">${toHTML(r.eq)}</p>`,
+                `<div class="bg-blue-600 text-white p-6 rounded-xl col-span-2 text-center text-lg">Aus ${v}g ${toHTML(r.edu)} entsteht:<br><b class="text-3xl">${mP.toFixed(2)}g</b> ${toHTML(r.prod)}</div>`);
+            scaffold(true);
         }
 
-        function shR(h, b) {
+        function showRes(h, b) {
             document.getElementById('resDiv').classList.remove('hidden');
             document.getElementById('resContent').innerHTML = h + '<div class="grid grid-cols-2 gap-3 mt-4">'+b+'</div>';
             document.getElementById('maxError').innerText = errors[Math.floor(Math.random()*errors.length)];
         }
 
-        function rSc(re) {
-            [true, true, re, true].forEach((a, i) => document.getElementById('step'+(i+1)).className = a ? "scaffolding-step active flex items-center gap-3 text-xs" : "scaffolding-step flex items-center gap-3 text-xs opacity-10");
+        function scaffold(isReac) {
+            [1,2,3,4].forEach(i => document.getElementById('step'+i).className = (i===3 && !isReac) ? "scaffolding-step flex items-center gap-3 text-xs font-bold opacity-10" : "scaffolding-step active flex items-center gap-3 text-xs font-bold");
         }
 
-        let qA = 0;
-        function stQ() {
-            const k = Object.keys(subDB)[Math.floor(Math.random()*Object.keys(subDB).length)];
-            const s = subDB[k]; const rv = (Math.random()*4+1).toFixed(1); const tM = Math.random()>0.5;
-            document.getElementById('quizQuest').innerHTML = tM ? `Wieviel Mol n sind <b>${rv}g ${s.name}</b> (${toHTML(k)})?` : `Wieviel Gramm m sind <b>${rv} mol ${s.name}</b> (${toHTML(k)})?`;
-            qA = tM ? rv/s.m : rv*s.m;
+        // Quiz-Logik
+        let qAns = 0;
+        function startQuiz() {
+            const keys = Object.keys(reacDB);
+            const r = reacDB[keys[Math.floor(Math.random()*keys.length)]];
+            const randVal = (Math.random() * 20 + 5).toFixed(1);
+            document.getElementById('quizEquation').innerHTML = toHTML(r.eq);
+            document.getElementById('quizText').innerHTML = `Wie viel Gramm <b>${r.prod}</b> entstehen bei der vollständigen Reaktion von <b>${randVal}g ${r.edu}</b>?`;
+            qAns = (randVal / subDB[r.edu].m) * r.ratio * subDB[r.prod].m;
             document.getElementById('quizFeedback').innerText = ""; document.getElementById('quizIn').value = "";
         }
 
         document.getElementById('quizCheck').onclick = () => {
             const v = parseFloat(document.getElementById('quizIn').value);
-            const ok = Math.abs(v-qA)<0.1;
+            const ok = Math.abs(v-qAns) < 0.5;
             const f = document.getElementById('quizFeedback');
-            f.innerText = ok ? "✅ Richtig!" : "❌ Falsch!";
-            f.className = ok ? "text-green-400 font-bold" : "text-red-400 font-bold";
-            if(ok) setTimeout(stQ, 2000);
+            f.innerText = ok ? "✅ Richtig!" : "❌ Falsch! (Lösung ca. " + qAns.toFixed(1) + "g)";
+            f.className = ok ? "mt-4 font-bold text-green-400" : "mt-4 font-bold text-red-400";
+            if(ok) setTimeout(startQuiz, 3000);
         };
     </script>
 </body>

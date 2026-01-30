@@ -3,30 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stöchiometrie-Meister Pro | Didaktik-Edition</title>
+    <title>Stöchiometrie-Meister Pro | Lern-Umgebung</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         sub { font-size: 0.75em; vertical-align: sub; line-height: 0; }
         .tab-active { background-color: #2563eb; color: white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
+        input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
 
     <div class="max-w-5xl mx-auto px-4 py-8">
         <header class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
-                <h1 class="text-3xl font-black text-blue-900 uppercase tracking-tighter">Stöchiometrie-Meister</h1>
-                <p class="text-slate-500 text-sm italic underline decoration-blue-200">Konzipiert für SEK 1 & 2 (Österreich)</p>
+            <div>
+                <h1 class="text-3xl font-black text-blue-900 uppercase tracking-tighter italic">Stöchiometrie-Meister</h1>
+                <p class="text-slate-500 text-sm">Interaktives Labor & Quiz-Academy</p>
             </div>
             
             <div class="flex flex-col items-center gap-2">
                 <div class="flex items-center gap-3 bg-slate-100 p-2 rounded-2xl border">
-                    <span class="text-[10px] font-bold px-2 text-slate-400 uppercase">Sek 1</span>
+                    <span class="text-[10px] font-bold px-2 text-slate-400 uppercase tracking-tighter">Sek 1</span>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="modeToggle" class="sr-only peer">
                         <div class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
                     </label>
-                    <span class="text-[10px] font-bold px-2 text-blue-600 uppercase">Sek 2</span>
+                    <span class="text-[10px] font-bold px-2 text-blue-600 uppercase tracking-tighter">Sek 2</span>
                 </div>
             </div>
         </header>
@@ -39,26 +40,25 @@
                     <button id="btnQuiz" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500">QUIZ</button>
                 </nav>
 
-                <div id="panelInput" class="bg-white p-6 rounded-3xl shadow-xl border border-blue-100">
+                <div id="panelInput" class="bg-white p-6 rounded-3xl shadow-xl border border-blue-50">
                     <div id="boxSub" class="space-y-4">
                         <label class="block">
                             <span class="text-[10px] font-bold text-slate-400 uppercase">Stoff wählen</span>
                             <select id="selSub" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
                         <input type="number" id="inM" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Masse m (g)">
-                        <div class="text-center text-[10px] text-slate-300 font-bold">ODER</div>
                         <input type="number" id="inN" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Stoffmenge n (mol)">
                     </div>
 
                     <div id="boxReac" class="hidden space-y-4">
                         <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Reaktion wählen</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Reaktion wählen</span>
                             <select id="selReac" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
                         <input type="number" id="inEdukt" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Eduktmenge (g)">
                     </div>
 
-                    <button id="actionBtn" class="w-full mt-6 bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">ANALYSE STARTEN</button>
+                    <button id="actionBtn" class="w-full mt-6 bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">START</button>
                 </div>
             </div>
 
@@ -69,29 +69,35 @@
                 </div>
 
                 <div id="viewQuiz" class="hidden bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
-                    <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-xl font-black text-blue-400 uppercase">Chemistry Challenge</h2>
-                        <button id="newQuizBtn" class="text-[10px] bg-white/10 hover:bg-white/20 px-3 py-1 rounded-lg font-bold">NEUE AUFGABE</button>
+                    <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
+                        <h2 class="text-xl font-black text-blue-400 tracking-tighter uppercase">Quiz Academy</h2>
+                        <button id="newQuizBtn" class="text-[10px] bg-blue-500 text-white px-3 py-1 rounded-lg font-bold">NÄCHSTE AUFGABE</button>
+                    </div>
+
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10 mb-6">
+                        <p class="text-[9px] font-bold text-slate-500 uppercase mb-2">Hilfs-Rechner</p>
+                        <div class="flex gap-2 items-center">
+                            <input type="text" id="mathInput" class="bg-black/20 p-2 rounded-lg flex-1 font-mono text-sm text-blue-300 outline-none border border-white/5" placeholder="z.B. 10 / 18.02">
+                            <button id="mathCalcBtn" class="bg-blue-600 px-4 py-2 rounded-lg font-bold text-sm">=</button>
+                            <div id="mathRes" class="w-24 bg-black/40 p-2 rounded-lg font-mono text-sm text-green-400 overflow-hidden">0.00</div>
+                            <button id="mathDelBtn" class="text-[10px] text-red-400 font-bold px-2">DEL</button>
+                        </div>
                     </div>
                     
-                    <div id="quizTask" class="space-y-6">
-                        <div id="quizEqBox" class="bg-white/5 p-4 rounded-xl text-center text-xl font-mono hidden"></div>
-                        <p id="quizText" class="text-lg italic leading-relaxed"></p>
-                        
-                        <div class="bg-blue-900/50 p-4 rounded-xl border border-blue-700/50">
-                            <p class="text-[10px] font-bold text-blue-300 uppercase mb-2">Hilfestellung: Molmassen (M)</p>
-                            <div id="quizHelp" class="flex gap-4 text-sm font-mono text-blue-100"></div>
-                        </div>
+                    <div id="quizTask" class="space-y-4">
+                        <div id="quizEqBox" class="bg-white/5 p-4 rounded-xl text-center text-xl font-mono hidden border border-white/5"></div>
+                        <p id="quizText" class="text-lg italic text-blue-100"></p>
+                        <div id="quizHelp" class="flex gap-4 text-[10px] font-bold text-blue-400 bg-blue-400/5 p-2 rounded-lg border border-blue-400/20"></div>
 
-                        <div class="flex gap-4">
-                            <input type="number" id="quizInput" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-xl outline-none" placeholder="Antwort...">
+                        <div class="flex gap-3 pt-4">
+                            <input type="number" id="quizInput" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-2xl outline-none" placeholder="Antwort...">
                             <button id="quizCheckBtn" class="bg-blue-600 px-8 rounded-2xl font-black hover:bg-blue-500 transition-colors">PRÜFEN</button>
                         </div>
                         
-                        <div class="flex flex-col gap-3">
-                            <p id="quizFeedback" class="font-bold text-center"></p>
-                            <button id="showSolutionBtn" class="hidden text-[10px] text-slate-400 hover:text-white underline">Lösungsweg anzeigen</button>
-                            <div id="quizSolution" class="hidden p-4 bg-white/5 rounded-xl text-xs text-slate-300 leading-relaxed border border-white/10"></div>
+                        <div class="flex flex-col gap-2 pt-2">
+                            <p id="quizFeedback" class="font-bold text-center h-6"></p>
+                            <button id="showSolutionBtn" class="hidden text-[10px] text-slate-500 underline uppercase tracking-widest">Lösungsweg einblenden</button>
+                            <div id="quizSolution" class="hidden p-4 bg-white/5 rounded-xl text-xs text-slate-400 border border-white/10 italic"></div>
                         </div>
                     </div>
                 </div>
@@ -100,16 +106,9 @@
     </div>
 
     <script>
-        // Formel-Konverter (Indices tiefgestellt, Koeffizienten normal)
-        function formatFormula(formula) {
-            return formula.replace(/([A-Z][a-z]*)(\d+)/g, '$1<sub>$2</sub>');
-        }
-
-        // Unicode für Dropdowns (da sub Tags dort nicht gehen)
-        function unicodeFormula(formula) {
-            const subs = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
-            return formula.replace(/(\d+)/g, (m) => [...m].map(c => subs[c] || c).join(''));
-        }
+        // Formel-Styling
+        function fF(s) { return s.replace(/([A-Z][a-z]*)(\d+)/g, '$1<sub>$2</sub>'); }
+        function uF(s) { const subs = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'}; return s.replace(/(\d+)/g, (m) => [...m].map(c => subs[c] || c).join('')); }
 
         const substances = {
             "H2O": { m: 18.015, name: "Wasser" }, "CO2": { m: 44.01, name: "Kohlenstoffdioxid" },
@@ -117,121 +116,118 @@
             "Mg": { m: 24.31, name: "Magnesium" }, "MgO": { m: 40.30, name: "Magnesiumoxid" },
             "O2": { m: 31.99, name: "Sauerstoff" }, "Al": { m: 26.98, name: "Aluminium" },
             "Al2O3": { m: 101.96, name: "Aluminiumoxid" }, "NH3": { m: 17.03, name: "Ammoniak" },
-            "N2": { m: 28.01, name: "Stickstoff" }, "H2": { m: 2.016, name: "Wasserstoff" }
+            "N2": { m: 28.01, name: "Stickstoff" }, "Fe2O3": { m: 159.69, name: "Eisen(III)-oxid" },
+            "Fe": { m: 55.85, name: "Eisen" }
         };
 
         const reactions = {
             "R1": { name: "Methan-Verbrennung", eq: "CH4 + 2 O2 -> CO2 + 2 H2O", ratio: 1, edu: "CH4", prod: "CO2" },
             "R2": { name: "Magnesium-Oxidation", eq: "2 Mg + O2 -> 2 MgO", ratio: 1, edu: "Mg", prod: "MgO" },
             "R3": { name: "Aluminium-Verbrennung", eq: "4 Al + 3 O2 -> 2 Al2O3", ratio: 0.5, edu: "Al", prod: "Al2O3" },
-            "R4": { name: "Ammoniak-Synthese", eq: "N2 + 3 H2 -> 2 NH3", ratio: 2, edu: "N2", prod: "NH3" }
+            "R4": { name: "Hochofen-Prozess", eq: "Fe2O3 + 3 CO -> 2 Fe + 3 CO2", ratio: 2, edu: "Fe2O3", prod: "Fe" }
         };
 
-        // Init UI
-        const selSub = document.getElementById('selSub');
-        const selReac = document.getElementById('selReac');
+        // UI Init
+        const sSel = document.getElementById('selSub');
+        const rSel = document.getElementById('selReac');
         Object.keys(substances).sort().forEach(k => {
-            let o = document.createElement('option'); o.value = k; o.innerText = `${substances[k].name} (${unicodeFormula(k)})`; selSub.appendChild(o);
+            let o = document.createElement('option'); o.value = k; o.innerText = `${substances[k].name} (${uF(k)})`; sSel.appendChild(o);
         });
         Object.keys(reactions).forEach(k => {
-            let o = document.createElement('option'); o.value = k; o.innerText = reactions[k].name; selReac.appendChild(o);
+            let o = document.createElement('option'); o.value = k; o.innerText = reactions[k].name; rSel.appendChild(o);
         });
 
-        // Navigation
-        let currentMode = 'rechner';
+        // Tabs
+        let curMode = 'rechner';
         const btns = { rechner: document.getElementById('btnRechner'), labor: document.getElementById('btnLabor'), quiz: document.getElementById('btnQuiz') };
-        
-        function switchTab(mode) {
-            currentMode = mode;
-            document.getElementById('boxSub').classList.toggle('hidden', mode !== 'rechner');
-            document.getElementById('boxReac').classList.toggle('hidden', mode !== 'labor');
-            document.getElementById('viewQuiz').classList.toggle('hidden', mode !== 'quiz');
+        function swTab(m) {
+            curMode = m;
+            document.getElementById('boxSub').classList.toggle('hidden', m !== 'rechner');
+            document.getElementById('boxReac').classList.toggle('hidden', m !== 'labor');
+            document.getElementById('viewQuiz').classList.toggle('hidden', m !== 'quiz');
             document.getElementById('viewResult').classList.add('hidden');
             Object.values(btns).forEach(b => b.classList.remove('tab-active', 'text-slate-500'));
-            btns[mode].classList.add('tab-active');
-            if(mode === 'quiz') createNewQuiz();
+            btns[m].classList.add('tab-active');
+            if(m === 'quiz') startQ();
         }
-        btns.rechner.onclick = () => switchTab('rechner');
-        btns.labor.onclick = () => switchTab('labor');
-        btns.quiz.onclick = () => switchTab('quiz');
+        btns.rechner.onclick = () => swTab('rechner');
+        btns.labor.onclick = () => swTab('labor');
+        btns.quiz.onclick = () => swTab('quiz');
 
-        // Logic Rechner / Labor
+        // Main Calc
         document.getElementById('actionBtn').onclick = () => {
             document.getElementById('viewResult').classList.remove('hidden');
-            if(currentMode === 'rechner') {
-                const s = substances[selSub.value];
-                const m = parseFloat(document.getElementById('inM').value);
-                const n = parseFloat(document.getElementById('inN').value);
-                const resN = m ? m/s.m : n;
-                const resM = n ? n*s.m : m;
-                document.getElementById('outHeader').innerHTML = `<h2 class="text-3xl font-black text-slate-800 uppercase tracking-tighter">${s.name}</h2><p class="text-blue-500 font-bold">${formatFormula(selSub.value)} | M = ${s.m} g/mol</p>`;
-                document.getElementById('outBody').innerHTML = `<div class="bg-blue-50 p-4 rounded-xl text-center">n = ${resN.toFixed(4)} mol</div><div class="bg-blue-50 p-4 rounded-xl text-center">m = ${resM.toFixed(2)} g</div>`;
+            if(curMode === 'rechner') {
+                const s = substances[sSel.value]; const m = parseFloat(document.getElementById('inM').value); const n = parseFloat(document.getElementById('inN').value);
+                const rN = m ? m/s.m : n; const rM = n ? n*s.m : m;
+                document.getElementById('outHeader').innerHTML = `<h2 class="text-2xl font-black">${s.name}</h2><p class="text-blue-500 font-bold">${fF(sSel.value)} | M = ${s.m} g/mol</p>`;
+                document.getElementById('outBody').innerHTML = `<div class="bg-blue-50 p-3 rounded-xl">n = ${rN.toFixed(4)} mol</div><div class="bg-blue-50 p-3 rounded-xl">m = ${rM.toFixed(2)} g</div>`;
             } else {
-                const r = reactions[selReac.value];
-                const val = parseFloat(document.getElementById('inEdukt').value);
-                const resM = (val / substances[r.edu].m) * r.ratio * substances[r.prod].m;
-                document.getElementById('outHeader').innerHTML = `<h2 class="text-2xl font-black text-slate-800 uppercase">${r.name}</h2><p class="text-blue-500 font-bold">${formatFormula(r.eq)}</p>`;
-                document.getElementById('outBody').innerHTML = `<div class="bg-blue-600 text-white p-6 rounded-xl col-span-2 text-center text-lg shadow-lg">Aus ${val}g ${formatFormula(r.edu)} entsteht:<br><b class="text-3xl">${resM.toFixed(2)}g</b> ${formatFormula(r.prod)}</div>`;
+                const r = reactions[rSel.value]; const v = parseFloat(document.getElementById('inEdukt').value);
+                const rM = (v / substances[r.edu].m) * r.ratio * substances[r.prod].m;
+                document.getElementById('outHeader').innerHTML = `<h2 class="text-xl font-black uppercase">${r.name}</h2><p class="text-blue-500 font-bold text-xs">${fF(r.eq)}</p>`;
+                document.getElementById('outBody').innerHTML = `<div class="bg-blue-600 text-white p-6 rounded-xl col-span-2 text-center shadow-lg">Ergebnis: <b>${rM.toFixed(2)}g</b> ${fF(r.prod)}</div>`;
             }
         };
 
-        // Quiz-Logic
-        let quizSolution = "";
-        let quizAnswer = 0;
+        // Mini Calculator Logic
+        document.getElementById('mathCalcBtn').onclick = () => {
+            const raw = document.getElementById('mathInput').value;
+            try {
+                // Nur Zahlen und Grundrechenarten erlauben (Sicherheit)
+                const clean = raw.replace(/[^-()\d/*+.]/g, '');
+                const res = Function('"use strict";return (' + clean + ')')();
+                document.getElementById('mathRes').innerText = Number.isInteger(res) ? res : res.toFixed(3);
+            } catch (e) { document.getElementById('mathRes').innerText = "Err"; }
+        };
+        document.getElementById('mathDelBtn').onclick = () => {
+            document.getElementById('mathInput').value = "";
+            document.getElementById('mathRes').innerText = "0.00";
+        };
 
-        function createNewQuiz() {
-            const isSek2 = document.getElementById('modeToggle').checked;
+        // Quiz Logic
+        let qAns = 0; let qSol = "";
+        function startQ() {
+            const is2 = document.getElementById('modeToggle').checked;
             document.getElementById('quizSolution').classList.add('hidden');
             document.getElementById('showSolutionBtn').classList.add('hidden');
             document.getElementById('quizFeedback').innerText = "";
             document.getElementById('quizInput').value = "";
-            
-            if(!isSek2) { // SEK 1: n <-> m
-                const keys = Object.keys(substances);
-                const sKey = keys[Math.floor(Math.random()*keys.length)];
-                const s = substances[sKey];
-                const val = (Math.random()*5+1).toFixed(1);
-                const toMol = Math.random() > 0.5;
+            if(!is2) {
+                const keys = Object.keys(substances); const sk = keys[Math.floor(Math.random()*keys.length)]; const s = substances[sk];
+                const val = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
                 document.getElementById('quizEqBox').classList.add('hidden');
-                document.getElementById('quizHelp').innerHTML = `<span>M(${formatFormula(sKey)}) = ${s.m} g/mol</span>`;
-                
-                if(toMol) {
-                    document.getElementById('quizText').innerHTML = `Berechne die Stoffmenge <b>n</b> von <b>${val}g ${s.name}</b>.`;
-                    quizAnswer = val / s.m;
-                    quizSolution = `Schritt 1: Formel n = m / M<br>Schritt 2: Werte einsetzen: ${val}g / ${s.m} g/mol<br>Ergebnis: ${quizAnswer.toFixed(3)} mol`;
+                document.getElementById('quizHelp').innerHTML = `M(${fF(sk)}) = ${s.m} g/mol`;
+                if(toM) {
+                    document.getElementById('quizText').innerHTML = `Berechne n von <b>${val}g ${s.name}</b>.`;
+                    qAns = val / s.m; qSol = `${val}g / ${s.m} g/mol = ${qAns.toFixed(3)} mol`;
                 } else {
-                    document.getElementById('quizText').innerHTML = `Berechne die Masse <b>m</b> von <b>${val} mol ${s.name}</b>.`;
-                    quizAnswer = val * s.m;
-                    quizSolution = `Schritt 1: Formel m = n * M<br>Schritt 2: Werte einsetzen: ${val} mol * ${s.m} g/mol<br>Ergebnis: ${quizAnswer.toFixed(2)} g`;
+                    document.getElementById('quizText').innerHTML = `Berechne m von <b>${val} mol ${s.name}</b>.`;
+                    qAns = val * s.m; qSol = `${val} mol * ${s.m} g/mol = ${qAns.toFixed(2)} g`;
                 }
-            } else { // SEK 2: Umsatz
-                const rKey = Object.keys(reactions)[Math.floor(Math.random()*Object.keys(reactions).length)];
-                const r = reactions[rKey];
-                const val = (Math.random()*20+5).toFixed(1);
-                document.getElementById('quizEqBox').classList.remove('hidden');
-                document.getElementById('quizEqBox').innerHTML = formatFormula(r.eq);
-                document.getElementById('quizHelp').innerHTML = `<span>M(${formatFormula(r.edu)}) = ${substances[r.edu].m}</span><span class="ml-4">M(${formatFormula(r.prod)}) = ${substances[r.prod].m}</span>`;
-                document.getElementById('quizText').innerHTML = `Wie viel Gramm <b>${r.prod}</b> entstehen bei der vollständigen Reaktion von <b>${val}g ${r.edu}</b>?`;
-                quizAnswer = (val / substances[r.edu].m) * r.ratio * substances[r.prod].m;
-                quizSolution = `1. Mol des Edukts: n = ${val}g / ${substances[r.edu].m} g/mol = ${(val/substances[r.edu].m).toFixed(3)} mol<br>2. Molverhältnis: n(${r.prod}) = n(${r.edu}) * ${r.ratio}<br>3. Masse Produkt: m = n * M(${r.prod}) = ${quizAnswer.toFixed(2)} g`;
+            } else {
+                const rk = Object.keys(reactions)[Math.floor(Math.random()*Object.keys(reactions).length)]; const r = reactions[rk];
+                const val = (Math.random()*15+5).toFixed(1);
+                document.getElementById('quizEqBox').classList.remove('hidden'); document.getElementById('quizEqBox').innerHTML = fF(r.eq);
+                document.getElementById('quizHelp').innerHTML = `M(${fF(r.edu)}) = ${substances[r.edu].m} | M(${fF(r.prod)}) = ${substances[r.prod].m}`;
+                document.getElementById('quizText').innerHTML = `Wie viel Gramm <b>${r.prod}</b> entstehen aus <b>${val}g ${r.edu}</b>?`;
+                qAns = (val / substances[r.edu].m) * r.ratio * substances[r.prod].m;
+                qSol = `1. n(${r.edu}) = ${val}/${substances[r.edu].m} = ${(val/substances[r.edu].m).toFixed(3)} mol<br>2. n(${r.prod}) = n(${r.edu}) * ${r.ratio}<br>3. m = n * ${substances[r.prod].m} = ${qAns.toFixed(2)}g`;
             }
         }
-
         document.getElementById('quizCheckBtn').onclick = () => {
-            const userVal = parseFloat(document.getElementById('quizInput').value);
-            const ok = Math.abs(userVal - quizAnswer) < 0.2;
-            document.getElementById('quizFeedback').innerText = ok ? "✅ Richtig! Hervorragend." : "❌ Fast! Berechne nochmal.";
-            document.getElementById('quizFeedback').className = ok ? "font-bold text-green-400" : "font-bold text-red-400";
+            const v = parseFloat(document.getElementById('quizInput').value);
+            const ok = Math.abs(v - qAns) < 0.25;
+            document.getElementById('quizFeedback').innerText = ok ? "✅ Richtig!" : "❌ Probier es nochmal!";
+            document.getElementById('quizFeedback').className = ok ? "font-bold text-green-400 text-center" : "font-bold text-red-400 text-center";
             document.getElementById('showSolutionBtn').classList.remove('hidden');
         };
-
         document.getElementById('showSolutionBtn').onclick = () => {
             document.getElementById('quizSolution').classList.toggle('hidden');
-            document.getElementById('quizSolution').innerHTML = quizSolution;
+            document.getElementById('quizSolution').innerHTML = qSol;
         };
-
-        document.getElementById('newQuizBtn').onclick = createNewQuiz;
-        document.getElementById('modeToggle').onchange = createNewQuiz;
+        document.getElementById('newQuizBtn').onclick = startQ;
+        document.getElementById('modeToggle').onchange = startQ;
     </script>
 </body>
 </html>

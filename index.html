@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stöchiometrie-Meister Pro | Lern-Umgebung</title>
+    <title>Stöchiometrie-Meister Pro | Final Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         sub { font-size: 0.75em; vertical-align: sub; line-height: 0; }
@@ -17,17 +17,17 @@
         <header class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
                 <h1 class="text-3xl font-black text-blue-900 uppercase tracking-tighter italic">Stöchiometrie-Meister</h1>
-                <p class="text-slate-500 text-sm">Interaktives Labor & Quiz-Academy</p>
+                <p class="text-slate-500 text-sm">Labor-Umgebung für SEK 1 & 2</p>
             </div>
             
             <div class="flex flex-col items-center gap-2">
                 <div class="flex items-center gap-3 bg-slate-100 p-2 rounded-2xl border">
-                    <span class="text-[10px] font-bold px-2 text-slate-400 uppercase tracking-tighter">Sek 1</span>
+                    <span class="text-[10px] font-bold px-2 text-slate-400 uppercase">Sek 1</span>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="modeToggle" class="sr-only peer">
                         <div class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
                     </label>
-                    <span class="text-[10px] font-bold px-2 text-blue-600 uppercase tracking-tighter">Sek 2</span>
+                    <span class="text-[10px] font-bold px-2 text-blue-600 uppercase">Sek 2</span>
                 </div>
             </div>
         </header>
@@ -43,7 +43,7 @@
                 <div id="panelInput" class="bg-white p-6 rounded-3xl shadow-xl border border-blue-50">
                     <div id="boxSub" class="space-y-4">
                         <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Stoff wählen</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Stoff wählen</span>
                             <select id="selSub" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
                         <input type="number" id="inM" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Masse m (g)">
@@ -55,10 +55,10 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Reaktion wählen</span>
                             <select id="selReac" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
-                        <input type="number" id="inEdukt" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Eduktmenge (g)">
+                        <input type="number" id="inEdukt" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Menge Edukt (g)">
                     </div>
 
-                    <button id="actionBtn" class="w-full mt-6 bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">START</button>
+                    <button id="actionBtn" class="w-full mt-6 bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase tracking-widest">Analyse starten</button>
                 </div>
             </div>
 
@@ -70,34 +70,38 @@
 
                 <div id="viewQuiz" class="hidden bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
                     <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                        <h2 class="text-xl font-black text-blue-400 tracking-tighter uppercase">Quiz Academy</h2>
-                        <button id="newQuizBtn" class="text-[10px] bg-blue-500 text-white px-3 py-1 rounded-lg font-bold">NÄCHSTE AUFGABE</button>
+                        <h2 class="text-xl font-black text-blue-400 tracking-tighter uppercase">Academy Quiz</h2>
+                        <button id="newQuizBtn" class="text-[10px] bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl font-bold transition-all">NEUE AUFGABE</button>
                     </div>
 
                     <div class="bg-white/5 p-4 rounded-2xl border border-white/10 mb-6">
-                        <p class="text-[9px] font-bold text-slate-500 uppercase mb-2">Hilfs-Rechner</p>
+                        <p class="text-[9px] font-bold text-slate-500 uppercase mb-2 tracking-widest">Integriertes Rechenfeld</p>
                         <div class="flex gap-2 items-center">
-                            <input type="text" id="mathInput" class="bg-black/20 p-2 rounded-lg flex-1 font-mono text-sm text-blue-300 outline-none border border-white/5" placeholder="z.B. 10 / 18.02">
-                            <button id="mathCalcBtn" class="bg-blue-600 px-4 py-2 rounded-lg font-bold text-sm">=</button>
-                            <div id="mathRes" class="w-24 bg-black/40 p-2 rounded-lg font-mono text-sm text-green-400 overflow-hidden">0.00</div>
-                            <button id="mathDelBtn" class="text-[10px] text-red-400 font-bold px-2">DEL</button>
+                            <input type="text" id="mathInput" class="bg-black/20 p-2 rounded-lg flex-1 font-mono text-sm text-blue-300 outline-none border border-white/5" placeholder="Formel eingeben, z.B. 10 / 18.02">
+                            <button id="mathCalcBtn" class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg font-bold text-sm">=</button>
+                            <div id="mathRes" class="w-24 bg-black/40 p-2 rounded-lg font-mono text-sm text-green-400 overflow-hidden text-center">0.00</div>
+                            <button id="mathDelBtn" class="text-[10px] text-red-400 font-bold px-2 hover:text-red-300">DEL</button>
                         </div>
                     </div>
                     
-                    <div id="quizTask" class="space-y-4">
-                        <div id="quizEqBox" class="bg-white/5 p-4 rounded-xl text-center text-xl font-mono hidden border border-white/5"></div>
-                        <p id="quizText" class="text-lg italic text-blue-100"></p>
-                        <div id="quizHelp" class="flex gap-4 text-[10px] font-bold text-blue-400 bg-blue-400/5 p-2 rounded-lg border border-blue-400/20"></div>
+                    <div id="quizTask" class="space-y-6">
+                        <div id="quizEqBox" class="bg-white/5 p-5 rounded-xl text-center text-2xl font-mono hidden border border-white/5 text-blue-100"></div>
+                        <p id="quizText" class="text-lg italic text-blue-50 leading-relaxed"></p>
+                        
+                        <div class="bg-blue-900/40 p-4 rounded-2xl border border-blue-500/20">
+                            <p class="text-[10px] font-bold text-blue-400 uppercase mb-2 tracking-widest">Gegebene Werte (Hilfestellung)</p>
+                            <div id="quizHelp" class="flex flex-wrap gap-y-2 gap-x-6 text-sm font-medium text-blue-100 italic"></div>
+                        </div>
 
-                        <div class="flex gap-3 pt-4">
-                            <input type="number" id="quizInput" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-2xl outline-none" placeholder="Antwort...">
+                        <div class="flex gap-3 pt-4 border-t border-white/5">
+                            <input type="number" id="quizInput" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-2xl outline-none focus:bg-white/20" placeholder="Ergebnis eingeben...">
                             <button id="quizCheckBtn" class="bg-blue-600 px-8 rounded-2xl font-black hover:bg-blue-500 transition-colors">PRÜFEN</button>
                         </div>
                         
                         <div class="flex flex-col gap-2 pt-2">
-                            <p id="quizFeedback" class="font-bold text-center h-6"></p>
-                            <button id="showSolutionBtn" class="hidden text-[10px] text-slate-500 underline uppercase tracking-widest">Lösungsweg einblenden</button>
-                            <div id="quizSolution" class="hidden p-4 bg-white/5 rounded-xl text-xs text-slate-400 border border-white/10 italic"></div>
+                            <p id="quizFeedback" class="font-bold text-center h-6 text-lg"></p>
+                            <button id="showSolutionBtn" class="hidden text-[10px] text-slate-500 hover:text-white underline uppercase tracking-widest mx-auto">Lösungsweg einblenden</button>
+                            <div id="quizSolution" class="hidden p-5 bg-white/5 rounded-2xl text-xs text-slate-400 border border-white/10 italic leading-loose"></div>
                         </div>
                     </div>
                 </div>
@@ -106,8 +110,9 @@
     </div>
 
     <script>
-        // Formel-Styling
+        // Formel-Styling (HTML sub)
         function fF(s) { return s.replace(/([A-Z][a-z]*)(\d+)/g, '$1<sub>$2</sub>'); }
+        // Unicode für Dropdowns
         function uF(s) { const subs = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'}; return s.replace(/(\d+)/g, (m) => [...m].map(c => subs[c] || c).join('')); }
 
         const substances = {
@@ -127,7 +132,6 @@
             "R4": { name: "Hochofen-Prozess", eq: "Fe2O3 + 3 CO -> 2 Fe + 3 CO2", ratio: 2, edu: "Fe2O3", prod: "Fe" }
         };
 
-        // UI Init
         const sSel = document.getElementById('selSub');
         const rSel = document.getElementById('selReac');
         Object.keys(substances).sort().forEach(k => {
@@ -137,11 +141,10 @@
             let o = document.createElement('option'); o.value = k; o.innerText = reactions[k].name; rSel.appendChild(o);
         });
 
-        // Tabs
-        let curMode = 'rechner';
+        let curTab = 'rechner';
         const btns = { rechner: document.getElementById('btnRechner'), labor: document.getElementById('btnLabor'), quiz: document.getElementById('btnQuiz') };
         function swTab(m) {
-            curMode = m;
+            curTab = m;
             document.getElementById('boxSub').classList.toggle('hidden', m !== 'rechner');
             document.getElementById('boxReac').classList.toggle('hidden', m !== 'labor');
             document.getElementById('viewQuiz').classList.toggle('hidden', m !== 'quiz');
@@ -154,10 +157,9 @@
         btns.labor.onclick = () => swTab('labor');
         btns.quiz.onclick = () => swTab('quiz');
 
-        // Main Calc
         document.getElementById('actionBtn').onclick = () => {
             document.getElementById('viewResult').classList.remove('hidden');
-            if(curMode === 'rechner') {
+            if(curTab === 'rechner') {
                 const s = substances[sSel.value]; const m = parseFloat(document.getElementById('inM').value); const n = parseFloat(document.getElementById('inN').value);
                 const rN = m ? m/s.m : n; const rM = n ? n*s.m : m;
                 document.getElementById('outHeader').innerHTML = `<h2 class="text-2xl font-black">${s.name}</h2><p class="text-blue-500 font-bold">${fF(sSel.value)} | M = ${s.m} g/mol</p>`;
@@ -170,22 +172,17 @@
             }
         };
 
-        // Mini Calculator Logic
+        // Hilfsrechner
         document.getElementById('mathCalcBtn').onclick = () => {
-            const raw = document.getElementById('mathInput').value;
             try {
-                // Nur Zahlen und Grundrechenarten erlauben (Sicherheit)
-                const clean = raw.replace(/[^-()\d/*+.]/g, '');
-                const res = Function('"use strict";return (' + clean + ')')();
+                const raw = document.getElementById('mathInput').value.replace(/[^-()\d/*+.]/g, '');
+                const res = Function('"use strict";return (' + raw + ')')();
                 document.getElementById('mathRes').innerText = Number.isInteger(res) ? res : res.toFixed(3);
             } catch (e) { document.getElementById('mathRes').innerText = "Err"; }
         };
-        document.getElementById('mathDelBtn').onclick = () => {
-            document.getElementById('mathInput').value = "";
-            document.getElementById('mathRes').innerText = "0.00";
-        };
+        document.getElementById('mathDelBtn').onclick = () => { document.getElementById('mathInput').value = ""; document.getElementById('mathRes').innerText = "0.00"; };
 
-        // Quiz Logic
+        // Quiz Logik (Überarbeitet)
         let qAns = 0; let qSol = "";
         function startQ() {
             const is2 = document.getElementById('modeToggle').checked;
@@ -193,32 +190,41 @@
             document.getElementById('showSolutionBtn').classList.add('hidden');
             document.getElementById('quizFeedback').innerText = "";
             document.getElementById('quizInput').value = "";
+            
             if(!is2) {
                 const keys = Object.keys(substances); const sk = keys[Math.floor(Math.random()*keys.length)]; const s = substances[sk];
                 const val = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
                 document.getElementById('quizEqBox').classList.add('hidden');
-                document.getElementById('quizHelp').innerHTML = `M(${fF(sk)}) = ${s.m} g/mol`;
+                
+                // Klare Molmassen-Hilfe SEK 1
+                document.getElementById('quizHelp').innerHTML = `M(${fF(sk)}) = <b>${s.m} g/mol</b>`;
+                
                 if(toM) {
-                    document.getElementById('quizText').innerHTML = `Berechne n von <b>${val}g ${s.name}</b>.`;
-                    qAns = val / s.m; qSol = `${val}g / ${s.m} g/mol = ${qAns.toFixed(3)} mol`;
+                    document.getElementById('quizText').innerHTML = `Wie groß ist die Stoffmenge <b>n</b> von <b>${val}g ${s.name}</b>?`;
+                    qAns = val / s.m; qSol = `Formel: n = m / M<br>Rechnung: ${val} g / ${s.m} g/mol = <b>${qAns.toFixed(3)} mol</b>`;
                 } else {
-                    document.getElementById('quizText').innerHTML = `Berechne m von <b>${val} mol ${s.name}</b>.`;
-                    qAns = val * s.m; qSol = `${val} mol * ${s.m} g/mol = ${qAns.toFixed(2)} g`;
+                    document.getElementById('quizText').innerHTML = `Wie groß ist die Masse <b>m</b> von <b>${val} mol ${s.name}</b>?`;
+                    qAns = val * s.m; qSol = `Formel: m = n * M<br>Rechnung: ${val} mol * ${s.m} g/mol = <b>${qAns.toFixed(2)} g</b>`;
                 }
             } else {
                 const rk = Object.keys(reactions)[Math.floor(Math.random()*Object.keys(reactions).length)]; const r = reactions[rk];
                 const val = (Math.random()*15+5).toFixed(1);
-                document.getElementById('quizEqBox').classList.remove('hidden'); document.getElementById('quizEqBox').innerHTML = fF(r.eq);
-                document.getElementById('quizHelp').innerHTML = `M(${fF(r.edu)}) = ${substances[r.edu].m} | M(${fF(r.prod)}) = ${substances[r.prod].m}`;
-                document.getElementById('quizText').innerHTML = `Wie viel Gramm <b>${r.prod}</b> entstehen aus <b>${val}g ${r.edu}</b>?`;
+                document.getElementById('quizEqBox').classList.remove('hidden'); 
+                document.getElementById('quizEqBox').innerHTML = fF(r.eq);
+                
+                // Klare Molmassen-Hilfe SEK 2
+                document.getElementById('quizHelp').innerHTML = `M(${fF(r.edu)}) = <b>${substances[r.edu].m} g/mol</b> &nbsp;|&nbsp; M(${fF(r.prod)}) = <b>${substances[r.prod].m} g/mol</b>`;
+                
+                document.getElementById('quizText').innerHTML = `Wie viel Gramm <b>${r.prod}</b> entstehen aus <b>${val}g ${r.edu}</b> bei vollständiger Reaktion?`;
                 qAns = (val / substances[r.edu].m) * r.ratio * substances[r.prod].m;
-                qSol = `1. n(${r.edu}) = ${val}/${substances[r.edu].m} = ${(val/substances[r.edu].m).toFixed(3)} mol<br>2. n(${r.prod}) = n(${r.edu}) * ${r.ratio}<br>3. m = n * ${substances[r.prod].m} = ${qAns.toFixed(2)}g`;
+                qSol = `1. Stoffmenge Edukt: n = ${val} g / ${substances[r.edu].m} g/mol = ${(val/substances[r.edu].m).toFixed(3)} mol<br>2. Molverhältnis aus Gleichung berücksichtigen.<br>3. Masse Produkt: m = n(Prod) * ${substances[r.prod].m} g/mol = <b>${qAns.toFixed(2)} g</b>`;
             }
         }
+
         document.getElementById('quizCheckBtn').onclick = () => {
             const v = parseFloat(document.getElementById('quizInput').value);
             const ok = Math.abs(v - qAns) < 0.25;
-            document.getElementById('quizFeedback').innerText = ok ? "✅ Richtig!" : "❌ Probier es nochmal!";
+            document.getElementById('quizFeedback').innerText = ok ? "✅ Richtig!" : "❌ Das stimmt noch nicht ganz!";
             document.getElementById('quizFeedback').className = ok ? "font-bold text-green-400 text-center" : "font-bold text-red-400 text-center";
             document.getElementById('showSolutionBtn').classList.remove('hidden');
         };

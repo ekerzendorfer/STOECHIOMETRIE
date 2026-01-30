@@ -6,201 +6,151 @@
     <title>Stöchiometrie-Meister Pro | Chemie-Didaktik</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .bridge-active { stroke: #3b82f6; stroke-width: 4; filter: drop-shadow(0 0 8px #3b82f6); transition: all 0.5s ease; }
-        sub { font-size: 0.7em; vertical-align: sub; line-height: 0; }
+        sub { font-size: 0.75em; vertical-align: sub; line-height: 0; }
         .scaffolding-step { opacity: 0.3; transition: all 0.4s; }
-        .scaffolding-step.active { opacity: 1; transform: translateX(10px); color: #2563eb; }
+        .scaffolding-step.active { opacity: 1; transform: translateX(8px); color: #2563eb; font-weight: 800; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
 
     <div class="max-w-6xl mx-auto px-4 py-8">
-        <header class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
+        <header class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 mb-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+            <div>
                 <h1 class="text-3xl font-black text-blue-900 uppercase tracking-tighter">Stöchiometrie-Meister Pro</h1>
-                <p class="text-slate-500 text-sm italic">Präsentations-Tool für KI im Chemieunterricht</p>
+                <p class="text-slate-500 text-sm italic">Präsentations-Tool: Chemie trifft KI</p>
             </div>
             
             <div class="flex flex-col items-center gap-2">
                 <div class="flex items-center gap-3 bg-slate-100 p-2 rounded-2xl border">
-                    <span class="text-[10px] font-bold px-2 text-slate-400">SEK 1</span>
+                    <span class="text-[10px] font-bold px-2 text-slate-400 uppercase">Sek 1</span>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="modeToggle" class="sr-only peer">
                         <div class="w-11 h-6 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
                     </label>
-                    <span class="text-[10px] font-bold px-2 text-blue-600">SEK 2</span>
+                    <span class="text-[10px] font-bold px-2 text-blue-600 uppercase">Sek 2</span>
                 </div>
-                <p class="text-[9px] text-slate-400 uppercase font-bold">Inhalts-Level</p>
             </div>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
             <div class="lg:col-span-4 space-y-6">
-                
                 <div class="bg-white p-2 rounded-2xl shadow-sm border flex gap-1">
-                    <button id="tabSub" class="flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white transition-all">STOFF-RECHNER</button>
-                    <button id="tabReac" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50 transition-all">REAKTIONS-LABOR</button>
-                    <button id="tabQuiz" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50 transition-all">QUIZ</button>
+                    <button id="tabSub" class="flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white transition-all">RECHNER</button>
+                    <button id="tabReac" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50">LABOR</button>
+                    <button id="tabQuiz" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50">QUIZ</button>
                 </div>
 
                 <div id="inputPanel" class="bg-white p-6 rounded-3xl shadow-xl border border-blue-100">
                     <div id="subInputSection" class="space-y-4">
                         <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Stoff auswählen</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Stoff wählen</span>
                             <select id="subSelect" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
                         <div class="space-y-3">
-                            <div class="relative">
-                                <input type="number" id="inM" class="w-full p-3 pl-12 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="0.00">
-                                <span class="absolute left-4 top-3.5 font-bold text-blue-300">m</span>
-                                <span class="absolute right-4 top-3.5 text-[10px] font-bold text-slate-300">Gramm</span>
-                            </div>
+                            <input type="number" id="inM" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="Masse m (g)">
                             <div class="text-center text-[10px] font-black text-slate-200 uppercase tracking-widest">ODER</div>
-                            <div class="relative">
-                                <input type="number" id="inN" class="w-full p-3 pl-12 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="0.00">
-                                <span class="absolute left-4 top-3.5 font-bold text-blue-300">n</span>
-                                <span class="absolute right-4 top-3.5 text-[10px] font-bold text-slate-300">Mol</span>
-                            </div>
+                            <input type="number" id="inN" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="Stoffmenge n (mol)">
                         </div>
                     </div>
 
                     <div id="reacInputSection" class="hidden space-y-4">
                         <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Reaktion wählen</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase">Reaktion</span>
                             <select id="reacSelect" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
                         </label>
-                        <div class="relative">
-                            <input type="number" id="reacIn" class="w-full p-3 pl-16 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="Menge Edukt...">
-                            <span class="absolute left-4 top-3.5 font-bold text-blue-300 italic">Input</span>
-                            <span class="absolute right-4 top-3.5 text-[10px] font-bold text-slate-300">Gramm</span>
-                        </div>
+                        <input type="number" id="reacIn" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" placeholder="Menge Edukt (g)">
                     </div>
 
-                    <button id="mainActionBtn" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg transition-all active:scale-95">ANALYSE STARTEN</button>
+                    <button id="mainActionBtn" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all">ANALYSE STARTEN</button>
                 </div>
 
                 <div id="scaffoldBox" class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200">
                     <h3 class="text-[10px] font-black text-slate-300 uppercase mb-4 tracking-widest">Lösungs-Leitfaden</h3>
                     <div class="space-y-4" id="scaffoldList">
-                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step1">
-                            <span class="bg-slate-100 w-6 h-6 rounded-full flex items-center justify-center text-[10px]">1</span> Formel & M bestimmen
-                        </div>
-                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step2">
-                            <span class="bg-slate-100 w-6 h-6 rounded-full flex items-center justify-center text-[10px]">2</span> Gegebene Größe identifizieren
-                        </div>
-                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step3">
-                            <span class="bg-slate-100 w-6 h-6 rounded-full flex items-center justify-center text-[10px]">3</span> Molverhältnis anwenden
-                        </div>
-                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step4">
-                            <span class="bg-slate-100 w-6 h-6 rounded-full flex items-center justify-center text-[10px]">4</span> Zielgröße berechnen
-                        </div>
+                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step1"><span>1</span> Formel & M bestimmen</div>
+                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step2"><span>2</span> Gegebene Größe</div>
+                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step3"><span>3</span> Molverhältnis</div>
+                        <div class="scaffolding-step flex items-center gap-3 text-xs font-bold" id="step4"><span>4</span> Berechnung</div>
                     </div>
                 </div>
             </div>
 
             <div class="lg:col-span-8 space-y-6">
-                
-                <div id="displayArea" class="space-y-6">
-                    <div id="resDiv" class="hidden bg-white p-8 rounded-3xl shadow-xl border-l-[12px] border-blue-600">
-                        <div id="resContent"></div>
-                    </div>
-
-                    <div id="quizDiv" class="hidden bg-blue-900 text-white p-8 rounded-3xl shadow-2xl">
-                        <h2 class="text-xl font-black mb-4 flex items-center gap-3"><span>🎓</span> ACADEMY CHALLENGE</h2>
-                        <p id="quizQuest" class="text-blue-200 mb-6 text-lg italic"></p>
-                        <div class="flex gap-4">
-                            <input type="number" id="quizIn" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 outline-none text-xl" placeholder="Ergebnis...">
-                            <button id="quizCheck" class="bg-white text-blue-900 font-black px-10 rounded-2xl hover:bg-blue-100 transition-colors">PRÜFEN</button>
-                        </div>
-                        <p id="quizFeedback" class="mt-4 font-bold h-6"></p>
-                    </div>
-
-                    <div id="kiResBox" class="bg-amber-50 p-6 rounded-3xl border-2 border-dashed border-amber-200">
-                        <h3 class="text-amber-700 font-black text-xs uppercase mb-3 flex items-center gap-2">
-                            <span class="text-xl">⚠️</span> KI-Resilienz: Max hat Mist gemacht
-                        </h3>
-                        <p id="maxError" class="text-sm text-amber-900 leading-relaxed italic">Wähle einen Stoff aus, um Max' Denkfehler zu analysieren.</p>
-                    </div>
+                <div id="resDiv" class="hidden bg-white p-8 rounded-3xl shadow-xl border-l-[12px] border-blue-600">
+                    <div id="resContent"></div>
                 </div>
 
-                <div id="maturaSection" class="hidden bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
-                    <h3 class="text-blue-400 font-black text-xs uppercase mb-4 tracking-widest">Matura-Vorbereitung: Reale Gase</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
-                            <p class="text-xs font-bold text-blue-300 mb-1">Van-der-Waals Parameter</p>
-                            <p class="text-[10px] opacity-70">Warum weicht CO<sub>2</sub> stärker vom idealen Gas ab als Helium?</p>
-                        </div>
-                        <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
-                            <p class="text-xs font-bold text-blue-300 mb-1">Binnendruck-Korrektur</p>
-                            <p class="text-[10px] opacity-70">Welchen Einfluss haben zwischenmolekulare Kräfte auf den gemessenen Druck?</p>
-                        </div>
+                <div id="quizDiv" class="hidden bg-blue-900 text-white p-8 rounded-3xl shadow-2xl">
+                    <h2 class="text-xl font-black mb-4 flex items-center gap-3">🎓 ACADEMY CHALLENGE</h2>
+                    <p id="quizQuest" class="text-blue-100 mb-6 text-lg italic"></p>
+                    <div class="flex gap-4">
+                        <input type="number" id="quizIn" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-xl outline-none" placeholder="Ergebnis...">
+                        <button id="quizCheck" class="bg-white text-blue-900 font-black px-10 rounded-2xl hover:bg-blue-100">PRÜFEN</button>
                     </div>
+                    <p id="quizFeedback" class="mt-4 font-bold h-6"></p>
+                </div>
+
+                <div id="kiResBox" class="bg-amber-50 p-6 rounded-3xl border-2 border-dashed border-amber-200">
+                    <h3 class="text-amber-700 font-black text-xs uppercase mb-3">⚠️ KI-Resilienz: Kritik an Max</h3>
+                    <p id="maxError" class="text-sm text-amber-900 italic">Wähle eine Aktion aus.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Formel-Helper für Tiefstellung
-        function renderF(text) {
-            return text.replace(/(\d+)/g, '<sub>$1</sub>');
+        // Formel-Helper (Unicode für Select, HTML für Anzeige)
+        function toUni(s) {
+            const map = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
+            return s.replace(/[a-zA-Z](\d+)/g, (m) => m[0] + [...m.slice(1)].map(c => map[c]||c).join(''));
+        }
+        function toHTML(s) {
+            // Regex: Findet Zahlen, die direkt hinter Buchstaben stehen (Indices), ignoriert Koeffizienten am Wortanfang
+            return s.replace(/([a-zA-Z])(\d+)/g, '$1<sub>$2</sub>');
         }
 
-        const NA = 6.02214e23;
-
-        // Datenbank: Einzelsubstanzen (25 Stoffe)
         const subDB = {
-            "H": { name: "Wasserstoff (Atome)", m: 1.008, s1: "Ein Mol H-Atome wiegt ca. 1g (wie eine Büroklammer).", s2: "Vorsicht: Wasserstoff tritt als Element H2 auf (2,016 g/mol)." },
-            "He": { m: 4.003, name: "Helium", s1: "Ein Mol He füllt bei RT ca. 24,5 L Volumen.", s2: "Fast ideales Gasverhalten aufgrund fehlender Wechselwirkungen." },
-            "Li": { m: 6.941, name: "Lithium", s1: "Sehr leichtes Metall. Ein Mol wiegt ca. 7g.", s2: "Wichtig für Stöchiometrie in Lithium-Ionen-Akkus." },
-            "C": { m: 12.011, name: "Kohlenstoff", s1: "12g Graphit entsprechen genau einem Mol C.", s2: "Bezugswert für die Definition der atomaren Masseneinheit u." },
-            "N": { m: 14.007, name: "Stickstoff", s1: "Luft besteht zu 78% aus N2 (Molmasse 28 g/mol).", s2: "Haber-Bosch-Verfahren: Stöchiometrie der NH3-Synthese." },
-            "O": { m: 15.999, name: "Sauerstoff", s1: "16g Sauerstoffatome entsprechen einem halben Mol O2-Gas.", s2: "O2 ist die Grundlage für alle Verbrennungsrechnungen." },
-            "F": { m: 18.998, name: "Fluor", s1: "Reaktivstes Element. Molmasse ca. 19g.", s2: "Elektronegativitäts-Spitzenreiter. Tritt als F2 auf." },
-            "Ne": { m: 20.180, name: "Neon", s1: "Edelgas in Leuchtröhren. Ein Mol wiegt ca. 20g.", s2: "Berechnung des molaren Volumens unter Standardbedingungen." },
-            "Na": { m: 22.990, name: "Natrium", s1: "Ein Mol Na wiegt etwa so viel wie ein Standardbrief.", s2: "Reaktion mit Wasser: Stöchiometrisches Verhältnis 1:1 zu NaOH." },
-            "Mg": { m: 24.305, name: "Magnesium", s1: "Gewicht eines Briefes. Brennt mit hellem Licht.", s2: "Modeling-Versuch: Quantitative Bestimmung von MgO." },
-            "Al": { m: 26.982, name: "Aluminium", s1: "27g Al entsprechen einer kleinen Rolle Haushaltsfolie.", s2: "Leichtmetall mit hoher spezifischer Stoffmenge pro kg." },
-            "S": { m: 32.06, name: "Schwefel", s1: "Gelber Feststoff. Ein Mol wiegt ca. 32g.", s2: "Wichtig für die Synthese von Schwefelsäure (H2SO4)." },
-            "Cl": { m: 35.45, name: "Chlor", s1: "Giftiges Gas. Tritt als Cl2 auf (M = 70,9 g/mol).", s2: "Stöchiometrie bei der Chloralkali-Elektrolyse." },
-            "K": { m: 39.098, name: "Kalium", s1: "Wichtig für Pflanzen. Ein Mol wiegt ca. 39g.", s2: "Reaktion mit Halogenen zu Kaliumhalogeniden." },
-            "Ca": { m: 40.078, name: "Calcium", s1: "40g Calcium stecken in ca. 100g Eierschalen.", s2: "Bestimmung der Wasserhärte über Ca-Ionen-Konzentration." },
-            "Fe": { m: 55.845, name: "Eisen", s1: "Ein Eisenwürfel von ca. 56g ist genau ein Mol.", s2: "Redoxreaktion: Fe2O3 Reduktion im Hochofen." },
-            "Cu": { m: 63.546, name: "Kupfer", s1: "64g entsprechen ca. einer Handvoll Cent-Münzen.", s2: "Elektrolytische Kupferraffination (Faraday-Gesetze)." },
-            "Ag": { m: 107.87, name: "Silber", s1: "108g Silber sind ein wertvolles Mol (ca. 10 Esslöffel).", s2: "Fällungsreaktionen mit Silbernitrat in der Analytik." },
-            "Au": { m: 196.97, name: "Gold", s1: "Ein Mol Gold wiegt fast 200g (2 Tafeln Schokolade).", s2: "Extrem hohe Dichte (19,3 g/cm³). Kleines Volumen." },
-            "H2O": { m: 18.015, name: "Wasser", s1: "Genau ein Schluck Wasser (18ml) ist ein Mol.", s2: "Dichte 1,0 g/ml erleichtert n=V/M Umrechnung." },
-            "CO2": { m: 44.01, name: "Kohlenstoffdioxid", s1: "Ein Mol CO2 füllt ca. 12 große Luftballons.", s2: "Treibhauseffekt: Berechnung von CO2-Emissionen." },
-            "NaCl": { m: 58.44, name: "Kochsalz", s1: "Ein gehäufter Esslöffel Salz ist ca. ein Mol.", s2: "Molarität c=n/V für physiologische Kochsalzlösung." },
-            "CH4": { m: 16.04, name: "Methan", s1: "Ein Mol Erdgas wiegt nur 16g (sehr leicht!).", s2: "Hauptkomponente von Erdgas. Verbrennungs-Stöchiometrie." },
-            "C6H12O6": { m: 180.16, name: "Glucose", s1: "Zucker. Ein Mol wiegt 180g (fast ein Päckchen).", s2: "Grundlage der Zellatmung und Photosynthese." },
-            "H2SO4": { m: 98.08, name: "Schwefelsäure", s1: "Fast 100g. Eine sehr schwere, ölige Flüssigkeit.", s2: "Zweistufige Protolyse in wässriger Lösung." }
+            "H2": { name: "Wasserstoffgas", m: 2.016, s1: "Zwei H-Atome bilden ein Paar!", s2: "Haber-Bosch: N₂ + 3 H₂ → 2 NH₃." },
+            "He": { m: 4.003, name: "Helium", s1: "Ein Mol He füllt 24,5 L.", s2: "Keine Wechselwirkungen (ideales Gas)." },
+            "Li": { m: 6.941, name: "Lithium", s1: "Sehr leichtes Metall.", s2: "Stöchiometrie in Akkus." },
+            "C": { m: 12.01, name: "Kohlenstoff", s1: "12g Graphit = 1 Mol.", s2: "Referenz für die atomare Masse u." },
+            "N2": { m: 28.01, name: "Stickstoffgas", s1: "78% der Luft.", s2: "Sehr stabile Dreifachbindung." },
+            "O2": { m: 31.99, name: "Sauerstoffgas", s1: "Lebensnotwendig für Verbrennung.", s2: "In der Reaktionsgleichung immer O₂." },
+            "Na": { m: 22.99, name: "Natrium", s1: "Weiches Alkalimetall.", s2: "Bildet Na⁺ Ionen in Lösung." },
+            "Mg": { m: 24.31, name: "Magnesium", s1: "Brennt mit weißer Flamme.", s2: "MgO-Synthese ist Modeling-Klassiker." },
+            "Al": { m: 26.98, name: "Aluminium", s1: "Leichtmetall für Folien.", s2: "Dichte 2,7 g/cm³." },
+            "Cl2": { m: 70.90, name: "Chlorgas", s1: "Giftiges, gelbgrünes Gas.", s2: "Tritt immer als Cl₂ auf." },
+            "Fe": { m: 55.85, name: "Eisen", s1: "Ein Würfel von 56g.", s2: "Redox: Oxidation zu Fe₂O₃." },
+            "Cu": { m: 63.55, name: "Kupfer", s1: "Handvoll Cent-Münzen.", s2: "Standardelektrodenpotential beachten." },
+            "Ag": { m: 107.87, name: "Silber", s1: "Wertvolles Mol (108g).", s2: "Wichtig in der Analytik (Fällung)." },
+            "Au": { m: 196.97, name: "Gold", s1: "Wiegt fast 200g.", s2: "Extrem hohe Dichte." },
+            "H2O": { m: 18.02, name: "Wasser", s1: "Ein guter Schluck (18ml).", s2: "Polare Bindung, Dichte 1,0." },
+            "CO2": { m: 44.01, name: "Kohlenstoffdioxid", s1: "Füllt 12 große Ballons.", s2: "Gay-Lussac: Gasvolumina." },
+            "NaCl": { m: 58.44, name: "Kochsalz", s1: "Ein Esslöffel voll.", s2: "Molarität physiologischer Lösungen." },
+            "CH4": { m: 16.04, name: "Methan", s1: "Hauptteil von Erdgas.", s2: "Verbrennungsenthalpie berechnen." },
+            "C6H12O6": { m: 180.16, name: "Glucose", s1: "Ein Päckchen Zucker.", s2: "Photosynthese-Bilanz." },
+            "H2SO4": { m: 98.08, name: "Schwefelsäure", s1: "Schwere, ölige Flüssigkeit.", s2: "Titration: Zweiprotonige Säure." },
+            "HCl": { m: 36.46, name: "Salzsäure", s1: "Stechend riechendes Gas.", s2: "H⁺ Konzentration in Lösung." },
+            "NaOH": { m: 40.00, name: "Natriumhydroxid", s1: "Ätzend. Formt Seife.", s2: "Titerstellung von Säuren." },
+            "NH3": { m: 17.03, name: "Ammoniak", s1: "Düngemittel-Grundstoff.", s2: "Gleichgewichtsreaktion beachten." },
+            "MgO": { m: 40.30, name: "Magnesiumoxid", s1: "Weißes Pulver.", s2: "Resultat der Magnesiumverbrennung." },
+            "KMnO4": { m: 158.03, name: "Kaliumpermanganat", s1: "Tiefviolette Kristalle.", s2: "Starkes Oxidationsmittel (Redox)." }
         };
 
-        // Datenbank: Reaktionen
         const reacDB = {
-            "REAC_CH4": { name: "Methan-Verbrennung", eq: "CH4 + 2 O2 -> CO2 + 2 H2O", ratio: 1, edu: "CH4", prod: "CO2", m_edu: 16.04, m_prod: 44.01 },
-            "REAC_MG": { name: "Magnesium-Oxidation", eq: "2 Mg + O2 -> 2 MgO", ratio: 1, edu: "Mg", prod: "MgO", m_edu: 24.31, m_prod: 40.30 },
-            "REAC_H2O": { name: "Knallgas-Reaktion", eq: "2 H2 + O2 -> 2 H2O", ratio: 1, edu: "H2", prod: "H2O", m_edu: 2.016, m_prod: 18.015 }
+            "R1": { name: "Methan-Verbrennung", eq: "CH4 + 2 O2 -> CO2 + 2 H2O", ratio: 1, edu: "CH4", prod: "CO2", mE: 16.04, mP: 44.01 },
+            "R2": { name: "Magnesium-Oxidation", eq: "2 Mg + O2 -> 2 MgO", ratio: 1, edu: "Mg", prod: "MgO", mE: 24.31, mP: 40.30 },
+            "R3": { name: "Knallgas-Reaktion", eq: "2 H2 + O2 -> 2 H2O", ratio: 1, edu: "H2", prod: "H2O", mE: 2.016, mP: 18.02 }
         };
 
-        const errors = [
-            "Max dachte, O2 wiegt 16g. Er hat vergessen, dass Sauerstoff als Paar vorkommt.",
-            "Max hat Mol und Gramm verwechselt und einfach m * M gerechnet.",
-            "Max hat die Koeffizienten ignoriert: Er dachte 1g CH4 ergibt immer 1g CO2.",
-            "Max hat vergessen, dass Flüssigkeiten eine Dichte haben und 100ml als 100g gerechnet."
-        ];
+        const errors = ["O2 wiegt 32g, nicht 16g!","m*M gerechnet statt m/M.","Koeffizienten ignoriert!","Dichte von Flüssigkeiten ignoriert."];
 
-        // UI State
-        let currentTab = 'sub';
         const selS = document.getElementById('subSelect');
         const selR = document.getElementById('reacSelect');
 
-        // Init Dropdowns
         Object.keys(subDB).sort().forEach(k => {
-            let o = document.createElement('option'); o.value = k; 
-            o.innerHTML = `${subDB[k].name} (${k})`; // Anzeige im Select ohne Tags
+            let o = document.createElement('option'); o.value = k;
+            o.innerText = `${subDB[k].name} (${toUni(k)})`;
             selS.appendChild(o);
         });
         Object.keys(reacDB).forEach(k => {
@@ -208,123 +158,73 @@
             selR.appendChild(o);
         });
 
-        // Tab Switching
-        document.getElementById('tabSub').onclick = () => switchTab('sub');
-        document.getElementById('tabReac').onclick = () => switchTab('reac');
-        document.getElementById('tabQuiz').onclick = () => switchTab('quiz');
+        document.getElementById('tabSub').onclick = () => sw('sub');
+        document.getElementById('tabReac').onclick = () => sw('reac');
+        document.getElementById('tabQuiz').onclick = () => sw('quiz');
 
-        function switchTab(t) {
-            currentTab = t;
+        function sw(t) {
             document.getElementById('subInputSection').classList.toggle('hidden', t !== 'sub');
             document.getElementById('reacInputSection').classList.toggle('hidden', t !== 'reac');
             document.getElementById('quizDiv').classList.toggle('hidden', t !== 'quiz');
-            document.getElementById('resDiv').classList.toggle('hidden', t === 'quiz' || (t === 'sub' && !document.getElementById('inM').value && !document.getElementById('inN').value));
+            document.getElementById('resDiv').classList.add('hidden');
             document.getElementById('scaffoldBox').classList.toggle('hidden', t === 'quiz');
-            
-            // Buttons styling
-            ['tabSub', 'tabReac', 'tabQuiz'].forEach(id => {
-                const btn = document.getElementById(id);
-                const active = id === 'tab' + t.charAt(0).toUpperCase() + t.slice(1);
-                btn.className = active ? "flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white shadow-md" : "flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50";
-            });
-            if(t === 'quiz') startQuiz();
+            ['tabSub','tabReac','tabQuiz'].forEach(id => document.getElementById(id).className = id==='tab'+t.charAt(0).toUpperCase()+t.slice(1) ? "flex-1 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white shadow-md" : "flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 hover:bg-slate-50");
+            if(t==='quiz') stQ();
         }
 
-        // Logic
         document.getElementById('mainActionBtn').onclick = () => {
-            if(currentTab === 'sub') calcSub(); else calcReac();
+            const t = document.getElementById('reacInputSection').classList.contains('hidden') ? 'sub' : 'reac';
+            if(t==='sub') cS(); else cR();
         };
 
-        function calcSub() {
-            const sub = subDB[selS.value];
+        function cS() {
+            const s = subDB[selS.value];
             const im = parseFloat(document.getElementById('inM').value);
             const inN = parseFloat(document.getElementById('inN').value);
             const is2 = document.getElementById('modeToggle').checked;
-
             if(!im && !inN) return alert("Wert eingeben!");
-            
-            const n = im ? im / sub.m : inN;
-            const m = inN ? inN * sub.m : im;
-
-            showRes(`
-                <h2 class="text-3xl font-black text-slate-800 tracking-tighter">${sub.name}</h2>
-                <p class="text-blue-500 font-mono font-bold">${renderF(selS.value)} | M = ${sub.m} g/mol</p>
-            `, `
-                <div class="bg-blue-50 p-4 rounded-2xl"><span class="text-[9px] font-bold text-slate-400 uppercase">Stoffmenge n</span><p class="text-2xl font-black text-blue-600">${n.toFixed(4)} mol</p></div>
-                <div class="bg-blue-50 p-4 rounded-2xl"><span class="text-[9px] font-bold text-slate-400 uppercase">Masse m</span><p class="text-2xl font-black text-blue-600">${m.toFixed(2)} g</p></div>
-                <div class="bg-slate-50 p-4 rounded-2xl col-span-2 border italic text-slate-600 text-xs">${is2 ? sub.s2 : sub.s1}</div>
-            `);
-            runScaffold(sub.cat === 'R');
-            if(is2) document.getElementById('maturaSection').classList.remove('hidden');
+            const n = im ? im/s.m : inN; const m = inN ? inN*s.m : im;
+            shR(`<h2>${s.name}</h2><p class="text-blue-500 font-bold">${toHTML(selS.value)} | M = ${s.m} g/mol</p>`, 
+               `<div class="bg-blue-50 p-4 rounded-xl">n = ${n.toFixed(4)} mol</div><div class="bg-blue-50 p-4 rounded-xl">m = ${m.toFixed(2)} g</div><div class="bg-slate-50 p-4 rounded-xl col-span-2 text-xs">${is2?s.s2:s.s1}</div>`);
+            rSc(false);
         }
 
-        function calcReac() {
+        function cR() {
             const r = reacDB[selR.value];
-            const val = parseFloat(document.getElementById('reacIn').value);
-            if(!val) return alert("Menge Edukt eingeben!");
-
-            const nEdu = val / r.m_edu;
-            const nProd = nEdu * r.ratio;
-            const mProd = nProd * r.m_prod;
-
-            showRes(`
-                <h2 class="text-2xl font-black text-slate-800">${r.name}</h2>
-                <p class="text-blue-500 font-mono font-bold">${renderF(r.eq)}</p>
-            `, `
-                <div class="bg-blue-600 text-white p-6 rounded-2xl col-span-2 shadow-lg">
-                    <p class="text-[10px] font-bold uppercase opacity-70 mb-2 text-center">Ergebnis der Stöchiometrie</p>
-                    <p class="text-lg text-center leading-tight">Aus <b>${val}g ${renderF(r.edu)}</b> entstehen theoretisch <br><span class="text-3xl font-black">${mProd.toFixed(2)}g</span> <br><b>${renderF(r.prod)}</b>.</p>
-                </div>
-            `);
-            runScaffold(true);
+            const v = parseFloat(document.getElementById('reacIn').value);
+            if(!v) return alert("Menge Edukt eingeben!");
+            const mP = (v/r.mE)*r.ratio*r.mP;
+            shR(`<h2>${r.name}</h2><p class="text-blue-500 font-bold">${toHTML(r.eq)}</p>`,
+               `<div class="bg-blue-600 text-white p-6 rounded-xl col-span-2 text-center text-lg">Aus ${v}g ${toHTML(r.edu)} entsteht:<br><b class="text-2xl">${mP.toFixed(2)}g</b> ${toHTML(r.prod)}</div>`);
+            rSc(true);
         }
 
-        function showRes(h, b) {
+        function shR(h, b) {
             document.getElementById('resDiv').classList.remove('hidden');
-            document.getElementById('resContent').innerHTML = h + '<div class="grid grid-cols-2 gap-4 mt-6">' + b + '</div>';
+            document.getElementById('resContent').innerHTML = h + '<div class="grid grid-cols-2 gap-3 mt-4">'+b+'</div>';
             document.getElementById('maxError').innerText = errors[Math.floor(Math.random()*errors.length)];
         }
 
-        function runScaffold(isReac) {
-            const steps = [true, true, isReac, true];
-            steps.forEach((active, i) => {
-                const el = document.getElementById('step' + (i+1));
-                el.className = active ? "scaffolding-step active flex items-center gap-3 text-xs font-bold" : "scaffolding-step flex items-center gap-3 text-xs font-bold opacity-10";
-            });
+        function rSc(re) {
+            [true, true, re, true].forEach((a, i) => document.getElementById('step'+(i+1)).className = a ? "scaffolding-step active flex items-center gap-3 text-xs" : "scaffolding-step flex items-center gap-3 text-xs opacity-10");
         }
 
-        // Quiz
-        let qAns = 0;
-        function startQuiz() {
-            const keys = Object.keys(subDB);
-            const k = keys[Math.floor(Math.random()*keys.length)];
-            const s = subDB[k];
-            const rand = (Math.random() * 3 + 1).toFixed(1);
-            const toMol = Math.random() > 0.5;
-            
-            if(toMol) {
-                document.getElementById('quizQuest').innerHTML = `Wieviel Mol (n) sind <b>${rand}g ${s.name}</b> (${renderF(k)})?`;
-                qAns = rand / s.m;
-            } else {
-                document.getElementById('quizQuest').innerHTML = `Wieviel Gramm (m) sind <b>${rand} mol ${s.name}</b> (${renderF(k)})?`;
-                qAns = rand * s.m;
-            }
-            document.getElementById('quizFeedback').innerText = "";
-            document.getElementById('quizIn').value = "";
+        let qA = 0;
+        function stQ() {
+            const k = Object.keys(subDB)[Math.floor(Math.random()*Object.keys(subDB).length)];
+            const s = subDB[k]; const rv = (Math.random()*4+1).toFixed(1); const tM = Math.random()>0.5;
+            document.getElementById('quizQuest').innerHTML = tM ? `Wieviel Mol n sind <b>${rv}g ${s.name}</b> (${toHTML(k)})?` : `Wieviel Gramm m sind <b>${rv} mol ${s.name}</b> (${toHTML(k)})?`;
+            qA = tM ? rv/s.m : rv*s.m;
+            document.getElementById('quizFeedback').innerText = ""; document.getElementById('quizIn').value = "";
         }
 
         document.getElementById('quizCheck').onclick = () => {
-            const val = parseFloat(document.getElementById('quizIn').value);
-            const ok = Math.abs(val - qAns) < 0.1;
+            const v = parseFloat(document.getElementById('quizIn').value);
+            const ok = Math.abs(v-qA)<0.1;
             const f = document.getElementById('quizFeedback');
-            f.innerText = ok ? "✅ Richtig! Du hast das Mol verstanden." : "❌ Fast! Berechne nochmal mit n = m / M.";
-            f.className = ok ? "mt-4 font-bold text-green-400" : "mt-4 font-bold text-red-400";
-            if(ok) setTimeout(startQuiz, 3000);
-        };
-
-        // UI Toggle SEK
-        document.getElementById('modeToggle').onchange = (e) => {
-            document.getElementById('maturaSection').classList.toggle('hidden', !e.target.checked);
+            f.innerText = ok ? "✅ Richtig!" : "❌ Falsch!";
+            f.className = ok ? "text-green-400 font-bold" : "text-red-400 font-bold";
+            if(ok) setTimeout(stQ, 2000);
         };
     </script>
 </body>

@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stöchiometrie-Meister Pro | Komplett-Version</title>
+    <title>Stöchiometrie-Meister Pro | Komplett-System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         sub { font-size: 0.75em; vertical-align: sub; line-height: 0; }
         .tab-active { background-color: #2563eb; color: white; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); }
-        .scaffolding-step { opacity: 0.3; transition: all 0.4s; }
-        .scaffolding-step.active { opacity: 1; transform: translateX(8px); color: #2563eb; font-weight: 800; }
+        .mc-btn { transition: all 0.2s; border: 2px solid #e2e8f0; text-align: left; width: 100%; padding: 1rem; border-radius: 1rem; margin-bottom: 0.5rem; }
+        .mc-btn:hover { background-color: #f1f5f9; border-color: #3b82f6; }
+        .mc-correct { background-color: #dcfce7 !important; border-color: #22c55e !important; color: #166534; }
+        .mc-wrong { background-color: #fee2e2 !important; border-color: #ef4444 !important; color: #991b1b; }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen font-sans text-slate-900 pb-20">
 
     <div class="max-w-6xl mx-auto px-4 py-8">
         <header class="bg-white p-6 rounded-3xl shadow-md border border-slate-200 mb-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
+            <div>
                 <h1 class="text-3xl font-black text-blue-900 uppercase tracking-tighter italic">Stöchiometrie-Meister Pro</h1>
-                <p class="text-slate-500 text-sm">Rechner, Labor & Academy</p>
+                <p class="text-slate-500 text-sm">Rechner, Labor, Übung & Quiz</p>
             </div>
             
             <div class="flex items-center gap-3 bg-slate-100 p-2 rounded-2xl border">
@@ -34,41 +36,40 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <div class="lg:col-span-4 space-y-6">
                 <nav class="bg-white p-2 rounded-2xl shadow-sm border flex gap-1">
-                    <button id="btnRechner" class="flex-1 py-2 text-[10px] font-bold rounded-xl tab-active">RECHNER</button>
-                    <button id="btnLabor" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500">LABOR</button>
-                    <button id="btnQuiz" class="flex-1 py-2 text-[10px] font-bold rounded-xl text-slate-500 uppercase">Üben</button>
+                    <button id="btnRechner" class="flex-1 py-2 text-[9px] font-bold rounded-xl tab-active uppercase">Rechner</button>
+                    <button id="btnLabor" class="flex-1 py-2 text-[9px] font-bold rounded-xl text-slate-500 uppercase">Labor</button>
+                    <button id="btnTrain" class="flex-1 py-2 text-[9px] font-bold rounded-xl text-slate-500 uppercase">Üben</button>
+                    <button id="btnQuiz" class="flex-1 py-2 text-[9px] font-bold rounded-xl text-slate-500 uppercase">Quiz</button>
                 </nav>
 
                 <div id="panelInput" class="bg-white p-6 rounded-3xl shadow-xl border border-blue-100">
                     <div id="boxRechner" class="space-y-4">
-                        <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Stoff wählen</span>
-                            <select id="selSub" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
-                        </label>
-                        <input type="number" id="inM" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Masse m (g)">
-                        <input type="number" id="inN" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Stoffmenge n (mol)">
+                        <label class="block"><span class="text-[10px] font-bold text-slate-400 uppercase">Stoff wählen</span>
+                        <select id="selSub" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select></label>
+                        <input type="number" id="inM" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl" placeholder="Masse m (g)">
+                        <input type="number" id="inN" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl" placeholder="Stoffmenge n (mol)">
                     </div>
 
                     <div id="boxLabor" class="hidden space-y-4">
-                        <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Reaktion wählen</span>
-                            <select id="selReac" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select>
-                        </label>
-                        <input type="number" id="inEdukt" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none" placeholder="Eduktmenge (g)">
+                        <label class="block"><span class="text-[10px] font-bold text-slate-400 uppercase">Reaktion wählen</span>
+                        <select id="selReac" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500"></select></label>
+                        <input type="number" id="inEdukt" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl" placeholder="Menge Edukt (g)">
                     </div>
 
-                    <div id="boxQuizConfig" class="hidden space-y-4">
-                        <label class="block">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase">Anzahl Fragen</span>
-                            <input type="number" id="quizCount" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl outline-none focus:border-blue-500" value="5" min="5">
-                        </label>
+                    <div id="boxTrainConfig" class="hidden space-y-4">
+                        <label class="block"><span class="text-[10px] font-bold text-slate-400 uppercase">Anzahl Übungsfragen</span>
+                        <input type="number" id="trainCount" class="w-full mt-1 p-3 bg-slate-50 border-2 border-slate-100 rounded-xl" value="5" min="5"></label>
                     </div>
 
-                    <button id="mainActionBtn" class="w-full mt-6 bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase tracking-widest">Starten</button>
+                    <div id="boxQuizConfig" class="hidden space-y-4 text-center py-4">
+                        <p class="text-xs text-slate-500 italic">Bereit für den Multiple-Choice Check?</p>
+                    </div>
+
+                    <button id="mainActionBtn" class="w-full mt-6 bg-blue-600 text-white font-black py-4 rounded-2xl shadow-lg active:scale-95 transition-all uppercase tracking-widest">Aktion Starten</button>
                 </div>
 
                 <div class="bg-slate-800 p-5 rounded-3xl shadow-xl border border-slate-700">
-                    <p class="text-[9px] font-bold text-slate-400 uppercase mb-3 tracking-widest">Hilfs-Rechner</p>
+                    <p class="text-[9px] font-bold text-slate-400 uppercase mb-3 tracking-widest">Taschenrechner</p>
                     <div class="flex gap-2 items-center">
                         <input type="text" id="mathInput" class="bg-black/20 p-2 rounded-lg flex-1 font-mono text-xs text-blue-300 outline-none border border-white/5" placeholder="Formel...">
                         <button id="mathCalcBtn" class="bg-blue-600 px-3 py-2 rounded-lg font-bold text-white">=</button>
@@ -81,32 +82,33 @@
                 <div id="viewResult" class="hidden bg-white p-8 rounded-3xl shadow-xl border-l-[12px] border-blue-600">
                     <div id="outHeader"></div>
                     <div id="outBody" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                    
-                    <div class="mt-8 bg-amber-50 p-4 rounded-2xl border-2 border-dashed border-amber-200">
+                    <div class="mt-8 bg-amber-50 p-4 rounded-2xl border-2 border-dashed border-amber-200" id="errorBox">
                         <p class="text-[10px] font-bold text-amber-700 uppercase mb-1">⚠️ KI-Kritik: Max hat Mist gemacht</p>
                         <p id="maxError" class="text-sm text-amber-900 italic"></p>
                     </div>
                 </div>
 
-                <div id="viewQuiz" class="hidden bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
+                <div id="viewTrain" class="hidden bg-slate-900 text-white p-8 rounded-3xl shadow-2xl">
                     <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                        <span id="quizProgress" class="text-blue-400 font-bold text-xs uppercase tracking-widest"></span>
+                        <span id="trainProgress" class="text-blue-400 font-bold text-xs uppercase tracking-widest"></span>
                         <button onclick="location.reload()" class="text-[10px] text-red-400 uppercase font-bold">Beenden</button>
                     </div>
-                    <div id="quizContent"></div>
+                    <div id="trainContent"></div>
                 </div>
 
-                <div id="quizFinish" class="hidden bg-white p-10 rounded-3xl shadow-2xl text-center border-t-8 border-blue-600">
-                    <h2 class="text-4xl font-black text-blue-900 mb-4 uppercase">Training fertig!</h2>
-                    <div class="text-6xl font-black text-blue-600 mb-8" id="finalScoreText"></div>
-                    <button onclick="location.reload()" class="bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold">NEUER START</button>
+                <div id="viewQuiz" class="hidden bg-white p-8 rounded-3xl shadow-xl border border-slate-200">
+                    <div class="mb-6 flex justify-between items-center">
+                        <h2 class="text-xl font-black text-blue-900 uppercase">Multiple-Choice Quiz</h2>
+                        <span id="quizScore" class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-bold">Punkte: 0</span>
+                    </div>
+                    <div id="quizContent" class="space-y-4"></div>
+                    <button id="nextQuizBtn" class="hidden w-full mt-6 bg-slate-800 text-white font-bold py-3 rounded-xl">Nächste Frage</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- LOGIK & DATEN ---
         function toHTML(s) { return s.replace(/([A-Z][a-z]*)(\d+)/g, '$1<sub>$2</sub>'); }
         function toUni(s) { const map = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'}; return s.replace(/(\d+)/g, (m) => [...m].map(c => map[c] || c).join('')); }
 
@@ -117,19 +119,28 @@
             "O2": { m: 31.99, name: "Sauerstoff" }, "Al": { m: 26.98, name: "Aluminium" },
             "Al2O3": { m: 101.96, name: "Aluminiumoxid" }, "NH3": { m: 17.03, name: "Ammoniak" },
             "N2": { m: 28.01, name: "Stickstoff" }, "Fe": { m: 55.85, name: "Eisen" },
-            "HCl": { m: 36.46, name: "Salzsäure" }, "NaOH": { m: 40.00, name: "Natronlauge" }
+            "Fe2O3": { m: 159.69, name: "Eisen(III)-oxid" }, "HCl": { m: 36.46, name: "Salzsäure" },
+            "NaOH": { m: 40.00, name: "Natronlauge" }, "H2": { m: 2.016, name: "Wasserstoff" },
+            "Cu": { m: 63.55, name: "Kupfer" }, "CuO": { m: 79.55, name: "Kupfer(II)-oxid" },
+            "S": { m: 32.06, name: "Schwefel" }, "C": { m: 12.01, name: "Kohlenstoff" },
+            "CO": { m: 28.01, name: "Kohlenstoffmonoxid" }
         };
 
         const reacDB = {
             "R1": { name: "Methan-Verbrennung", eq: "CH4 + 2 O2 -> CO2 + 2 H2O", ratio: 1, edu: "CH4", prod: "CO2", mE: 16.04, mP: 44.01 },
             "R2": { name: "Magnesium-Oxidation", eq: "2 Mg + O2 -> 2 MgO", ratio: 1, edu: "Mg", prod: "MgO", mE: 24.31, mP: 40.30 },
-            "R3": { name: "Aluminium-Verbrennung", eq: "4 Al + 3 O2 -> 2 Al2O3", ratio: 0.5, edu: "Al", prod: "Al2O3", mE: 26.98, mP: 101.96 },
-            "R4": { name: "Ammoniak-Synthese", eq: "N2 + 3 H2 -> 2 NH3", ratio: 2, edu: "N2", prod: "NH3", mE: 28.01, mP: 17.03 }
+            "R3": { name: "Aluminium-Oxidation", eq: "4 Al + 3 O2 -> 2 Al2O3", ratio: 0.5, edu: "Al", prod: "Al2O3", mE: 26.98, mP: 101.96 },
+            "R4": { name: "Ammoniak-Synthese", eq: "N2 + 3 H2 -> 2 NH3", ratio: 2, edu: "N2", prod: "NH3", mE: 28.01, mP: 17.03 },
+            "R5": { name: "Knallgas-Reaktion", eq: "2 H2 + O2 -> 2 H2O", ratio: 1, edu: "H2", prod: "H2O", mE: 2.016, mP: 18.015 },
+            "R6": { name: "Kupfer-Reduktion", eq: "CuO + H2 -> Cu + H2O", ratio: 1, edu: "CuO", prod: "Cu", mE: 79.55, mP: 63.55 },
+            "R7": { name: "Eisen-Reduktion", eq: "Fe2O3 + 3 CO -> 2 Fe + 3 CO2", ratio: 2, edu: "Fe2O3", prod: "Fe", mE: 159.69, mP: 55.85 },
+            "R8": { name: "Neutralisation", eq: "HCl + NaOH -> NaCl + H2O", ratio: 1, edu: "HCl", prod: "NaCl", mE: 36.46, mP: 58.44 },
+            "R9": { name: "Kohlenstoff-Oxidation", eq: "C + O2 -> CO2", ratio: 1, edu: "C", prod: "CO2", mE: 12.01, mP: 44.01 },
+            "R10": { name: "Schwefel-Oxidation", eq: "S + O2 -> SO2", ratio: 1, edu: "S", prod: "SO2", mE: 32.06, mP: 64.06 }
         };
 
-        const errorPool = ["Max hat O2 mit 16g gerechnet.", "Max hat m * M multipliziert.", "Koeffizienten wurden ignoriert."];
+        const errorPool = ["Max hat O2 mit 16g gerechnet.", "Max hat n = m * M gerechnet.", "Koeffizienten wurden ignoriert.", "Max hat die Temperatur nicht in Kelvin umgerechnet."];
 
-        // Init Dropdowns
         const sSel = document.getElementById('selSub');
         const rSel = document.getElementById('selReac');
         Object.keys(subDB).sort().forEach(k => {
@@ -139,25 +150,24 @@
             let o = document.createElement('option'); o.value = k; o.innerText = reacDB[k].name; rSel.appendChild(o);
         });
 
-        // Tab-System
         let currentTab = 'rechner';
-        const tabBtns = { rechner: document.getElementById('btnRechner'), labor: document.getElementById('btnLabor'), quiz: document.getElementById('btnQuiz') };
+        const tabBtns = { rechner: document.getElementById('btnRechner'), labor: document.getElementById('btnLabor'), train: document.getElementById('btnTrain'), quiz: document.getElementById('btnQuiz') };
+        
         function switchTab(t) {
             currentTab = t;
             document.getElementById('boxRechner').classList.toggle('hidden', t !== 'rechner');
             document.getElementById('boxLabor').classList.toggle('hidden', t !== 'labor');
+            document.getElementById('boxTrainConfig').classList.toggle('hidden', t !== 'train');
             document.getElementById('boxQuizConfig').classList.toggle('hidden', t !== 'quiz');
             document.getElementById('viewResult').classList.add('hidden');
+            document.getElementById('viewTrain').classList.add('hidden');
             document.getElementById('viewQuiz').classList.add('hidden');
-            document.getElementById('quizFinish').classList.add('hidden');
             Object.values(tabBtns).forEach(b => b.classList.remove('tab-active', 'text-slate-500'));
             tabBtns[t].classList.add('tab-active');
+            if(t === 'quiz') startQuizMC();
         }
-        tabBtns.rechner.onclick = () => switchTab('rechner');
-        tabBtns.labor.onclick = () => switchTab('labor');
-        tabBtns.quiz.onclick = () => switchTab('quiz');
+        Object.keys(tabBtns).forEach(k => tabBtns[k].onclick = () => switchTab(k));
 
-        // Hilfsrechner
         document.getElementById('mathCalcBtn').onclick = () => {
             try {
                 const res = Function('"use strict";return (' + document.getElementById('mathInput').value.replace(/[^-()\d/*+.]/g, '') + ')')();
@@ -165,81 +175,97 @@
             } catch (e) { document.getElementById('mathRes').innerText = "Err"; }
         };
 
-        // ANALYSE STARTEN (Rechner & Labor)
         document.getElementById('mainActionBtn').onclick = () => {
-            if(currentTab === 'quiz') return startQuizFlow();
+            if(currentTab === 'train') return startTraining();
+            if(currentTab === 'quiz') return startQuizMC();
             
             document.getElementById('viewResult').classList.remove('hidden');
-            const is2 = document.getElementById('modeToggle').checked;
-            
             if(currentTab === 'rechner') {
-                const s = subDB[sSel.value];
-                const im = parseFloat(document.getElementById('inM').value);
-                const inN = parseFloat(document.getElementById('inN').value);
-                const n = im ? im / s.m : inN;
-                const m = inN ? inN * s.m : im;
-                document.getElementById('outHeader').innerHTML = `<h2 class="text-2xl font-black">${s.name}</h2><p class="text-blue-500 font-bold">${toHTML(sSel.value)} | M = ${s.m} g/mol</p>`;
+                const s = subDB[sSel.value]; const im = parseFloat(document.getElementById('inM').value); const inN = parseFloat(document.getElementById('inN').value);
+                const n = im ? im/s.m : inN; const m = inN ? inN*s.m : im;
+                document.getElementById('outHeader').innerHTML = `<h2>${s.name}</h2><p class="text-blue-500 font-bold">${toHTML(sSel.value)} | M = ${s.m} g/mol</p>`;
                 document.getElementById('outBody').innerHTML = `<div class="bg-blue-50 p-4 rounded-xl text-center">n = ${n.toFixed(4)} mol</div><div class="bg-blue-50 p-4 rounded-xl text-center">m = ${m.toFixed(2)} g</div>`;
             } else if(currentTab === 'labor') {
-                const r = reacDB[rSel.value];
-                const val = parseFloat(document.getElementById('inEdukt').value);
-                const prodMass = (val / r.mE) * r.ratio * r.mP;
-                document.getElementById('outHeader').innerHTML = `<h2 class="text-xl font-black uppercase">${r.name}</h2><p class="text-blue-500 font-bold">${toHTML(r.eq)}</p>`;
-                document.getElementById('outBody').innerHTML = `<div class="bg-blue-600 text-white p-6 rounded-xl col-span-2 text-center shadow-lg text-lg">Aus ${val}g ${toHTML(r.edu)} entstehen:<br><b class="text-3xl">${prodMass.toFixed(2)}g</b> ${toHTML(r.prod)}</div>`;
+                const r = reacDB[rSel.value]; const val = parseFloat(document.getElementById('inEdukt').value);
+                const pM = (val / r.mE) * r.ratio * r.mP;
+                document.getElementById('outHeader').innerHTML = `<h2>${r.name}</h2><p class="text-blue-500 font-bold">${toHTML(r.eq)}</p>`;
+                document.getElementById('outBody').innerHTML = `<div class="bg-blue-600 text-white p-6 rounded-xl col-span-2 text-center text-lg">Produkt-Ausbeute: <b>${pM.toFixed(2)}g</b> ${toHTML(r.prod)}</div>`;
             }
             document.getElementById('maxError').innerText = errorPool[Math.floor(Math.random()*errorPool.length)];
         };
 
-        // ÜBEN / QUIZ FLOW
-        let qList = [], qIdx = 0, qScore = 0;
-        function startQuizFlow() {
-            const count = parseInt(document.getElementById('quizCount').value) || 5;
+        // --- TRAINING LOGIK (Free Text) ---
+        let tList = [], tIdx = 0;
+        function startTraining() {
+            const count = parseInt(document.getElementById('trainCount').value) || 5;
             const is2 = document.getElementById('modeToggle').checked;
-            qList = []; qIdx = 0; qScore = 0;
-            
+            tList = []; tIdx = 0;
             for(let i=0; i<count; i++) {
-                if(is2 && Math.random() > 0.6) {
-                    const r = reacDB[Object.keys(reacDB)[Math.floor(Math.random()*4)]];
+                if(is2 && Math.random() > 0.5) {
+                    const r = reacDB["R"+(Math.floor(Math.random()*10)+1)];
                     const v = (Math.random()*20+5).toFixed(1);
-                    qList.push({ type:'R', eq: r.eq, text: `Wieviel g <b>${r.prod}</b> entstehen aus ${v}g ${r.edu}?`, help:`M(${r.edu})=${r.mE} | M(${r.prod})=${r.mP}`, ans: (v/r.mE)*r.ratio*r.mP });
+                    tList.push({ eq: r.eq, text: `Wieviel g ${r.prod} entstehen aus ${v}g ${r.edu}?`, help:`M(${r.edu})=${r.mE} | M(${r.prod})=${r.mP}`, ans: (v/r.mE)*r.ratio*r.mP });
                 } else {
-                    const sk = Object.keys(subDB)[Math.floor(Math.random()*14)];
-                    const s = subDB[sk]; const v = (Math.random()*5+1).toFixed(1); const toMol = Math.random() > 0.5;
-                    qList.push({ type:'S', text: toMol ? `Berechne n von ${v}g ${s.name} (${toHTML(sk)})` : `Berechne m von ${v}mol ${s.name} (${toHTML(sk)})`, help:`M=${s.m} g/mol`, ans: toMol ? v/s.m : v*s.m });
+                    const sk = Object.keys(subDB)[Math.floor(Math.random()*Object.keys(subDB).length)];
+                    const s = subDB[sk]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
+                    tList.push({ text: toM ? `n von ${v}g ${s.name} (${toHTML(sk)})?` : `m von ${v}mol ${s.name} (${toHTML(sk)})?`, help:`M=${s.m} g/mol`, ans: toM ? v/s.m : v*s.m });
                 }
             }
+            document.getElementById('viewTrain').classList.remove('hidden'); showT();
+        }
+        function showT() {
+            const q = tList[tIdx]; document.getElementById('trainProgress').innerText = `Frage ${tIdx+1} von ${tList.length}`;
+            document.getElementById('trainContent').innerHTML = `<div class="space-y-4">
+                ${q.eq ? `<div class="bg-white/10 p-4 rounded-xl text-center font-mono text-xl">${toHTML(q.eq)}</div>` : ''}
+                <p class="text-lg italic">${q.text}</p><div class="text-[10px] font-bold text-blue-400 uppercase">Hilfe: ${toHTML(q.help)}</div>
+                <div class="flex gap-3"><input type="number" id="tIn" class="bg-white/10 p-4 rounded-xl flex-1 outline-none text-2xl" placeholder="Wert..."><button onclick="checkT()" class="bg-blue-600 px-8 rounded-xl font-black">OK</button></div><p id="tFeed" class="text-center h-6 font-bold"></p></div>`;
+        }
+        window.checkT = () => {
+            const v = parseFloat(document.getElementById('tIn').value); const ok = Math.abs(v - tList[tIdx].ans) < 0.25;
+            const f = document.getElementById('tFeed'); f.innerText = ok ? "✅ Richtig!" : "❌ Falsch! Lösung: "+tList[tIdx].ans.toFixed(2); f.className = ok ? "text-green-400 text-center font-bold" : "text-red-400 text-center font-bold";
+            setTimeout(() => { tIdx++; if(tIdx < tList.length) showT(); else location.reload(); }, 2000);
+        };
+
+        // --- MC QUIZ LOGIK (Tab 4) ---
+        let mcScore = 0;
+        function startQuizMC() {
+            mcScore = 0; document.getElementById('quizScore').innerText = `Punkte: 0`;
             document.getElementById('viewQuiz').classList.remove('hidden');
-            showQ();
+            genMC();
         }
+        function genMC() {
+            const is2 = document.getElementById('modeToggle').checked;
+            let qData;
+            if(is2 && Math.random() > 0.4) {
+                const r = reacDB["R"+(Math.floor(Math.random()*10)+1)]; const v = (Math.random()*10+5).toFixed(1);
+                const corr = (v/r.mE)*r.ratio*r.mP;
+                qData = { text: `Wie viel Gramm <b>${r.prod}</b> entstehen aus ${v}g ${r.edu}?`, help: `M(${r.edu})=${r.mE}, M(${r.prod})=${r.mP}`, ans: corr, eq: r.eq };
+            } else {
+                const sk = Object.keys(subDB)[Math.floor(Math.random()*Object.keys(subDB).length)];
+                const s = subDB[sk]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
+                const corr = toM ? v/s.m : v*s.m;
+                qData = { text: toM ? `Stoffmenge n von ${v}g ${s.name}?` : `Masse m von ${v}mol ${s.name}?`, help: `M(${sk})=${s.m}`, ans: corr };
+            }
 
-        function showQ() {
-            const q = qList[qIdx];
-            document.getElementById('quizProgress').innerText = `Frage ${qIdx+1} von ${qList.length}`;
+            const options = [qData.ans, qData.ans*1.5, qData.ans/2, qData.ans+5].sort(() => Math.random()-0.5);
             document.getElementById('quizContent').innerHTML = `
-                <div class="space-y-6">
-                    ${q.eq ? `<div class="bg-white/10 p-4 rounded-xl text-center text-xl font-mono">${toHTML(q.eq)}</div>` : ''}
-                    <p class="text-lg italic text-blue-100">${q.text}</p>
-                    <div class="bg-blue-900/50 p-3 rounded-lg border border-blue-500/30 text-[10px] font-bold text-blue-400 uppercase">Hilfe: ${toHTML(q.help)}</div>
-                    <div class="flex gap-3">
-                        <input type="number" id="qIn" class="bg-white/10 border border-white/20 p-4 rounded-2xl flex-1 text-2xl outline-none" placeholder="Antwort...">
-                        <button onclick="checkQ()" class="bg-blue-600 px-10 rounded-2xl font-black">OK</button>
-                    </div>
-                    <p id="qFeed" class="h-6 font-bold text-center"></p>
+                ${qData.eq ? `<div class="bg-slate-100 p-4 rounded-xl text-center font-mono text-lg mb-4">${toHTML(qData.eq)}</div>` : ''}
+                <p class="text-lg mb-2">${qData.text}</p>
+                <p class="text-[10px] text-slate-400 mb-4 uppercase font-bold tracking-widest">Hilfe: ${toHTML(qData.help)}</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    ${options.map(opt => `<button class="mc-btn font-bold" onclick="checkMC(this, ${opt}, ${qData.ans})">${opt.toFixed(2)}</button>`).join('')}
                 </div>`;
+            document.getElementById('nextQuizBtn').classList.add('hidden');
         }
-
-        window.checkQ = function() {
-            const val = parseFloat(document.getElementById('qIn').value);
-            const isOk = Math.abs(val - qList[qIdx].ans) < 0.3;
-            if(isOk) { qScore++; document.getElementById('qFeed').innerText = "✅ RICHTIG!"; document.getElementById('qFeed').className = "text-green-400 font-bold text-center"; }
-            else { document.getElementById('qFeed').innerText = "❌ FALSCH! Lösung: " + qList[qIdx].ans.toFixed(2); document.getElementById('qFeed').className = "text-red-400 font-bold text-center"; }
-            
-            setTimeout(() => {
-                qIdx++;
-                if(qIdx < qList.length) showQ();
-                else { document.getElementById('viewQuiz').classList.add('hidden'); document.getElementById('quizFinish').classList.remove('hidden'); document.getElementById('finalScoreText').innerText = `${qScore} / ${qList.length}`; }
-            }, 2000);
-        }
+        window.checkMC = (btn, val, corr) => {
+            const btns = document.querySelectorAll('.mc-btn');
+            btns.forEach(b => b.disabled = true);
+            if(Math.abs(val - corr) < 0.01) { btn.classList.add('mc-correct'); mcScore++; }
+            else { btn.classList.add('mc-wrong'); btns.forEach(b => { if(parseFloat(b.innerText) === parseFloat(corr.toFixed(2))) b.classList.add('mc-correct'); }); }
+            document.getElementById('quizScore').innerText = `Punkte: ${mcScore}`;
+            document.getElementById('nextQuizBtn').classList.remove('hidden');
+        };
+        document.getElementById('nextQuizBtn').onclick = genMC;
     </script>
 </body>
 </html>

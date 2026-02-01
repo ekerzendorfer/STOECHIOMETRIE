@@ -10,7 +10,7 @@
         .tab-active { background-color: #2563eb; color: white; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3); }
         .formula-box { font-family: 'Times New Roman', serif; font-style: italic; }
         .fraction { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; padding: 0 5px; }
-        .fraction-top { border-bottom: 2px solid #1e293b; padding-bottom: 2px; }
+        .fraction-top { border-bottom: 2px solid #ffffff; padding-bottom: 2px; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
@@ -48,22 +48,22 @@
             <div class="lg:col-span-4 space-y-6">
                 <nav class="bg-white p-2 rounded-2xl shadow-sm border flex gap-1">
                     <button id="tab1" class="flex-1 py-3 text-[10px] font-black rounded-xl tab-active uppercase">Mol & Masse</button>
-                    <button id="tab2" class="flex-1 py-3 text-[10px] font-black rounded-xl text-slate-500 uppercase">Labor</button>
-                    <button id="tab3" class="flex-1 py-3 text-[10px] font-black rounded-xl text-slate-500 uppercase">Üben</button>
-                    <button id="tab4" class="flex-1 py-3 text-[10px] font-black rounded-xl text-slate-500 uppercase">Quiz</button>
+                    <button id="tab2" class="flex-1 py-3 text-[10px] font-black rounded-xl text-slate-500 uppercase hover:bg-slate-50">Labor</button>
+                    <button id="tab3" class="flex-1 py-3 text-[10px] font-black rounded-xl text-slate-500 uppercase hover:bg-slate-50">Üben</button>
+                    <button id="tab4" class="flex-1 py-3 text-[10px] font-black rounded-xl text-slate-500 uppercase hover:bg-slate-50">Quiz</button>
                 </nav>
 
                 <div class="bg-slate-900 p-6 rounded-[2rem] shadow-2xl border-b-4 border-blue-700">
                     <p class="text-[10px] font-black text-blue-400 uppercase mb-4 tracking-widest flex justify-between">
                         <span>Taschenrechner</span>
-                        <span class="text-slate-500 text-[8px]">Kommata erlaubt</span>
+                        <span class="text-slate-500 text-[8px]">Dezimal: Komma</span>
                     </p>
                     <div class="bg-black/40 p-4 rounded-xl mb-4 text-right">
                         <div id="calcInput" class="text-slate-400 text-xs font-mono h-4 overflow-hidden mb-1"></div>
                         <div id="calcRes" class="text-green-400 text-3xl font-mono truncate">0,00</div>
                     </div>
                     <div class="grid grid-cols-4 gap-2">
-                        <button onclick="calcKey('DEL')" class="bg-red-500/20 text-red-400 p-3 rounded-lg font-bold text-xs hover:bg-red-500 hover:text-white transition-colors">DEL</button>
+                        <button onclick="calcKey('DEL')" class="bg-red-600 text-white p-3 rounded-lg font-bold text-xs hover:bg-red-500 transition-colors">DEL</button>
                         <button onclick="calcKey('(')" class="bg-white/5 text-white p-3 rounded-lg hover:bg-white/10 font-bold">(</button>
                         <button onclick="calcKey(')')" class="bg-white/5 text-white p-3 rounded-lg hover:bg-white/10 font-bold">)</button>
                         <button onclick="calcKey('/')" class="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-500 font-bold">÷</button>
@@ -91,25 +91,24 @@
             </div>
 
             <div class="lg:col-span-8 space-y-6">
-                
                 <div id="viewMolMasse" class="bg-white p-8 rounded-[2rem] shadow-xl border border-slate-200">
                     <h2 class="text-2xl font-black text-blue-900 mb-6 flex items-center gap-3 uppercase tracking-tighter italic">
                         <span>Mol und Masse</span>
                         <span class="text-xs font-normal text-slate-400 not-italic">Berechnungstool</span>
                     </h2>
 
-                    <div class="flex flex-wrap gap-2 mb-6 p-2 bg-slate-50 rounded-2xl border border-slate-100">
-                        <button onclick="filterSub('alle')" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white">ALLE</button>
-                        <button onclick="filterSub('E')" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-white text-slate-500 border border-slate-200">ELEMENTE</button>
-                        <button onclick="filterSub('A')" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-white text-slate-500 border border-slate-200">ANORGANISCH</button>
-                        <button onclick="filterSub('O')" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-white text-slate-500 border border-slate-200">ORGANISCH</button>
+                    <div class="flex flex-wrap gap-2 mb-6 p-2 bg-slate-50 rounded-2xl border border-slate-100" id="filterContainer">
+                        <button id="btnAll" onclick="filterSub('alle', this)" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-blue-600 text-white">ALLE</button>
+                        <button id="btnE" onclick="filterSub('E', this)" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-white text-slate-500 border border-slate-200">ELEMENTE</button>
+                        <button id="btnA" onclick="filterSub('A', this)" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-white text-slate-500 border border-slate-200">ANORGANISCH</button>
+                        <button id="btnO" onclick="filterSub('O', this)" class="sub-filter-btn px-4 py-2 text-[10px] font-bold rounded-xl bg-white text-slate-500 border border-slate-200">ORGANISCH</button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
                         <div class="space-y-4">
                             <label class="block">
                                 <span class="text-[10px] font-black text-slate-400 uppercase ml-2">Substanz wählen</span>
-                                <select id="molSubSelect" class="w-full mt-1 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold focus:border-blue-500 outline-none transition-all"></select>
+                                <select id="molSubSelect" class="w-full mt-1 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold focus:border-blue-500 outline-none transition-all cursor-pointer"></select>
                             </label>
                             
                             <div class="p-4 bg-blue-50 rounded-2xl flex items-center justify-between border border-blue-100">
@@ -124,7 +123,7 @@
 
                             <div class="relative">
                                 <input type="text" id="molValInput" class="w-full p-4 pl-12 bg-white border-2 border-slate-100 rounded-2xl text-xl font-black outline-none focus:border-blue-500 transition-all" placeholder="Eingabe...">
-                                <span id="molUnitLabel" class="absolute left-4 top-4 font-black text-slate-300">m</span>
+                                <span id="molUnitLabel" class="absolute left-4 top-4 font-black text-slate-300 italic">m</span>
                             </div>
                             
                             <div class="flex gap-2">
@@ -134,29 +133,25 @@
                         </div>
 
                         <div class="bg-slate-900 rounded-[2rem] p-8 flex flex-col justify-center items-center text-white min-h-[300px] border-b-8 border-slate-700 relative overflow-hidden">
-                            <div class="absolute top-4 left-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Formale Darstellung</div>
+                            <div class="absolute top-4 left-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest italic">Formel & Lösungsweg</div>
                             
                             <div id="molFormulaVisual" class="formula-box text-3xl flex items-center gap-2">
-                                <span class="text-slate-600 italic">Warte auf Eingabe...</span>
+                                <span class="text-slate-600 italic">Bereit...</span>
                             </div>
 
-                            <div id="molResultBox" class="mt-12 hidden text-center animate-in fade-in zoom-in duration-500">
+                            <div id="molResultBox" class="mt-12 hidden text-center animate-in fade-in zoom-in duration-500 w-full">
                                 <span class="block text-[10px] font-black text-slate-500 uppercase mb-2 tracking-tighter">Ergebnis</span>
-                                <div id="molResultVal" class="text-5xl font-black text-green-400 p-6 bg-white/5 rounded-3xl border border-white/10 shadow-inner">--</div>
+                                <div id="molResultVal" class="text-4xl font-black text-green-400 p-6 bg-white/5 rounded-3xl border border-white/10 shadow-inner">--</div>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div id="viewOther" class="hidden bg-white p-20 rounded-[2rem] shadow-xl text-center text-slate-300 font-bold uppercase tracking-widest italic border-2 border-dashed">
-                    Bereich wird in Kürze freigeschaltet...
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- KONFIGURATION & DATEN ---
+        // --- STOFFDATENBANK ---
         const subDB = {
             "H": {m: 1.008, cat: "E", name: "Wasserstoff"},
             "He": {m: 4.003, cat: "E", name: "Helium"},
@@ -169,11 +164,8 @@
             "Al": {m: 26.982, cat: "E", name: "Aluminium"},
             "S": {m: 32.06, cat: "E", name: "Schwefel"},
             "Cl": {m: 35.45, cat: "E", name: "Chlor"},
-            "K": {m: 39.098, cat: "E", name: "Kalium"},
-            "Ca": {m: 40.078, cat: "E", name: "Calcium"},
             "Fe": {m: 55.845, cat: "E", name: "Eisen"},
             "Cu": {m: 63.546, cat: "E", name: "Kupfer"},
-            "Ag": {m: 107.87, cat: "E", name: "Silber"},
             "Au": {m: 196.97, cat: "E", name: "Gold"},
             "H2O": {m: 18.015, cat: "A", name: "Wasser"},
             "CO2": {m: 44.01, cat: "A", name: "Kohlenstoffdioxid"},
@@ -181,7 +173,6 @@
             "HCl": {m: 36.46, cat: "A", name: "Salzsäure"},
             "NaOH": {m: 40.00, cat: "A", name: "Natronlauge"},
             "NH3": {m: 17.03, cat: "A", name: "Ammoniak"},
-            "MgO": {m: 40.30, cat: "A", name: "Magnesiumoxid"},
             "H2SO4": {m: 98.08, cat: "A", name: "Schwefelsäure"},
             "CH4": {m: 16.04, cat: "O", name: "Methan"},
             "C2H5OH": {m: 46.07, cat: "O", name: "Ethanol"},
@@ -190,50 +181,64 @@
             "C3H8": {m: 44.10, cat: "O", name: "Propan"}
         };
 
-        let molMode = 'n'; // 'n' berechnen oder 'm' berechnen
-
         // --- HELPER ---
-        const toCom = (num) => num.toString().replace('.', ',');
-        const fromCom = (str) => parseFloat(str.replace(',', '.'));
+        const toCom = (num) => num.toString().replace(/\./g, ',');
+        const fromCom = (str) => parseFloat(str.replace(/,/g, '.'));
+        function toUni(s) {
+            const map = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'};
+            return s.replace(/(\d+)/g, (m) => [...m].map(c => map[c] || c).join(''));
+        }
 
-        // --- RECHNER LOGIK ---
+        // --- TASCHENRECHNER ---
         let currentExp = "";
         function calcKey(k) {
-            if(k === 'DEL') currentExp = currentExp.slice(0, -1);
-            else if(k === ',') currentExp += '.';
-            else currentExp += k;
+            if(k === 'DEL') {
+                currentExp = "";
+                document.getElementById('calcRes').innerText = "0,00";
+            } else if(k === ',') {
+                currentExp += '.';
+            } else {
+                currentExp += k;
+            }
             document.getElementById('calcInput').innerText = currentExp.replace(/\./g, ',');
         }
         function calcExec() {
             try {
                 let res = eval(currentExp);
-                document.getElementById('calcRes').innerText = toCom(res.toFixed(3));
+                document.getElementById('calcRes').innerText = toCom(res.toLocaleString('de-AT', {minimumFractionDigits: 2, maximumFractionDigits: 3}));
             } catch(e) { document.getElementById('calcRes').innerText = "Err"; }
         }
 
         // --- MOL & MASSE LOGIK ---
-        function filterSub(cat) {
+        let molMode = 'n';
+
+        function filterSub(cat, btn) {
             const select = document.getElementById('molSubSelect');
             select.innerHTML = "";
             Object.keys(subDB).forEach(key => {
                 if(cat === 'alle' || subDB[key].cat === cat) {
                     let opt = document.createElement('option');
                     opt.value = key;
-                    opt.innerHTML = `${subDB[key].name} (${toUni(key)})`;
+                    opt.innerText = `${subDB[key].name} (${toUni(key)})`;
                     select.appendChild(opt);
                 }
             });
-            updateM();
-            // Button Styles
+            
+            // UI Button Style
             document.querySelectorAll('.sub-filter-btn').forEach(b => {
                 b.classList.remove('bg-blue-600', 'text-white');
                 b.classList.add('bg-white', 'text-slate-500');
             });
-            event.target.classList.add('bg-blue-600', 'text-white');
+            if(btn) {
+                btn.classList.add('bg-blue-600', 'text-white');
+                btn.classList.remove('bg-white', 'text-slate-500');
+            }
+            updateM();
         }
 
         function updateM() {
             const key = document.getElementById('molSubSelect').value;
+            if(!key) return;
             document.getElementById('displayM').innerText = toCom(subDB[key].m) + " g/mol";
         }
 
@@ -251,7 +256,9 @@
         function calcMolMasse() {
             const key = document.getElementById('molSubSelect').value;
             const M = subDB[key].m;
-            const inputVal = fromCom(document.getElementById('molValInput').value);
+            const rawIn = document.getElementById('molValInput').value;
+            const inputVal = fromCom(rawIn);
+
             if(isNaN(inputVal)) return alert("Bitte einen gültigen Zahlenwert eingeben!");
 
             const visual = document.getElementById('molFormulaVisual');
@@ -261,9 +268,9 @@
             if(molMode === 'n') {
                 const n = inputVal / M;
                 visual.innerHTML = `
-                    <span class="text-blue-400">n</span> = 
+                    <span class="text-blue-400 italic">n</span> = 
                     <div class="fraction text-white">
-                        <span class="fraction-top text-blue-300">${toCom(inputVal)} g</span>
+                        <span class="fraction-top text-blue-300 font-bold">${toCom(inputVal)} g</span>
                         <span class="text-slate-400 font-bold">${toCom(M)} g/mol</span>
                     </div>
                 `;
@@ -271,8 +278,8 @@
             } else {
                 const m = inputVal * M;
                 visual.innerHTML = `
-                    <span class="text-blue-400">m</span> = 
-                    <span class="text-blue-300">${toCom(inputVal)} mol</span> · 
+                    <span class="text-blue-400 italic">m</span> = 
+                    <span class="text-blue-300 font-bold">${toCom(inputVal)} mol</span> · 
                     <span class="text-slate-400 font-bold">${toCom(M)} g/mol</span>
                 `;
                 resVal.innerText = toCom(m.toFixed(2)) + " g";
@@ -282,17 +289,19 @@
 
         function resetMolView() {
             document.getElementById('molValInput').value = "";
-            document.getElementById('molFormulaVisual').innerHTML = '<span class="text-slate-600 italic">Warte auf Eingabe...</span>';
+            document.getElementById('molFormulaVisual').innerHTML = '<span class="text-slate-600 italic">Bereit...</span>';
             document.getElementById('molResultBox').classList.add('hidden');
         }
 
-        // Global Task Slider
+        // Slider
         document.getElementById('globalTaskCount').oninput = (e) => {
             document.getElementById('taskCountVal').innerText = e.target.value + " Aufgaben";
         };
 
-        // Init
-        filterSub('alle');
+        // Init App
+        window.onload = () => {
+            filterSub('alle', document.getElementById('btnAll'));
+        };
     </script>
 </body>
 </html>

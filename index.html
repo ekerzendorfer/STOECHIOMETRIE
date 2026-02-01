@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molekül-Meister Pro Ultimate</title>
+    <title>Molekül-Meister Pro Ultimate | 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         sub { font-size: 0.8em; vertical-align: sub; line-height: 0; }
@@ -59,7 +59,7 @@
 
                 <div class="bg-slate-900 p-8 rounded-[3rem] shadow-2xl border-b-[12px] border-blue-950">
                     <div class="bg-black/60 p-5 rounded-2xl mb-6 text-right border border-white/5 shadow-inner">
-                        <div id="calcInput" class="text-slate-500 text-xs font-mono h-5 overflow-hidden mb-1 italic"></div>
+                        <div id="calcInput" class="text-slate-500 text-xs font-mono h-5 overflow-hidden mb-1"></div>
                         <div id="calcRes" class="text-yellow-400 text-4xl font-mono">0,00</div>
                     </div>
                     <div class="grid grid-cols-4 gap-3">
@@ -106,12 +106,12 @@
                                 <button onclick="setMolMode('m')" id="mBtnM" class="px-4 py-2 rounded-xl bg-white text-slate-400 text-[10px] font-black border border-slate-200">m berechnen</button></div>
                             </div>
                             <div class="relative"><span id="molInLabel" class="absolute left-5 top-5 font-black text-blue-500 text-xl italic">m</span>
-                            <input type="text" id="molInput" onfocus="trackFocus(this)" class="w-full p-5 pl-14 bg-white border-2 border-slate-200 rounded-2xl text-2xl font-black focus:border-blue-800" placeholder="Wert...">
+                            <input type="text" id="molInput" onfocus="lastF = this" class="w-full p-5 pl-14 bg-white border-2 border-slate-200 rounded-2xl text-2xl font-black focus:border-blue-800" placeholder="Wert...">
                             <span id="molUnitLabel" class="absolute right-5 top-6 font-bold text-slate-300">g</span></div>
                             <button onclick="calculateMol()" class="w-full bg-blue-800 text-yellow-400 py-6 rounded-2xl font-black shadow-xl text-xl uppercase tracking-widest">Berechnen</button>
                         </div>
-                        <div class="bg-slate-900 rounded-[3rem] p-10 flex flex-col justify-center items-center text-white border-b-[12px] border-blue-950 relative shadow-2xl min-h-[350px]">
-                            <div id="molVisFormula" class="formula-display text-4xl flex items-center gap-3"><span class="text-slate-700 italic text-xl">Bereit...</span></div>
+                        <div class="bg-slate-900 rounded-[3rem] p-10 flex flex-col justify-center items-center text-white shadow-2xl min-h-[350px]">
+                            <div id="molVisFormula" class="formula-display text-4xl flex items-center gap-3"><span class="text-slate-700 italic text-xl text-center">Formel-Visualisierung bereit</span></div>
                             <div id="molVisResBox" class="mt-12 hidden text-center animate-in zoom-in w-full"><span class="text-[11px] font-black text-slate-500 uppercase block mb-3">Ergebnis</span>
                             <div id="molVisResVal" class="text-5xl font-black text-green-400 py-8 px-4 bg-white/5 rounded-[2rem] border border-white/10 tracking-tighter">--</div></div>
                         </div>
@@ -121,131 +121,112 @@
                 <div id="view2" class="view-panel hidden space-y-6">
                     <div class="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-200">
                         <div class="flex justify-between items-center mb-8">
-                            <h2 class="text-3xl font-black text-blue-900 uppercase italic">Reaktions-Labor Pro</h2>
-                            <button onclick="calculateLabor()" class="px-10 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg hover:bg-green-700 uppercase tracking-widest">Werte berechnen</button>
+                            <h2 class="text-3xl font-black text-blue-900 uppercase italic">Reaktions-Labor Ultimate</h2>
+                            <button onclick="calculateLabor()" class="px-10 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg hover:bg-green-700 uppercase tracking-widest">Stöchiometrie berechnen</button>
                         </div>
                         <div class="flex flex-col md:flex-row gap-6 items-end">
-                            <label class="flex-1"><span class="text-[10px] font-black text-slate-400 uppercase ml-2 italic">Gleichung</span>
-                            <select id="reacSelect" onchange="buildReacUI()" class="w-full mt-2 p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black"></select></label>
+                            <label class="flex-1"><span class="text-[10px] font-black text-slate-400 uppercase ml-2 italic">Gleichung wählen</span>
+                            <select id="reacSelect" onchange="buildReacUI()" class="w-full mt-2 p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black focus:border-blue-800"></select></label>
                             <button onclick="clearLabor()" class="px-8 py-4 bg-slate-100 text-slate-400 rounded-2xl font-black text-xs uppercase">Reset</button>
                         </div>
                     </div>
                     <div class="bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl border-b-[16px] border-blue-950 text-white min-h-[400px]">
                         <div id="reacTableau" class="flex flex-col items-center">
-                            <div id="reacEqDisplay" class="formula-display text-4xl text-blue-300 mb-16 text-center leading-relaxed"></div>
+                            <div id="reacEqDisplay" class="formula-display text-4xl text-blue-300 mb-16 text-center leading-relaxed tracking-wider"></div>
                             <div id="reacGrid" class="lab-input-grid"></div>
                         </div>
                     </div>
                 </div>
 
                 <div id="view3" class="view-panel hidden bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl text-white">
-                    <div id="trainSetup" class="text-center py-10">
-                        <h2 class="text-4xl font-black text-blue-400 mb-6 uppercase italic tracking-tighter">Trainings-Modus</h2>
-                        <button onclick="startTraining()" class="bg-blue-600 px-16 py-6 rounded-3xl text-2xl font-black shadow-xl hover:bg-blue-500 uppercase tracking-widest">Start Training</button>
-                    </div>
-                    <div id="trainCore" class="hidden space-y-8">
-                        <div class="flex justify-between text-xs font-black uppercase text-slate-500 border-b border-white/10 pb-4 italic tracking-widest"><span id="tProgress">Frage 1</span><span id="tScoreDisp">Quote: 0%</span></div>
-                        <div class="text-center py-6">
-                            <div id="tTaskEq" class="text-4xl font-mono text-blue-300 mb-8 italic border-b border-white/5 pb-6"></div>
-                            <p id="tTaskText" class="text-3xl font-black italic mb-8"></p>
-                            <div id="tTaskHelp" class="text-lg bg-blue-500/10 p-3 rounded-xl border border-blue-500/20 text-blue-400 uppercase font-black"></div>
+                    <div id="trainCore" class="space-y-8">
+                        <div class="flex justify-between text-xs font-black uppercase text-slate-500 border-b border-white/10 pb-4 italic">
+                            <span id="tProgress">Frage 1</span><span id="tScoreDisp">Quote: 0%</span>
                         </div>
-                        <div class="flex gap-4"><input type="text" id="tInput" onfocus="trackFocus(this)" class="flex-1 p-6 bg-white/10 border-2 border-white/10 rounded-[2.5rem] text-4xl font-black text-center focus:border-blue-500 outline-none" placeholder="Lösung...">
-                        <button id="tCheckBtn" onclick="checkTraining()" class="bg-blue-600 px-14 rounded-[2.5rem] font-black text-xl hover:bg-blue-500">PRÜFEN</button>
-                        <button id="tNextBtn" onclick="nextTrainingTask()" class="hidden bg-green-600 px-14 rounded-[2.5rem] font-black text-xl hover:bg-green-500">WEITER</button></div>
+                        <div id="trainTaskArea" class="text-center py-6">
+                            <div id="tTaskEq" class="text-4xl font-mono text-blue-300 mb-10 italic border-b border-white/5 pb-6"></div>
+                            <p id="tTaskText" class="text-3xl font-black italic mb-8"></p>
+                            <div id="tTaskHelp" class="text-lg bg-blue-500/10 p-4 rounded-xl border border-blue-500/20 text-blue-400 uppercase font-black"></div>
+                        </div>
+                        <div class="flex gap-4">
+                            <input type="text" id="tInput" onfocus="lastF = this" class="flex-1 p-6 bg-white/10 border-2 border-white/10 rounded-[2.5rem] text-4xl font-black text-center focus:border-blue-500 outline-none" placeholder="Antwort...">
+                            <button id="tCheckBtn" onclick="checkTraining()" class="bg-blue-600 px-14 rounded-[2.5rem] font-black text-xl hover:bg-blue-500">PRÜFEN</button>
+                            <button id="tNextBtn" onclick="nextTrainingTask()" class="hidden bg-green-600 px-14 rounded-[2.5rem] font-black text-xl">NÄCHSTE AUFGABE</button>
+                        </div>
                         <div id="tFeedback" class="h-10 text-center font-black text-2xl"></div>
                     </div>
                 </div>
 
                 <div id="view4" class="view-panel hidden bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl text-white">
-                    <div id="quizCore" class="space-y-8">
-                        <div class="flex justify-between items-center border-b border-white/10 pb-6">
-                            <h2 class="text-2xl font-black text-blue-400 uppercase italic">Quiz-Academy</h2>
-                            <span id="qScoreText" class="bg-blue-900 text-blue-300 px-6 py-2 rounded-full font-black text-sm uppercase">Frage 1 / 10</span>
-                        </div>
-                        <div class="text-center py-4">
-                            <p id="qText" class="text-3xl font-black text-white mb-4 italic"></p>
-                            <p id="qHelp" class="text-lg text-slate-400 font-bold uppercase tracking-widest italic"></p>
-                        </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-6 mb-8">
+                        <h2 class="text-2xl font-black text-blue-400 uppercase italic">Quiz-Academy</h2>
+                        <span id="qScoreText" class="bg-blue-900 text-blue-300 px-6 py-2 rounded-full font-black text-sm uppercase">Frage 1</span>
+                    </div>
+                    <div id="quizContent" class="text-center">
+                        <p id="qText" class="text-3xl font-black text-white mb-6 italic"></p>
+                        <p id="qHelp" class="text-lg text-slate-400 font-bold uppercase tracking-widest italic mb-10"></p>
                         <div id="qOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                        <button id="qNextBtn" onclick="nextQuiz()" class="hidden w-full py-6 bg-blue-600 text-white rounded-3xl font-black uppercase tracking-widest text-lg">Nächste Frage</button>
+                        <button id="qNextBtn" onclick="nextQuiz()" class="hidden w-full py-6 bg-blue-600 text-white rounded-3xl font-black uppercase text-lg mt-8">Nächste Frage</button>
                     </div>
                 </div>
 
-                <div id="view5" class="view-panel hidden bg-white p-12 rounded-[4rem] shadow-2xl text-center border-t-[16px] border-blue-900 animate-in zoom-in">
-                    <h2 class="text-5xl font-black text-blue-900 mb-4 uppercase italic">Bilanz</h2>
+                <div id="view5" class="view-panel hidden bg-white p-12 rounded-[4rem] shadow-2xl text-center border-t-[16px] border-blue-900">
+                    <h2 class="text-5xl font-black text-blue-900 mb-4 uppercase italic">Abschlussbericht</h2>
                     <div class="flex justify-center items-center gap-10 my-12">
-                        <div><span class="text-[10px] font-black text-slate-400 uppercase block tracking-widest">Richtig</span><div id="bScore" class="text-7xl font-black text-blue-600 tracking-tighter">0 / 0</div></div>
+                        <div><span class="text-[10px] font-black text-slate-400 uppercase block tracking-widest">Ergebnis</span><div id="bScore" class="text-7xl font-black text-blue-600 tracking-tighter">0 / 0</div></div>
                         <div class="h-20 w-[2px] bg-slate-100"></div>
                         <div><span class="text-[10px] font-black text-slate-400 uppercase block tracking-widest">Quote</span><div id="bPercent" class="text-7xl font-black text-green-500 tracking-tighter">0%</div></div>
                     </div>
-                    <button onclick="location.reload()" class="bg-blue-900 text-yellow-400 px-16 py-7 rounded-[3rem] font-black text-2xl shadow-2xl uppercase tracking-widest">Neustart</button>
+                    <button onclick="location.reload()" class="bg-blue-900 text-yellow-400 px-16 py-7 rounded-[3rem] font-black text-2xl shadow-2xl uppercase">Hauptmenü</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // --- DB ---
+        // --- DATABASE ---
         const subDB = {
             "H": {m: 1.008, cat: "E", name: "Wasserstoff"}, "He": {m: 4.003, cat: "E", name: "Helium"},
-            "Li": {m: 6.941, cat: "E", name: "Lithium"}, "Be": {m: 9.012, cat: "E", name: "Beryllium"},
-            "C": {m: 12.011, cat: "E", name: "Kohlenstoff"}, "N": {m: 14.007, cat: "E", name: "Stickstoff"},
-            "O": {m: 15.999, cat: "E", name: "Sauerstoff"}, "F": {m: 18.998, cat: "E", name: "Fluor"},
+            "Li": {m: 6.941, cat: "E", name: "Lithium"}, "C": {m: 12.011, cat: "E", name: "Kohlenstoff"},
+            "N": {m: 14.007, cat: "E", name: "Stickstoff"}, "O": {m: 15.999, cat: "E", name: "Sauerstoff"},
             "Na": {m: 22.99, cat: "E", name: "Natrium"}, "Mg": {m: 24.305, cat: "E", name: "Magnesium"},
-            "Al": {m: 26.982, cat: "E", name: "Aluminium"}, "P": {m: 30.974, cat: "E", name: "Phosphor"},
-            "S": {m: 32.06, cat: "E", name: "Schwefel"}, "Cl": {m: 35.45, cat: "E", name: "Chlor"},
-            "K": {m: 39.098, cat: "E", name: "Kalium"}, "Ca": {m: 40.078, cat: "E", name: "Calcium"},
-            "Fe": {m: 55.845, cat: "E", name: "Eisen"}, "Cu": {m: 63.546, cat: "E", name: "Kupfer"},
-            "Ag": {m: 107.87, cat: "E", name: "Silber"}, "Au": {m: 196.97, cat: "E", name: "Gold"},
-            "H2O": {m: 18.015, cat: "A", name: "Wasser"}, "CO2": {m: 44.01, cat: "A", name: "Kohlenstoffdioxid"},
-            "NaCl": {m: 58.44, cat: "A", name: "Kochsalz"}, "HCl": {m: 36.46, cat: "A", name: "Salzsäure"},
-            "NaOH": {m: 40.0, cat: "A", name: "Natronlauge"}, "NH3": {m: 17.03, cat: "A", name: "Ammoniak"},
-            "MgO": {m: 40.30, cat: "A", name: "Magnesiumoxid"}, "CaO": {m: 56.08, cat: "A", name: "Branntkalk"},
-            "Fe2O3": {m: 159.69, cat: "A", name: "Eisen(III)-oxid"}, "CaCO3": {m: 100.09, cat: "A", name: "Kalk"},
-            "CH4": {m: 16.04, cat: "O", name: "Methan"}, "C2H6": {m: 30.07, cat: "O", name: "Ethan"},
-            "C3H8": {m: 44.1, cat: "O", name: "Propan"}, "C2H5OH": {m: 46.07, cat: "O", name: "Ethanol"},
-            "C6H12O6": {m: 180.16, cat: "O", name: "Glucose"}, "CH3COOH": {m: 60.05, cat: "O", name: "Essigsäure"},
+            "Al": {m: 26.982, cat: "E", name: "Aluminium"}, "S": {m: 32.06, cat: "E", name: "Schwefel"},
+            "Cl": {m: 35.45, cat: "E", name: "Chlor"}, "Fe": {m: 55.845, cat: "E", name: "Eisen"},
+            "Cu": {m: 63.546, cat: "E", name: "Kupfer"}, "H2O": {m: 18.015, cat: "A", name: "Wasser"},
+            "CO2": {m: 44.01, cat: "A", name: "Kohlenstoffdioxid"}, "NaCl": {m: 58.44, cat: "A", name: "Kochsalz"},
+            "HCl": {m: 36.46, cat: "A", name: "Salzsäure"}, "NaOH": {m: 40.0, cat: "A", name: "Natronlauge"},
+            "NH3": {m: 17.03, cat: "A", name: "Ammoniak"}, "MgO": {m: 40.30, cat: "A", name: "Magnesiumoxid"},
+            "Fe2O3": {m: 159.69, cat: "A", name: "Eisen(III)-oxid"}, "CH4": {m: 16.04, cat: "O", name: "Methan"},
+            "C3H8": {m: 44.1, cat: "O", name: "Propan"}, "C6H12O6": {m: 180.16, cat: "O", name: "Glucose"},
             "O2": {m: 31.998, cat: "A", name: "Sauerstoffgas"}, "H2": {m: 2.016, cat: "A", name: "Wasserstoffgas"}
         };
 
         const reacDB = {
             "R1": { name: "Methan-Verbrennung", parts: [{c:1,f:"CH4",M:16.04}, {c:2,f:"O2",M:31.998}, {c:1,f:"CO2",M:44.01}, {c:2,f:"H2O",M:18.015}], div: 2 },
             "R2": { name: "Magnesium-Verbrennung", parts: [{c:2,f:"Mg",M:24.31}, {c:1,f:"O2",M:31.998}, {c:2,f:"MgO",M:40.3}], div: 2 },
-            "R3": { name: "Aluminium-Oxidation", parts: [{c:4,f:"Al",M:26.98}, {c:3,f:"O2",M:31.998}, {c:2,f:"Al2O3",M:101.96}], div: 2 },
-            "R4": { name: "Ammoniak-Synthese", parts: [{c:1,f:"N2",M:28.01}, {c:3,f:"H2",M:2.016}, {c:2,f:"NH3",M:17.03}], div: 2 },
-            "R5": { name: "Hochofen-Prozess", parts: [{c:1,f:"Fe2O3",M:159.69}, {c:3,f:"CO",M:28.01}, {c:2,f:"Fe",M:55.85}, {c:3,f:"CO2",M:44.01}], div: 2 },
-            "R6": { name: "Knallgas-Reaktion", parts: [{c:2,f:"H2",M:2.016}, {c:1,f:"O2",M:31.998}, {c:2,f:"H2O",M:18.015}], div: 2 },
-            "R7": { name: "Zucker-Verbrennung", parts: [{c:1,f:"C6H12O6",M:180.16}, {c:6,f:"O2",M:31.998}, {c:6,f:"CO2",M:44.01}, {c:6,f:"H2O",M:18.015}], div: 2 },
-            "R8": { name: "Propan-Verbrennung", parts: [{c:1,f:"C3H8",M:44.1}, {c:5,f:"O2",M:31.998}, {c:3,f:"CO2",M:44.01}, {c:4,f:"H2O",M:18.015}], div: 2 }
+            "R3": { name: "Zucker-Verbrennung", parts: [{c:1,f:"C6H12O6",M:180.16}, {c:6,f:"O2",M:31.998}, {c:6,f:"CO2",M:44.01}, {c:6,f:"H2O",M:18.015}], div: 2 },
+            "R4": { name: "Knallgas-Reaktion", parts: [{c:2,f:"H2",M:2.016}, {c:1,f:"O2",M:31.998}, {c:2,f:"H2O",M:18.015}], div: 2 },
+            "R5": { name: "Hochofen-Prozess", parts: [{c:1,f:"Fe2O3",M:159.69}, {c:3,f:"CO",M:28.01}, {c:2,f:"Fe",M:55.85}, {c:3,f:"CO2",M:44.01}], div: 2 }
         };
 
         // --- CORE ---
-        let currentView = 1, mMode = 'n', cExp = "", lastFocus = null;
+        let lastF = null, cExp = "", mMode = 'n', sL = [], sI = 0, sScore = 0;
         const fmt = (n) => n.toString().replace(/\./g, ',');
         const parse = (s) => parseFloat(s.replace(/,/g, '.'));
         function renderF(t) { return t.replace(/([A-Z][a-z]*)(\d+)/g, '$1<sub>$2</sub>'); }
         function toUni(s) { const map = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'}; return s.replace(/(\d+)/g, (m) => [...m].map(c => map[c] || c).join('')); }
 
-        function trackFocus(el) { lastFocus = el; }
-
         // --- CALC ---
         function calcKey(k) {
             if(k === 'CLR') { cExp = ""; document.getElementById('calcRes').innerText = "0,00"; }
-            else if(k === ',') cExp += '.';
-            else cExp += k;
+            else if(k === ',') cExp += '.'; else cExp += k;
             document.getElementById('calcInput').innerText = cExp.replace(/\./g, ',');
         }
         function calcExec() {
             try { let r = eval(cExp); document.getElementById('calcRes').innerText = fmt(r.toLocaleString('de-AT', {maximumFractionDigits: 3})); }
             catch(e) { document.getElementById('calcRes').innerText = "Err"; }
         }
-        function applyCalc() {
-            if(lastFocus) {
-                lastFocus.value = document.getElementById('calcRes').innerText;
-                if(lastFocus.classList.contains('lab-m-input')) { lastFocus.dispatchEvent(new Event('input')); }
-            }
-        }
+        function applyCalc() { if(lastF) { lastF.value = document.getElementById('calcRes').innerText; lastF.dispatchEvent(new Event('input')); } }
 
         // --- NAVIGATION ---
         function switchView(v) {
@@ -253,7 +234,7 @@
             document.getElementById('view'+v).classList.remove('hidden');
             for(let i=1; i<=4; i++) document.getElementById('tabBtn'+i).classList.toggle('tab-active', i === v);
             if(v === 2) buildReacUI();
-            if(v === 4) startQuiz();
+            if(v === 3) startTraining();
         }
 
         // --- VIEW 1 ---
@@ -291,23 +272,16 @@
             document.getElementById('molVisResBox').classList.remove('hidden');
         }
 
-        // --- VIEW 2: LABOR (Stoichiometry Fixed) ---
+        // --- LABOR (Final Fixed Stoichiometry) ---
         function buildReacUI() {
             const r = reacDB[document.getElementById('reacSelect').value];
-            const eqDisp = document.getElementById('reacEqDisplay');
-            const grid = document.getElementById('reacGrid');
-            let eqStr = "";
-            r.parts.forEach((p, i) => {
-                if(i === r.div) eqStr += " ⟶ "; else if(i > 0) eqStr += " + ";
-                eqStr += (p.c > 1 ? p.c + " " : "") + renderF(p.f);
-            });
-            eqDisp.innerHTML = eqStr;
-            grid.innerHTML = "";
+            document.getElementById('reacEqDisplay').innerHTML = r.parts.map((p, i) => (i === r.div ? " ⟶ " : (i > 0 ? " + " : "")) + (p.c > 1 ? p.c + " " : "") + renderF(p.f)).join('');
+            const grid = document.getElementById('reacGrid'); grid.innerHTML = "";
             r.parts.forEach((p, i) => {
                 const cell = document.createElement('div');
                 cell.className = "flex flex-col gap-3 p-5 bg-white/5 rounded-[2rem] border border-white/10";
                 cell.innerHTML = `<div class="text-2xl font-black text-blue-400 text-center">${renderF(p.f)}</div>
-                    <input type="text" data-idx="${i}" onfocus="trackFocus(this)" class="lab-m-input w-full p-4 bg-white text-slate-900 rounded-2xl text-center font-black" placeholder="m (g)">
+                    <input type="text" data-idx="${i}" onfocus="lastF = this" class="lab-m-input w-full p-4 bg-white text-slate-900 rounded-2xl text-center font-black" placeholder="m (g)">
                     <div class="text-center text-xs text-slate-500">n = <span class="lab-n-output font-black text-green-400 text-sm">0,0000</span> mol</div>`;
                 grid.appendChild(cell);
             });
@@ -315,64 +289,58 @@
         function calculateLabor() {
             const r = reacDB[document.getElementById('reacSelect').value];
             const inps = document.querySelectorAll('.lab-m-input');
-            let aI = -1; inps.forEach((inp, i) => { if(inp.value !== "") aI = i; });
-            if(aI === -1) return;
-
-            const mIn = parse(inps[aI].value);
-            const pBas = r.parts[aI];
-            const nTotal = mIn / (pBas.M / pBas.c); // Masse durch atomare Molmasse
-            const nUnit = nTotal / pBas.c; // Mol pro 1 Koeffizient
+            let aIdx = -1; inps.forEach((inp, i) => { if(inp.value !== "") aIdx = i; });
+            if(aIdx === -1) return;
+            const mBasis = parse(inps[aIdx].value);
+            const nBasis = mBasis / r.parts[aIdx].M; // Mol der gesamten Portion
+            const nUnit = nBasis / r.parts[aIdx].c; // Mol pro 1 Koeffizient
 
             r.parts.forEach((p, i) => {
                 const nFinal = nUnit * p.c;
-                const mFinal = nFinal * (p.M / p.c); 
-                if(i !== aI) inps[i].value = fmt(mFinal.toFixed(2));
+                const mFinal = nFinal * p.M / p.c; // Rückrechnung: n * M_substanz
+                if(i !== aIdx) inps[i].value = fmt((nFinal * p.M / p.c).toFixed(2));
                 document.querySelectorAll('.lab-n-output')[i].innerText = fmt(nFinal.toFixed(4));
             });
         }
         function clearLabor() { document.querySelectorAll('.lab-m-input').forEach(i => i.value = ""); document.querySelectorAll('.lab-n-output').forEach(o => o.innerText = "0,0000"); }
 
-        // --- SESSION ---
-        let sL = [], sI = 0, sS = 0;
+        // --- SESSIONS ---
         function startTraining() {
-            const count = parseInt(document.getElementById('globalTaskCount').value);
-            const is2 = document.getElementById('modeToggle').checked;
-            sL = []; sI = 0; sS = 0;
-            for(let i=0; i<count; i++) {
-                if(is2 && Math.random() > 0.2) {
-                    const r = reacDB["R"+(Math.floor(Math.random()*8)+1)]; const v = (Math.random()*20+5).toFixed(1);
+            const c = parseInt(document.getElementById('globalTaskCount').value); const is2 = document.getElementById('modeToggle').checked;
+            sL = []; sI = 0; sScore = 0;
+            for(let i=0; i<c; i++) {
+                if(is2 && Math.random() > 0.3) {
+                    const r = reacDB["R"+(Math.floor(Math.random()*5)+1)]; const v = (Math.random()*20+5).toFixed(1);
                     const pr = r.parts[r.div]; const ed = r.parts[0];
-                    let eS = ""; r.parts.forEach((p, idx) => { if(idx === r.div) eS += " ⟶ "; else if(idx > 0) eS += " + "; eS += (p.c > 1 ? p.c + " " : "") + p.f; });
-                    sL.push({ type:'R', eq: eS, text: `Wie viel g ${renderF(pr.f)} entstehen aus ${fmt(v)}g ${renderF(ed.f)}?`, help:`M(${ed.f})=${fmt(ed.M/ed.c)} | M(${pr.f})=${fmt(pr.M/pr.c)}`, ans: (v/(ed.M/ed.c))*(pr.c/ed.c)*(pr.M/pr.c) });
+                    let eq = r.parts.map((p, idx) => (idx === r.div ? " ⟶ " : (idx > 0 ? " + " : "")) + (p.c > 1 ? p.c + " " : "") + p.f).join('');
+                    sL.push({ eq: eq, text: `Wie viel g ${renderF(pr.f)} entstehen aus ${fmt(v)}g ${renderF(ed.f)}?`, help:`M(${ed.f})=${fmt(ed.M/ed.c)} | M(${pr.f})=${fmt(pr.M/pr.c)}`, ans: (v/(ed.M/ed.c))*(pr.c/ed.c)*(pr.M/pr.c) });
                 } else {
-                    const k = Object.keys(subDB)[Math.floor(Math.random()*Object.keys(subDB).length)];
-                    const s = subDB[k]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
-                    sL.push({ type:'S', text: toM ? `n von ${fmt(v)}g ${s.name} (${renderF(k)})?` : `m von ${fmt(v)}mol ${s.name} (${renderF(k)})?`, help:`M = ${fmt(s.m)} g/mol`, ans: toM ? v/s.m : v*s.m });
+                    const k = Object.keys(subDB)[Math.floor(Math.random()*20)]; const s = subDB[k]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
+                    sL.push({ text: toM ? `Stoffmenge n von ${fmt(v)}g ${s.name} (${renderF(k)})?` : `Masse m von ${fmt(v)}mol ${s.name} (${renderF(k)})?`, help:`M = ${fmt(s.m)} g/mol`, ans: toM ? v/s.m : v*s.m });
                 }
             }
             document.getElementById('trainSetup').classList.add('hidden'); document.getElementById('trainCore').classList.remove('hidden'); showT();
         }
         function showT() {
-            const q = sL[sI]; document.getElementById('tProgress').innerText = `Frage ${sI+1} / ${sL.length}`;
+            const q = sL[sI]; document.getElementById('tProgress').innerText = `Frage ${sI+1}`;
             document.getElementById('tTaskEq').innerHTML = q.eq ? renderF(q.eq) : "";
             document.getElementById('tTaskText').innerHTML = q.text; document.getElementById('tTaskHelp').innerHTML = "Hilfe: " + q.help;
             document.getElementById('tInput').value = ""; document.getElementById('tFeedback').innerText = "";
             document.getElementById('tCheckBtn').classList.remove('hidden'); document.getElementById('tNextBtn').classList.add('hidden');
         }
         function checkTraining() {
-            const v = parse(document.getElementById('tInput').value); const c = sL[sI].ans;
-            if(Math.abs(v-c) < 0.25) { sS++; document.getElementById('tFeedback').innerText = "✅ Richtig!"; document.getElementById('tFeedback').className = "text-green-400 font-black"; }
-            else { document.getElementById('tFeedback').innerText = "❌ Falsch! Lösung: " + fmt(c.toFixed(2)); document.getElementById('tFeedback').className = "text-red-500 font-black"; }
+            const v = parse(document.getElementById('tInput').value); const corr = sL[sI].ans;
+            if(Math.abs(v-corr) < 0.25) { sScore++; document.getElementById('tFeedback').innerText = "✅ Richtig!"; document.getElementById('tFeedback').className = "text-green-400 font-black"; }
+            else { document.getElementById('tFeedback').innerText = "❌ Falsch! Lösung: " + fmt(corr.toFixed(2)); document.getElementById('tFeedback').className = "text-red-500 font-black"; }
             document.getElementById('tCheckBtn').classList.add('hidden'); document.getElementById('tNextBtn').classList.remove('hidden');
         }
-        function nextTrainingTask() { sI++; if(sI < sL.length) { showT(); document.getElementById('tScoreDisp').innerText = `Quote: ${Math.round((sS/sL.length)*100)}%`; } else finishS(); }
+        function nextTrainingTask() { sI++; if(sI < sL.length) { showT(); document.getElementById('tScoreDisp').innerText = `Quote: ${Math.round((sScore/sL.length)*100)}%`; } else finishS(); }
 
         function startQuiz() {
-            sS = 0; sI = 0; sL = []; const count = parseInt(document.getElementById('globalTaskCount').value);
+            sScore = 0; sI = 0; sL = []; const count = parseInt(document.getElementById('globalTaskCount').value);
             for(let i=0; i<count; i++) {
-                const k = Object.keys(subDB)[Math.floor(Math.random()*Object.keys(subDB).length)];
-                const s = subDB[k]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
-                sL.push({ text: toM ? `Stoffmenge n von ${fmt(v)}g ${s.name}?` : `Masse m von ${fmt(v)}mol ${s.name}?`, help: `M(${k}) = ${fmt(s.m)} g/mol`, ans: toM ? v/s.m : v*s.m });
+                const k = Object.keys(subDB)[Math.floor(Math.random()*20)]; const s = subDB[k]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
+                sL.push({ text: toM ? `n von ${fmt(v)}g ${s.name}?` : `m von ${fmt(v)}mol ${s.name}?`, help: `M(${k}) = ${fmt(s.m)} g/mol`, ans: toM ? v/s.m : v*s.m });
             }
             showQ();
         }
@@ -385,7 +353,7 @@
         }
         window.checkQ = (btn, val, corr) => {
             document.querySelectorAll('.mc-btn').forEach(b => b.disabled = true);
-            if(Math.abs(val-corr) < 0.05) { btn.classList.add('bg-green-600', 'text-white'); sS++; }
+            if(Math.abs(val-corr) < 0.05) { btn.classList.add('bg-green-600', 'text-white'); sScore++; }
             else { btn.classList.add('bg-red-600', 'text-white'); }
             document.getElementById('qNextBtn').classList.remove('hidden');
         }
@@ -393,8 +361,8 @@
         function finishS() {
             document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('view5').classList.remove('hidden');
-            document.getElementById('bScore').innerText = `${sS} / ${sL.length}`;
-            document.getElementById('bPercent').innerText = `${Math.round((sS/sL.length)*100)}%`;
+            document.getElementById('bScore').innerText = `${sScore} / ${sL.length}`;
+            document.getElementById('bPercent').innerText = `${Math.round((sScore/sL.length)*100)}%`;
         }
 
         window.onload = () => {

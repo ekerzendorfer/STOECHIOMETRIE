@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molekül-Meister Ultimate | St. Pölten Edition 2026</title>
+    <title>Molekül-Meister Pro | Ultimate 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         sub { font-size: 0.8em; vertical-align: sub; line-height: 0; }
@@ -13,11 +13,11 @@
         .fraction { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; padding: 0 5px; }
         .fraction-top { border-bottom: 2px solid white; padding-bottom: 2px; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .lab-input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1.5rem; width: 100%; }
+        .lab-input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; width: 100%; }
         .mc-btn { transition: all 0.2s; border: 2px solid #334155; font-weight: 800; background-color: #1e293b; color: #cbd5e1; }
         .mc-btn:hover:not(:disabled) { border-color: #3b82f6; background-color: #334155; color: #fff; }
-        /* Sicherstellen, dass Formel-Container NIEMALS uppercase erben */
         .no-caps { text-transform: none !important; }
+        .calc-display { background-color: #0f172a; border: 2px solid #1e293b; }
     </style>
 </head>
 <body class="bg-slate-100 min-h-screen font-sans text-slate-900 pb-20">
@@ -27,22 +27,22 @@
             <div class="flex items-center gap-4">
                 <div class="bg-blue-900 p-4 rounded-3xl text-yellow-400 text-4xl shadow-lg">🧪</div>
                 <div>
-                    <h1 class="text-4xl font-black text-blue-900 uppercase tracking-tighter italic">Molekül-Meister <span class="text-blue-600">Ultimate</span></h1>
-                    <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Digitales Chemie-Zentrum | AT 2026</p>
+                    <h1 class="text-4xl font-black text-blue-900 uppercase tracking-tighter italic">Molekül-Meister <span class="text-blue-600">Pro</span></h1>
+                    <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Digitales Chemie-Zentrum | Edition Saint Pölten</p>
                 </div>
             </div>
             
             <div class="flex flex-wrap justify-center gap-6 items-center bg-slate-50 p-5 rounded-[2rem] border border-slate-200">
                 <div class="flex flex-col items-center border-r border-slate-200 pr-6">
-                    <span class="text-[10px] font-black text-slate-400 uppercase mb-2">Aufgabenanzahl</span>
-                    <input type="range" id="globalTaskCount" min="5" max="20" value="10" class="w-40 h-2 bg-slate-200 rounded-lg accent-blue-900">
-                    <span id="taskCountVal" class="text-blue-900 font-black text-sm mt-2">10 Aufgaben</span>
+                    <span class="text-[10px] font-black text-slate-400 uppercase mb-1">Aufgaben</span>
+                    <input type="range" id="globalTaskCount" min="5" max="20" value="10" class="w-32 h-2 bg-slate-200 rounded-lg accent-blue-900 cursor-pointer">
+                    <span id="taskCountVal" class="text-blue-900 font-black text-xs mt-1">10 Fragen</span>
                 </div>
                 <div class="flex items-center gap-4">
                     <span class="text-[10px] font-black text-slate-400 uppercase">Sek 1</span>
                     <label class="relative inline-flex items-center cursor-pointer">
                         <input type="checkbox" id="modeToggle" class="sr-only peer">
-                        <div class="w-14 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-900 after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+                        <div class="w-12 h-6 bg-slate-300 rounded-full peer peer-checked:bg-blue-900 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
                     </label>
                     <span class="text-[10px] font-black text-blue-900 uppercase">Sek 2</span>
                 </div>
@@ -58,32 +58,31 @@
                     <button onclick="switchView(4)" id="tabBtn4" class="tab-btn w-full py-4 text-xs rounded-2xl">MC-Quiz</button>
                 </nav>
 
-                <div class="bg-slate-900 p-8 rounded-[3rem] shadow-2xl border-b-[12px] border-blue-950">
-                    <div class="bg-black/60 p-5 rounded-2xl mb-6 text-right border border-white/5">
-                        <div id="calcInput" class="text-slate-500 text-xs font-mono h-5 overflow-hidden mb-1 italic"></div>
-                        <div id="calcRes" class="text-yellow-400 text-4xl font-mono">0,00</div>
+                <div class="bg-slate-900 p-6 rounded-[3rem] shadow-2xl border-b-[10px] border-blue-950">
+                    <div class="calc-display p-4 rounded-2xl mb-4 text-right shadow-inner">
+                        <div id="calcInput" class="text-blue-400 text-sm font-mono h-6 overflow-hidden mb-1 opacity-70"></div>
+                        <div id="calcRes" class="text-yellow-400 text-3xl font-mono font-bold">0,00</div>
                     </div>
-                    <div class="grid grid-cols-4 gap-3">
-                        <button onclick="calcKey('CLR')" class="bg-red-700 text-white p-4 rounded-xl font-black text-xs">AC</button>
-                        <button onclick="calcKey('(')" class="bg-white/10 text-white p-4 rounded-xl font-bold">(</button>
-                        <button onclick="calcKey(')')" class="bg-white/10 text-white p-4 rounded-xl font-bold">)</button>
-                        <button onclick="calcKey('/')" class="bg-blue-800 text-white p-4 rounded-xl font-bold">÷</button>
-                        <button onclick="calcKey('7')" class="bg-white/5 text-white p-5 rounded-xl font-bold">7</button>
-                        <button onclick="calcKey('8')" class="bg-white/5 text-white p-5 rounded-xl font-bold">8</button>
-                        <button onclick="calcKey('9')" class="bg-white/5 text-white p-5 rounded-xl font-bold">9</button>
-                        <button onclick="calcKey('*')" class="bg-blue-800 text-white p-4 rounded-xl font-bold">×</button>
-                        <button onclick="calcKey('4')" class="bg-white/5 text-white p-5 rounded-xl font-bold">4</button>
-                        <button onclick="calcKey('5')" class="bg-white/5 text-white p-5 rounded-xl font-bold">5</button>
-                        <button onclick="calcKey('6')" class="bg-white/5 text-white p-5 rounded-xl font-bold">6</button>
-                        <button onclick="calcKey('-')" class="bg-blue-800 text-white p-4 rounded-xl font-bold">-</button>
-                        <button onclick="calcKey('1')" class="bg-white/5 text-white p-5 rounded-xl font-bold">1</button>
-                        <button onclick="calcKey('2')" class="bg-white/5 text-white p-5 rounded-xl font-bold">2</button>
-                        <button onclick="calcKey('3')" class="bg-white/5 text-white p-5 rounded-xl font-bold">3</button>
-                        <button onclick="calcKey('+')" class="bg-blue-800 text-white p-4 rounded-xl font-bold">+</button>
-                        <button onclick="calcKey('0')" class="bg-white/5 text-white p-5 rounded-xl font-bold">0</button>
-                        <button onclick="calcKey(',')" class="bg-white/5 text-white p-5 rounded-xl font-bold text-2xl">,</button>
-                        <button onclick="calcExec()" class="bg-green-700 text-white p-5 rounded-xl font-black">=</button>
-                        <button onclick="applyResultToInput()" class="bg-yellow-500 text-blue-900 p-4 rounded-xl font-black text-[10px] uppercase shadow-lg">Übernahme</button>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button onclick="calcKey('CLR')" class="bg-red-700 text-white p-3 rounded-xl font-black text-xs">AC</button>
+                        <button onclick="calcKey('(')" class="bg-white/10 text-white p-3 rounded-xl font-bold">(</button>
+                        <button onclick="calcKey(')')" class="bg-white/10 text-white p-3 rounded-xl font-bold">)</button>
+                        <button onclick="calcKey('/')" class="bg-blue-800 text-white p-3 rounded-xl font-bold">÷</button>
+                        <button onclick="calcKey('7')" class="bg-white/5 text-white p-4 rounded-xl font-bold">7</button>
+                        <button onclick="calcKey('8')" class="bg-white/5 text-white p-4 rounded-xl font-bold">8</button>
+                        <button onclick="calcKey('9')" class="bg-white/5 text-white p-4 rounded-xl font-bold">9</button>
+                        <button onclick="calcKey('*')" class="bg-blue-800 text-white p-3 rounded-xl font-bold">×</button>
+                        <button onclick="calcKey('4')" class="bg-white/5 text-white p-4 rounded-xl font-bold">4</button>
+                        <button onclick="calcKey('5')" class="bg-white/5 text-white p-4 rounded-xl font-bold">5</button>
+                        <button onclick="calcKey('6')" class="bg-white/5 text-white p-4 rounded-xl font-bold">6</button>
+                        <button onclick="calcKey('-')" class="bg-blue-800 text-white p-3 rounded-xl font-bold">-</button>
+                        <button onclick="calcKey('1')" class="bg-white/5 text-white p-4 rounded-xl font-bold">1</button>
+                        <button onclick="calcKey('2')" class="bg-white/5 text-white p-4 rounded-xl font-bold">2</button>
+                        <button onclick="calcKey('3')" class="bg-white/5 text-white p-4 rounded-xl font-bold">3</button>
+                        <button onclick="calcKey('+')" class="bg-blue-800 text-white p-3 rounded-xl font-bold">+</button>
+                        <button onclick="calcKey('0')" class="bg-white/5 text-white p-4 rounded-xl font-bold">0</button>
+                        <button onclick="calcKey(',')" class="bg-white/5 text-white p-4 rounded-xl font-bold text-xl">,</button>
+                        <button onclick="calcExec()" class="col-span-2 bg-green-700 text-white p-4 rounded-xl font-black text-xl">=</button>
                     </div>
                 </div>
             </div>
@@ -93,9 +92,9 @@
                     <h2 class="text-3xl font-black text-blue-900 mb-8 uppercase italic">Mol & Masse</h2>
                     <div class="flex flex-wrap gap-2 mb-8 p-3 bg-slate-50 rounded-[1.5rem] border border-slate-200">
                         <button onclick="filterSub('alle', this)" id="fBtnAll" class="px-6 py-2 text-[10px] font-black rounded-xl bg-blue-900 text-yellow-400">ALLE</button>
-                        <button onclick="filterSub('E', this)" class="px-6 py-2 text-[10px] font-black rounded-xl bg-white text-slate-500">ELEMENTE</button>
-                        <button onclick="filterSub('A', this)" class="px-6 py-2 text-[10px] font-black rounded-xl bg-white text-slate-500">ANORGANIK</button>
-                        <button onclick="filterSub('O', this)" class="px-6 py-2 text-[10px] font-black rounded-xl bg-white text-slate-500">ORGANIK</button>
+                        <button onclick="filterSub('E', this)" class="px-6 py-2 text-[10px] font-black rounded-xl bg-white text-slate-500 border border-slate-200">ELEMENTE</button>
+                        <button onclick="filterSub('A', this)" class="px-6 py-2 text-[10px] font-black rounded-xl bg-white text-slate-500 border border-slate-200">ANORGANIK</button>
+                        <button onclick="filterSub('O', this)" class="px-6 py-2 text-[10px] font-black rounded-xl bg-white text-slate-500 border border-slate-200">ORGANIK</button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div class="space-y-6">
@@ -113,7 +112,7 @@
                             <span id="molUnitLabel" class="absolute right-5 top-6 font-bold text-slate-300">g</span></div>
                             <button onclick="calculateMol()" class="w-full bg-blue-800 text-yellow-400 py-6 rounded-2xl font-black shadow-xl text-xl uppercase tracking-widest">Berechnen</button>
                         </div>
-                        <div class="bg-slate-900 rounded-[3rem] p-10 flex flex-col justify-center items-center text-white min-h-[350px]">
+                        <div class="bg-slate-900 rounded-[3rem] p-10 flex flex-col justify-center items-center text-white border-b-[12px] border-blue-950 min-h-[350px] shadow-2xl">
                             <div id="molVisFormula" class="formula-display text-4xl flex items-center gap-3 no-caps"></div>
                             <div id="molVisResBox" class="mt-12 hidden text-center animate-in zoom-in w-full">
                                 <span class="text-[11px] font-black text-slate-500 uppercase block mb-3">Ergebnis</span>
@@ -127,14 +126,14 @@
                     <div class="bg-white p-8 rounded-[3rem] shadow-xl border border-slate-200">
                         <div class="flex justify-between items-center mb-8">
                             <h2 class="text-3xl font-black text-blue-900 uppercase italic">Reaktions-Labor</h2>
-                            <button onclick="calculateLabor()" class="px-10 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg hover:bg-green-700 uppercase">Berechnen</button>
+                            <button onclick="calculateLabor()" class="px-10 py-4 bg-green-600 text-white rounded-2xl font-black shadow-lg hover:bg-green-700 uppercase tracking-widest">Berechnen</button>
                         </div>
-                        <label class="block"><span class="text-[10px] font-black text-slate-400 uppercase ml-2 italic tracking-widest">Gleichung wählen</span>
-                        <select id="reacSelect" onchange="buildReacUI()" class="w-full mt-2 p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black"></select></label>
+                        <label class="block"><span class="text-[10px] font-black text-slate-400 uppercase ml-2 italic tracking-widest">Gleichung</span>
+                        <select id="reacSelect" onchange="buildReacUI()" class="w-full mt-2 p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black focus:border-blue-800 outline-none"></select></label>
                     </div>
                     <div class="bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl text-white min-h-[400px]">
                         <div class="flex flex-col items-center">
-                            <div id="reacEqDisplay" class="formula-display text-4xl text-blue-300 mb-16 text-center italic tracking-widest no-caps"></div>
+                            <div id="reacEqDisplay" class="formula-display text-3xl md:text-4xl text-blue-300 mb-16 text-center italic tracking-widest no-caps"></div>
                             <div id="reacGrid" class="lab-input-grid w-full no-caps"></div>
                         </div>
                     </div>
@@ -143,30 +142,31 @@
                 <div id="view3" class="view-panel hidden bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl text-white">
                     <div id="trainSetup" class="text-center py-10">
                         <h2 class="text-4xl font-black text-blue-400 mb-6 uppercase italic">Training</h2>
-                        <button onclick="startTrainingSession()" class="bg-blue-600 px-16 py-6 rounded-3xl text-2xl font-black shadow-xl hover:bg-blue-500 uppercase">Start</button>
+                        <button onclick="startTrainingSession()" class="bg-blue-600 px-16 py-6 rounded-3xl text-2xl font-black shadow-xl hover:bg-blue-500 uppercase tracking-widest">Start</button>
                     </div>
                     <div id="trainCore" class="hidden space-y-8">
-                        <div class="flex justify-between text-xs font-black uppercase text-slate-500 border-b border-white/10 pb-4 italic tracking-widest">
+                        <div class="flex justify-between text-[10px] font-black uppercase text-slate-500 border-b border-white/10 pb-4 italic tracking-widest">
                             <span id="tProgress">Frage 1</span><span id="tScoreDisp">Quote: 0%</span>
                         </div>
-                        <div class="text-center py-6">
-                            <div id="tTaskEq" class="text-4xl font-mono text-blue-300 mb-10 italic border-b border-white/5 pb-6 no-caps"></div>
-                            <p id="tTaskText" class="text-3xl font-black italic mb-8 no-caps"></p>
-                            <div id="tTaskHelp" class="text-xl bg-blue-500/10 p-4 rounded-xl border border-blue-500/20 text-blue-400 font-black no-caps"></div>
+                        <div class="text-center py-4">
+                            <div id="tTaskEq" class="text-3xl md:text-4xl font-mono text-blue-300 mb-8 italic border-b border-white/5 pb-6 no-caps"></div>
+                            <p id="tTaskText" class="text-2xl md:text-3xl font-black italic mb-8 no-caps"></p>
+                            <div id="tTaskHelp" class="text-lg bg-blue-500/10 p-4 rounded-xl border border-blue-500/20 text-blue-400 font-black no-caps"></div>
                         </div>
                         <div class="flex gap-4">
-                            <input type="text" id="tInput" class="flex-1 p-6 bg-white/10 border-2 border-white/10 rounded-[2.5rem] text-4xl font-black text-center outline-none focus:border-blue-500" placeholder="Antwort...">
+                            <input type="text" id="tInput" class="flex-1 p-6 bg-white/10 border-2 border-white/10 rounded-[2.5rem] text-4xl font-black text-center focus:border-blue-500 outline-none" placeholder="Antwort...">
                             <button id="tCheckBtn" onclick="checkAnswer()" class="bg-blue-600 px-10 rounded-[2.5rem] font-black text-xl hover:bg-blue-500 uppercase">Prüfen</button>
-                            <button id="tNextBtn" onclick="nextQuestion()" class="hidden bg-green-600 px-10 rounded-[2.5rem] font-black text-xl hover:bg-green-500 uppercase">Weiter</button>
+                            <button id="tNextBtn" onclick="nextQuestion()" class="hidden bg-green-600 px-10 rounded-[2.5rem] font-black text-xl hover:bg-green-500 uppercase">Nächste</button>
                         </div>
-                        <div id="tFeedback" class="h-10 text-center font-black text-2xl"></div>
+                        <div id="tFeedback" class="text-center font-black text-2xl py-2"></div>
+                        <div id="tSolution" class="hidden bg-blue-900/20 p-6 rounded-3xl border border-blue-500/30 text-blue-100 font-medium no-caps animate-in fade-in slide-in-from-bottom-4"></div>
                     </div>
                 </div>
 
                 <div id="view4" class="view-panel hidden bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl text-white">
                     <div id="quizSetup" class="text-center py-10">
                         <h2 class="text-4xl font-black text-blue-400 mb-6 uppercase italic">MC-Quiz</h2>
-                        <button onclick="startQuizSession()" class="bg-blue-600 px-16 py-6 rounded-3xl text-2xl font-black shadow-xl hover:bg-blue-500 uppercase">Start</button>
+                        <button onclick="startQuizSession()" class="bg-blue-600 px-16 py-6 rounded-3xl text-2xl font-black shadow-xl hover:bg-blue-500 uppercase tracking-widest">Start</button>
                     </div>
                     <div id="quizCore" class="hidden space-y-8">
                         <div class="flex justify-between items-center border-b border-white/10 pb-6 mb-8">
@@ -174,20 +174,20 @@
                             <span id="qScoreText" class="bg-blue-900 text-blue-300 px-6 py-2 rounded-full font-black text-sm uppercase">Frage 1</span>
                         </div>
                         <div class="text-center no-caps">
-                            <p id="qText" class="text-3xl font-black mb-6 italic"></p>
-                            <p id="qHelp" class="text-lg text-slate-400 font-bold mb-10"></p>
+                            <p id="qText" class="text-3xl font-black mb-6 italic tracking-tight"></p>
+                            <p id="qHelp" class="text-xl text-slate-400 font-bold mb-10"></p>
                             <div id="qOptions" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                            <button id="qNextBtn" onclick="nextQuizStep()" class="hidden w-full py-6 bg-blue-600 rounded-3xl font-black uppercase text-lg mt-8">Nächste Frage</button>
+                            <button id="qNextBtn" onclick="nextQuizStep()" class="hidden w-full py-6 bg-blue-600 rounded-3xl font-black uppercase text-lg mt-8">Weiter</button>
                         </div>
                     </div>
                 </div>
 
                 <div id="view5" class="view-panel hidden bg-white p-12 rounded-[4rem] shadow-2xl text-center border-t-[16px] border-blue-900 animate-in zoom-in">
-                    <h2 class="text-5xl font-black text-blue-900 mb-4 uppercase italic tracking-tighter">Abschluss</h2>
+                    <h2 class="text-5xl font-black text-blue-900 mb-4 uppercase italic">Bilanz</h2>
                     <div class="flex justify-center items-center gap-10 my-12">
-                        <div><span class="text-[10px] font-black text-slate-400 uppercase block">Richtig</span><div id="bScore" class="text-7xl font-black text-blue-600 tracking-tighter">0 / 0</div></div>
+                        <div><span class="text-[10px] font-black text-slate-400 uppercase block tracking-widest">Richtig</span><div id="bScore" class="text-7xl font-black text-blue-600 tracking-tighter">0 / 0</div></div>
                         <div class="h-20 w-[2px] bg-slate-100"></div>
-                        <div><span class="text-[10px] font-black text-slate-400 uppercase block">Quote</span><div id="bPercent" class="text-7xl font-black text-green-500 tracking-tighter">0%</div></div>
+                        <div><span class="text-[10px] font-black text-slate-400 uppercase block tracking-widest">Quote</span><div id="bPercent" class="text-7xl font-black text-green-500 tracking-tighter">0%</div></div>
                     </div>
                     <button onclick="location.reload()" class="bg-blue-900 text-yellow-400 px-16 py-7 rounded-[3rem] font-black text-2xl uppercase">Neustart</button>
                 </div>
@@ -196,63 +196,55 @@
     </div>
 
     <script>
-        // --- DATABASE (Präzise Notation) ---
+        // --- DATABASE (Updated with 12 organic substances) ---
         const subDB = {
             "H2": {m: 2.02, cat: "E", name: "Wasserstoffgas"}, "He": {m: 4.00, cat: "E", name: "Helium"},
             "C": {m: 12.01, cat: "E", name: "Kohlenstoff"}, "N2": {m: 28.01, cat: "E", name: "Stickstoffgas"},
             "O2": {m: 32.00, cat: "E", name: "Sauerstoffgas"}, "Na": {m: 22.99, cat: "E", name: "Natrium"},
             "Mg": {m: 24.31, cat: "E", name: "Magnesium"}, "Al": {m: 26.98, cat: "E", name: "Aluminium"},
             "S": {m: 32.06, cat: "E", name: "Schwefel"}, "Cl2": {m: 70.90, cat: "E", name: "Chlorgas"},
-            "Ca": {m: 40.08, cat: "E", name: "Calcium"}, "Fe": {m: 55.85, cat: "E", name: "Eisen"},
-            "Cu": {m: 63.55, cat: "E", name: "Kupfer"}, "Ag": {m: 107.87, cat: "E", name: "Silber"},
+            "Fe": {m: 55.85, cat: "E", name: "Eisen"}, "Cu": {m: 63.55, cat: "E", name: "Kupfer"},
             "H2O": {m: 18.02, cat: "A", name: "Wasser"}, "CO2": {m: 44.01, cat: "A", name: "Kohlenstoffdioxid"},
             "NaCl": {m: 58.44, cat: "A", name: "Kochsalz"}, "HCl": {m: 36.46, cat: "A", name: "Salzsäure"},
             "NaOH": {m: 40.00, cat: "A", name: "Natronlauge"}, "NH3": {m: 17.03, cat: "A", name: "Ammoniak"},
             "MgO": {m: 40.31, cat: "A", name: "Magnesiumoxid"}, "CaO": {m: 56.08, cat: "A", name: "Branntkalk"},
             "Fe2O3": {m: 159.69, cat: "A", name: "Eisen(III)-oxid"}, "CO": {m: 28.01, cat: "A", name: "Kohlenstoffmonoxid"},
-            "CaO": {m: 56.08, cat: "A", name: "Branntkalk"}, "CaCO3": {m: 100.09, cat: "A", name: "Kalk"},
-            "C6H12O6": {m: 180.16, cat: "O", name: "Glucose"}, "CH4": {m: 16.04, cat: "O", name: "Methan"},
-            "C3H8": {m: 44.10, cat: "O", name: "Propan"}, "CuO": {m: 79.55, cat: "A", name: "Kupferoxid"},
-            "C2H5OH": {m: 46.07, cat: "O", name: "Ethanol"}, "CH3COOH": {m: 60.05, cat: "O", name: "Essigsäure"}
+            "CaCO3": {m: 100.09, cat: "A", name: "Kalk"}, 
+            "CH4": {m: 16.04, cat: "O", name: "Methan"}, "C2H6": {m: 30.07, cat: "O", name: "Ethan"},
+            "C3H8": {m: 44.10, cat: "O", name: "Propan"}, "C4H10": {m: 58.12, cat: "O", name: "Butan"},
+            "C2H4": {m: 28.05, cat: "O", name: "Ethen"}, "CH3OH": {m: 32.04, cat: "O", name: "Methanol"},
+            "C2H5OH": {m: 46.07, cat: "O", name: "Ethanol"}, "HCOOH": {m: 46.03, cat: "O", name: "Ameisensäure"},
+            "CH3COOH": {m: 60.05, cat: "O", name: "Essigsäure"}, "HCOOCH3": {m: 60.05, cat: "O", name: "Ameisensäuremethylester"},
+            "C6H12O6": {m: 180.16, cat: "O", name: "Glucose"}, "C4H9Cl": {m: 92.57, cat: "O", name: "Chlorbutan"},
+            "C2H5Cl": {m: 64.51, cat: "O", name: "Chlorethan"}
         };
 
         const reacDB = {
             "R1": { name: "Methan-Verbrennung", p: [{c:1,k:"CH4"}, {c:2,k:"O2"}, {c:1,k:"CO2"}, {c:2,k:"H2O"}], div: 2 },
             "R2": { name: "Magnesium-Verbrennung", p: [{c:2,k:"Mg"}, {c:1,k:"O2"}, {c:2,k:"MgO"}], div: 2 },
-            "R3": { name: "Aluminium-Oxidation", p: [{c:4,k:"Al"}, {c:3,k:"O2"}, {c:2,k:"Al2O3"}], div: 2 },
-            "R4": { name: "Knallgas-Reaktion", p: [{c:2,k:"H2"}, {c:1,k:"O2"}, {c:2,k:"H2O"}], div: 2 },
-            "R5": { name: "Ammoniak-Synthese", p: [{c:1,k:"N2"}, {c:3,k:"H2"}, {c:2,k:"NH3"}], div: 2 },
-            "R6": { name: "Zucker-Verbrennung", p: [{c:1,k:"C6H12O6"}, {c:6,k:"O2"}, {c:6,k:"CO2"}, {c:6,k:"H2O"}], div: 2 },
-            "R7": { name: "Hochofen-Prozess", p: [{c:1,k:"Fe2O3"}, {c:3,k:"CO"}, {c:2,k:"Fe"}, {c:3,k:"CO2"}], div: 2 },
-            "R8": { name: "Eisen-Oxidation", p: [{c:4,k:"Fe"}, {c:3,k:"O2"}, {c:2,k:"Fe2O3"}], div: 2 },
-            "R9": { name: "Kalk-Zersetzung", p: [{c:1,k:"CaCO3"}, {c:1,k:"CaO"}, {c:1,k:"CO2"}], div: 1 },
-            "R10": { name: "Kupfer-Oxidation", p: [{c:2,k:"Cu"}, {c:1,k:"O2"}, {c:2,k:"CuO"}], div: 2 }
+            "R3": { name: "Knallgas-Reaktion", p: [{c:2,k:"H2"}, {c:1,k:"O2"}, {c:2,k:"H2O"}], div: 2 },
+            "R4": { name: "Neutralisation", p: [{c:1,k:"HCl"}, {c:1,k:"NaOH"}, {c:1,k:"NaCl"}, {c:1,k:"H2O"}], div: 2 },
+            "R5": { name: "Zucker-Verbrennung", p: [{c:1,k:"C6H12O6"}, {c:6,k:"O2"}, {c:6,k:"CO2"}, {c:6,k:"H2O"}], div: 2 },
+            "R6": { name: "Hochofen-Prozess", p: [{c:1,k:"Fe2O3"}, {c:3,k:"CO"}, {c:2,k:"Fe"}, {c:3,k:"CO2"}], div: 2 },
+            "R7": { name: "Veresterung", p: [{c:1,k:"CH3OH"}, {c:1,k:"HCOOH"}, {c:1,k:"HCOOCH3"}, {c:1,k:"H2O"}], div: 2 },
+            "R8": { name: "Substitution (Butan)", p: [{c:1,k:"C4H10"}, {c:1,k:"Cl2"}, {c:1,k:"C4H9Cl"}, {c:1,k:"HCl"}], div: 2 },
+            "R9": { name: "Addition (Ethen)", p: [{c:1,k:"C2H4"}, {c:1,k:"HCl"}, {c:1,k:"C2H5Cl"}], div: 2 },
+            "R10": { name: "Ammoniak-Synthese", p: [{c:1,k:"N2"}, {c:3,k:"H2"}, {c:2,k:"NH3"}], div: 2 }
         };
 
-        // --- ENGINE ---
-        let lastInputFocused = null;
+        // --- CORE ENGINE ---
         let cExp = "", mMode = 'n', sL = [], sI = 0, sScore = 0;
         const fmt = (n) => n.toString().replace(/\./g, ',');
         const parse = (s) => parseFloat(s.replace(/,/g, '.'));
         function renderF(t) { return t.replace(/([A-Z][a-z]*)(\d+)/g, '$1<sub>$2</sub>'); }
         function toUni(s) { const m = {'0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅','6':'₆','7':'₇','8':'₈','9':'₉'}; return s.replace(/(\d+)/g, (v) => [...v].map(c => m[c] || c).join('')); }
 
-        // --- GLOBAL FOCUS WATCHER ---
-        document.addEventListener('focusin', (e) => {
-            if(e.target.tagName === 'INPUT' && !e.target.closest('.bg-slate-900')) {
-                lastInputFocused = e.target;
-            }
-        });
-
-        // --- CALC ---
+        // --- CALC KEYBOARD ---
         window.addEventListener('keydown', (e) => {
             if(e.key === 'Enter') { e.preventDefault(); calcExec(); }
             else if(e.key === 'Escape') { calcKey('CLR'); }
-            else if("0123456789+-*/(),.".includes(e.key)) {
-                let k = e.key === '.' ? ',' : e.key; calcKey(k);
-            } else if(e.key === 'Backspace') {
-                cExp = cExp.slice(0, -1); document.getElementById('calcInput').innerText = cExp.replace(/\./g, ',');
-            }
+            else if("0123456789+-*/(),.".includes(e.key)) { let k = e.key === '.' ? ',' : e.key; calcKey(k); }
+            else if(e.key === 'Backspace') { cExp = cExp.slice(0, -1); document.getElementById('calcInput').innerText = cExp.replace(/\./g, ','); }
         });
         function calcKey(k) {
             if(k === 'CLR') { cExp = ""; document.getElementById('calcRes').innerText = "0,00"; }
@@ -263,25 +255,21 @@
             try { let r = eval(cExp); document.getElementById('calcRes').innerText = fmt(r.toLocaleString('de-AT', {maximumFractionDigits: 3})); }
             catch(e) { document.getElementById('calcRes').innerText = "Err"; }
         }
-        function applyResultToInput() { if(lastInputFocused) { lastInputFocused.value = document.getElementById('calcRes').innerText; lastInputFocused.focus(); } }
 
         // --- NAV ---
         function switchView(v) {
             document.querySelectorAll('.view-panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('view'+v).classList.remove('hidden');
             for(let i=1; i<=4; i++) document.getElementById('tabBtn'+i).classList.toggle('tab-active', i === v);
-            if(v === 1) lastInputFocused = document.getElementById('molInput');
             if(v === 2) buildReacUI();
         }
 
-        // --- VIEW 1 (FILTER REPAIR) ---
+        // --- VIEW 1 ---
         function filterSub(cat, btn) {
             const s = document.getElementById('molSelect'); s.innerHTML = "";
-            Object.keys(subDB).forEach(k => {
-                if(cat==='alle' || subDB[k].cat === cat) {
-                    let o = document.createElement('option'); o.value = k; o.innerText = `${subDB[k].name} (${toUni(k)})`; s.appendChild(o);
-                }
-            });
+            Object.keys(subDB).forEach(k => { if(cat==='alle' || subDB[k].cat === cat) {
+                let o = document.createElement('option'); o.value = k; o.innerText = `${subDB[k].name} (${toUni(k)})`; s.appendChild(o);
+            }});
             document.querySelectorAll('[onclick^="filterSub"]').forEach(b => b.className = "px-6 py-2 text-[10px] font-black rounded-xl bg-white text-slate-500 border border-slate-200");
             btn.className = "px-6 py-2 text-[10px] font-black rounded-xl bg-blue-900 text-yellow-400 shadow-md"; updateM();
         }
@@ -295,23 +283,23 @@
             const k = document.getElementById('molSelect').value; const M = subDB[k].m; const iV = parse(document.getElementById('molInput').value); if(isNaN(iV)) return;
             const vis = document.getElementById('molVisFormula');
             if(mMode === 'n') {
-                vis.innerHTML = `<span class="text-blue-400 italic font-black">n</span> = <div class="fraction text-white"><span class="fraction-top text-blue-300 font-bold">${fmt(iV)} g</span><span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span></div>`;
+                vis.innerHTML = `<span class="text-blue-400 font-black">n</span> = <div class="fraction text-white"><span class="fraction-top text-blue-300 font-bold">${fmt(iV)} g</span><span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span></div>`;
                 document.getElementById('molVisResVal').innerText = fmt((iV/M).toFixed(4)) + " mol";
             } else {
-                vis.innerHTML = `<span class="text-blue-400 italic font-black">m</span> = <span class="text-blue-300 font-bold">${fmt(iV)} mol</span> · <span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span>`;
+                vis.innerHTML = `<span class="text-blue-400 font-black">m</span> = <span class="text-blue-300 font-bold">${fmt(iV)} mol</span> · <span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span>`;
                 document.getElementById('molVisResVal').innerText = fmt((iV*M).toFixed(2)) + " g";
             }
             document.getElementById('molVisResBox').classList.remove('hidden');
         }
 
-        // --- LABOR (STOICHIOMETRY) ---
+        // --- LABOR ---
         function buildReacUI() {
             const r = reacDB[document.getElementById('reacSelect').value];
             document.getElementById('reacEqDisplay').innerHTML = r.p.map((p, i) => (i === r.div ? " ⟶ " : (i > 0 ? " + " : "")) + (p.c > 1 ? p.c + " " : "") + renderF(p.k)).join('');
             const grid = document.getElementById('reacGrid'); grid.innerHTML = "";
             r.p.forEach((p, i) => {
-                const cell = document.createElement('div'); cell.className = "flex flex-col gap-3 p-5 bg-white/5 rounded-[2rem] border border-white/10";
-                cell.innerHTML = `<div class="text-2xl font-black text-blue-400 text-center">${renderF(p.k)}</div><input type="text" class="lab-m-input w-full p-4 bg-white text-slate-900 rounded-2xl text-center font-black" placeholder="m (g)"><div class="text-center text-xs text-slate-500">n = <span class="lab-n-output font-black text-green-400 text-sm">0,0000</span> mol</div>`;
+                const cell = document.createElement('div'); cell.className = "flex flex-col gap-2 p-4 bg-white/5 rounded-[2rem] border border-white/10";
+                cell.innerHTML = `<div class="text-xl font-black text-blue-400 text-center">${renderF(p.k)}</div><input type="text" class="lab-m-input w-full p-3 bg-white text-slate-900 rounded-xl text-center font-black outline-none focus:ring-2 focus:ring-blue-500" placeholder="m (g)"><div class="text-center text-[10px] text-slate-500">n = <span class="lab-n-output font-black text-green-400">0,0000</span> mol</div>`;
                 grid.appendChild(cell);
             });
         }
@@ -322,48 +310,64 @@
             r.p.forEach((p, i) => { const nRes = nUnit * p.c; if(i !== aI) inps[i].value = fmt((nRes * subDB[p.k].m).toFixed(2)); document.querySelectorAll('.lab-n-output')[i].innerText = fmt(nRes.toFixed(4)); });
         }
 
-        // --- TRAINING (SEK 2 START REPAIRED) ---
+        // --- TRAINING (NEW SOLUTION FEATURE) ---
         function startTrainingSession() {
             const count = parseInt(document.getElementById('globalTaskCount').value); const is2 = document.getElementById('modeToggle').checked;
             sL = []; sI = 0; sScore = 0; const rKeys = Object.keys(reacDB);
             for(let i=0; i<count; i++) {
-                if(is2 && Math.random() > 0.3) {
-                    const r = reacDB[rKeys[Math.floor(Math.random() * rKeys.length)]]; const v = (Math.random()*20+5).toFixed(1); const pr = r.p[r.div]; const ed = r.p[0];
+                if(is2 && Math.random() > 0.4) {
+                    const r = reacDB[rKeys[Math.floor(Math.random() * rKeys.length)]]; const v = (Math.random()*15+5).toFixed(1); const pr = r.p[r.div]; const ed = r.p[0];
                     const eqS = r.p.map((p, idx) => (idx === r.div ? " ⟶ " : (idx > 0 ? " + " : "")) + (p.c > 1 ? p.c + " " : "") + p.k).join('');
-                    sL.push({ eq: eqS, text: `Wieviel g ${renderF(pr.k)} entstehen aus ${fmt(v)}g ${renderF(ed.k)}?`, help:`M(${ed.k})=${fmt(subDB[ed.k].m)} | M(${pr.k})=${fmt(subDB[pr.k].m)}`, ans: (v / subDB[ed.k].m) / ed.c * pr.c * subDB[pr.k].m });
+                    sL.push({ type:'R', eq: eqS, text: `Wieviel g ${renderF(pr.k)} entstehen aus ${fmt(v)}g ${renderF(ed.k)}?`, edK: ed.k, prK: pr.k, edC: ed.c, prC: pr.c, val: v, ans: (v / subDB[ed.k].m) / ed.c * pr.c * subDB[pr.k].m });
                 } else {
-                    const k = Object.keys(subDB)[Math.floor(Math.random()*20)]; const s = subDB[k]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
-                    sL.push({ text: toM ? `n von ${fmt(v)}g ${s.name} (${renderF(k)})?` : `m von ${fmt(v)}mol ${s.name} (${renderF(k)})?`, help:`M = ${fmt(s.m)} g/mol`, ans: toM ? v/s.m : v*s.m });
+                    const k = Object.keys(subDB)[Math.floor(Math.random()*20)]; const s = subDB[k]; const v = (Math.random()*4+1).toFixed(1); const toM = Math.random() > 0.5;
+                    sL.push({ type:'S', mode: toM?'n':'m', k: k, val: v, text: toM ? `n von ${fmt(v)}g ${s.name} (${renderF(k)})?` : `m von ${fmt(v)}mol ${s.name} (${renderF(k)})?`, ans: toM ? v/s.m : v*s.m });
                 }
             }
             document.getElementById('trainSetup').classList.add('hidden'); document.getElementById('trainCore').classList.remove('hidden'); showQuestion();
         }
         function showQuestion() {
             const q = sL[sI]; document.getElementById('tProgress').innerText = `Frage ${sI+1} / ${sL.length}`; document.getElementById('tTaskEq').innerHTML = q.eq ? renderF(q.eq) : "";
-            document.getElementById('tTaskText').innerHTML = q.text; document.getElementById('tTaskHelp').innerHTML = "HILFE: " + renderF(q.help);
-            document.getElementById('tInput').value = ""; document.getElementById('tFeedback').innerText = ""; document.getElementById('tCheckBtn').classList.remove('hidden'); document.getElementById('tNextBtn').classList.add('hidden');
+            document.getElementById('tTaskText').innerHTML = q.text; document.getElementById('tTaskHelp').innerHTML = "M("+renderF(q.edK || q.k)+") = "+fmt(subDB[q.edK || q.k].m.toFixed(2))+" g/mol" + (q.prK ? " | M("+renderF(q.prK)+") = "+fmt(subDB[q.prK].m.toFixed(2))+" g/mol" : "");
+            document.getElementById('tInput').value = ""; document.getElementById('tFeedback').innerText = ""; document.getElementById('tSolution').classList.add('hidden');
+            document.getElementById('tCheckBtn').classList.remove('hidden'); document.getElementById('tNextBtn').classList.add('hidden');
         }
         function checkAnswer() {
-            const v = parse(document.getElementById('tInput').value); const c = sL[sI].ans;
-            if(Math.abs(v-c) < 0.25) { sScore++; document.getElementById('tFeedback').innerText = "✅ Richtig!"; document.getElementById('tFeedback').className = "text-green-400 font-black"; }
-            else { document.getElementById('tFeedback').innerText = "❌ Falsch! Lösung: " + fmt(c.toFixed(2)); document.getElementById('tFeedback').className = "text-red-500 font-black"; }
+            const q = sL[sI]; const v = parse(document.getElementById('tInput').value); const c = q.ans;
+            const sol = document.getElementById('tSolution'); sol.classList.remove('hidden');
+            if(Math.abs(v-c) < 0.25) { sScore++; document.getElementById('tFeedback').innerText = "✅ RICHTIG!"; document.getElementById('tFeedback').className = "text-green-400 font-black"; }
+            else { document.getElementById('tFeedback').innerText = "❌ LEIDER FALSCH!"; document.getElementById('tFeedback').className = "text-red-500 font-black"; }
+            
+            // Build AI Solution Path
+            let path = `<p class='font-black text-blue-400 mb-2 uppercase text-xs tracking-widest'>Lösungsweg:</p>`;
+            if(q.type === 'S') {
+                if(q.mode === 'n') path += `1. Stoffmenge berechnen: n = m / M<br>n = ${fmt(q.val)}g / ${fmt(subDB[q.k].m.toFixed(2))}g/mol = <b>${fmt(c.toFixed(4))} mol</b>`;
+                else path += `1. Masse berechnen: m = n · M<br>m = ${fmt(q.val)}mol · ${fmt(subDB[q.k].m.toFixed(2))}g/mol = <b>${fmt(c.toFixed(2))} g</b>`;
+            } else {
+                const nEd = q.val / subDB[q.edK].m;
+                path += `1. Stoffmenge n(${renderF(q.edK)}) = m/M = ${fmt(q.val)} / ${fmt(subDB[q.edK].m.toFixed(2))} = ${fmt(nEd.toFixed(4))} mol<br>`;
+                path += `2. Molverhältnis: ${q.edC} mol ${renderF(q.edK)} reagieren zu ${q.prC} mol ${renderF(q.prK)}<br>`;
+                path += `3. n(${renderF(q.prK)}) = ${fmt(nEd.toFixed(4))} / ${q.edC} · ${q.prC} = ${fmt((nEd/q.edC*q.prC).toFixed(4))} mol<br>`;
+                path += `4. Masse m = n · M = ${fmt((nEd/q.edC*q.prC).toFixed(4))} · ${fmt(subDB[q.prK].m.toFixed(2))} = <b>${fmt(c.toFixed(2))} g</b>`;
+            }
+            sol.innerHTML = path;
             document.getElementById('tCheckBtn').classList.add('hidden'); document.getElementById('tNextBtn').classList.remove('hidden');
         }
         function nextQuestion() { sI++; if(sI < sL.length) showQuestion(); else finishS(); }
 
-        // --- QUIZ (CASE-SENSITIVE REPAIR) ---
+        // --- QUIZ ---
         function startQuizSession() {
             sScore = 0; sI = 0; sL = []; const count = parseInt(document.getElementById('globalTaskCount').value); const keys = Object.keys(subDB);
             for(let i=0; i<count; i++) {
                 const k = keys[Math.floor(Math.random()*keys.length)]; const s = subDB[k]; const v = (Math.random()*5+1).toFixed(1); const toM = Math.random() > 0.5;
-                sL.push({ text: toM ? `Stoffmenge n von ${fmt(v)}g ${s.name}?` : `Masse m von ${fmt(v)}mol ${s.name}?`, help: `M(${k}) = ${fmt(s.m)} g/mol`, ans: toM ? v/s.m : v*s.m });
+                sL.push({ text: toM ? `Stoffmenge n von ${fmt(v)}g ${s.name}?` : `Masse m von ${fmt(v)}mol ${s.name}?`, help: `M(${k}) = ${fmt(s.m.toFixed(2))} g/mol`, ans: toM ? v/s.m : v*s.m });
             }
             document.getElementById('quizSetup').classList.add('hidden'); document.getElementById('quizCore').classList.remove('hidden'); showQ();
         }
         function showQ() {
             const q = sL[sI]; document.getElementById('qScoreText').innerText = `Frage ${sI+1} / ${sL.length}`;
             document.getElementById('qText').innerHTML = q.text; document.getElementById('qHelp').innerHTML = "HILFE: " + renderF(q.help);
-            const opts = [q.ans, q.ans*1.5, q.ans/2, q.ans+5].sort(() => Math.random()-0.5);
+            const opts = [q.ans, q.ans*1.5, q.ans/2, q.ans+1.2].sort(() => Math.random()-0.5);
             document.getElementById('qOptions').innerHTML = opts.map(o => `<button onclick="checkQMC(this, ${o}, ${q.ans})" class="mc-btn p-6 rounded-3xl font-black text-xl shadow-lg">${fmt(o.toFixed(2))}</button>`).join('');
             document.getElementById('qNextBtn').classList.add('hidden');
         }
@@ -384,7 +388,6 @@
             filterSub('alle', document.getElementById('fBtnAll')); setMolMode('n');
             const rs = document.getElementById('reacSelect'); Object.keys(reacDB).forEach(k => { let o = document.createElement('option'); o.value = k; o.innerText = reacDB[k].name; rs.appendChild(o); });
             document.getElementById('globalTaskCount').oninput = (e) => document.getElementById('taskCountVal').innerText = e.target.value + " Aufgaben";
-            lastInputFocused = document.getElementById('molInput');
         };
     </script>
 </body>

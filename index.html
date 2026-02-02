@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Molekül-Meister Pro | Ultimate 2026</title>
+    <title>Stöchiometrie-Meister Pro | St. Pölten 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         sub { font-size: 0.8em; vertical-align: sub; line-height: 0; }
@@ -27,8 +27,9 @@
             <div class="flex items-center gap-4">
                 <div class="bg-blue-900 p-4 rounded-3xl text-yellow-400 text-4xl shadow-lg">🧪</div>
                 <div>
-                    <h1 class="text-4xl font-black text-blue-900 uppercase tracking-tighter italic">Molekül-Meister <span class="text-blue-600">Pro</span></h1>
-                    <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Digitales Chemie-Zentrum | Edition Saint Pölten</p>
+                    <h1 class="text-4xl font-black text-blue-900 uppercase tracking-tighter italic">Stöchiometrie-Meister <span class="text-blue-600">Pro</span></h1>
+                    <p class="text-slate-500 text-xs font-bold uppercase tracking-widest">Digitales Chemie-Zentrum | St. Pölten</p>
+                    <p class="text-slate-400 text-[9px] mt-1 font-medium italic">Entwickelt von Mag. Erich Kerzendorfer mit Hilfe von Gemini 3 Pro</p>
                 </div>
             </div>
             
@@ -133,7 +134,7 @@
                     </div>
                     <div class="bg-slate-900 p-10 rounded-[3.5rem] shadow-2xl text-white min-h-[400px]">
                         <div class="flex flex-col items-center">
-                            <div id="reacEqDisplay" class="formula-display text-3xl md:text-4xl text-blue-300 mb-16 text-center italic tracking-widest no-caps"></div>
+                            <div id="reacEqDisplay" class="formula-display text-2xl md:text-3xl text-blue-300 mb-16 text-center italic tracking-widest no-caps"></div>
                             <div id="reacGrid" class="lab-input-grid w-full no-caps"></div>
                         </div>
                     </div>
@@ -159,7 +160,7 @@
                             <button id="tNextBtn" onclick="nextQuestion()" class="hidden bg-green-600 px-10 rounded-[2.5rem] font-black text-xl hover:bg-green-500 uppercase">Nächste</button>
                         </div>
                         <div id="tFeedback" class="text-center font-black text-2xl py-2"></div>
-                        <div id="tSolution" class="hidden bg-blue-900/20 p-6 rounded-3xl border border-blue-500/30 text-blue-100 font-medium no-caps animate-in fade-in slide-in-from-bottom-4"></div>
+                        <div id="tSolution" class="hidden bg-blue-900/20 p-6 rounded-3xl border border-blue-500/30 text-blue-100 font-medium no-caps animate-in fade-in"></div>
                     </div>
                 </div>
 
@@ -183,7 +184,7 @@
                 </div>
 
                 <div id="view5" class="view-panel hidden bg-white p-12 rounded-[4rem] shadow-2xl text-center border-t-[16px] border-blue-900 animate-in zoom-in">
-                    <h2 class="text-5xl font-black text-blue-900 mb-4 uppercase italic">Bilanz</h2>
+                    <h2 class="text-5xl font-black text-blue-900 mb-4 uppercase italic">Abschluss</h2>
                     <div class="flex justify-center items-center gap-10 my-12">
                         <div><span class="text-[10px] font-black text-slate-400 uppercase block tracking-widest">Richtig</span><div id="bScore" class="text-7xl font-black text-blue-600 tracking-tighter">0 / 0</div></div>
                         <div class="h-20 w-[2px] bg-slate-100"></div>
@@ -196,14 +197,14 @@
     </div>
 
     <script>
-        // --- DATABASE (Updated with 12 organic substances) ---
+        // --- COMPLETE DATABASE (12 organic substances) ---
         const subDB = {
             "H2": {m: 2.02, cat: "E", name: "Wasserstoffgas"}, "He": {m: 4.00, cat: "E", name: "Helium"},
             "C": {m: 12.01, cat: "E", name: "Kohlenstoff"}, "N2": {m: 28.01, cat: "E", name: "Stickstoffgas"},
             "O2": {m: 32.00, cat: "E", name: "Sauerstoffgas"}, "Na": {m: 22.99, cat: "E", name: "Natrium"},
             "Mg": {m: 24.31, cat: "E", name: "Magnesium"}, "Al": {m: 26.98, cat: "E", name: "Aluminium"},
-            "S": {m: 32.06, cat: "E", name: "Schwefel"}, "Cl2": {m: 70.90, cat: "E", name: "Chlorgas"},
             "Fe": {m: 55.85, cat: "E", name: "Eisen"}, "Cu": {m: 63.55, cat: "E", name: "Kupfer"},
+            "Cl2": {m: 70.90, cat: "E", name: "Chlorgas"}, "S": {m: 32.06, cat: "E", name: "Schwefel"},
             "H2O": {m: 18.02, cat: "A", name: "Wasser"}, "CO2": {m: 44.01, cat: "A", name: "Kohlenstoffdioxid"},
             "NaCl": {m: 58.44, cat: "A", name: "Kochsalz"}, "HCl": {m: 36.46, cat: "A", name: "Salzsäure"},
             "NaOH": {m: 40.00, cat: "A", name: "Natronlauge"}, "NH3": {m: 17.03, cat: "A", name: "Ammoniak"},
@@ -222,14 +223,14 @@
         const reacDB = {
             "R1": { name: "Methan-Verbrennung", p: [{c:1,k:"CH4"}, {c:2,k:"O2"}, {c:1,k:"CO2"}, {c:2,k:"H2O"}], div: 2 },
             "R2": { name: "Magnesium-Verbrennung", p: [{c:2,k:"Mg"}, {c:1,k:"O2"}, {c:2,k:"MgO"}], div: 2 },
-            "R3": { name: "Knallgas-Reaktion", p: [{c:2,k:"H2"}, {c:1,k:"O2"}, {c:2,k:"H2O"}], div: 2 },
+            "R3": { name: "Zucker-Verbrennung", p: [{c:1,k:"C6H12O6"}, {c:6,k:"O2"}, {c:6,k:"CO2"}, {c:6,k:"H2O"}], div: 2 },
             "R4": { name: "Neutralisation", p: [{c:1,k:"HCl"}, {c:1,k:"NaOH"}, {c:1,k:"NaCl"}, {c:1,k:"H2O"}], div: 2 },
-            "R5": { name: "Zucker-Verbrennung", p: [{c:1,k:"C6H12O6"}, {c:6,k:"O2"}, {c:6,k:"CO2"}, {c:6,k:"H2O"}], div: 2 },
+            "R5": { name: "Ammoniak-Synthese", p: [{c:1,k:"N2"}, {c:3,k:"H2"}, {c:2,k:"NH3"}], div: 2 },
             "R6": { name: "Hochofen-Prozess", p: [{c:1,k:"Fe2O3"}, {c:3,k:"CO"}, {c:2,k:"Fe"}, {c:3,k:"CO2"}], div: 2 },
             "R7": { name: "Veresterung", p: [{c:1,k:"CH3OH"}, {c:1,k:"HCOOH"}, {c:1,k:"HCOOCH3"}, {c:1,k:"H2O"}], div: 2 },
             "R8": { name: "Substitution (Butan)", p: [{c:1,k:"C4H10"}, {c:1,k:"Cl2"}, {c:1,k:"C4H9Cl"}, {c:1,k:"HCl"}], div: 2 },
             "R9": { name: "Addition (Ethen)", p: [{c:1,k:"C2H4"}, {c:1,k:"HCl"}, {c:1,k:"C2H5Cl"}], div: 2 },
-            "R10": { name: "Ammoniak-Synthese", p: [{c:1,k:"N2"}, {c:3,k:"H2"}, {c:2,k:"NH3"}], div: 2 }
+            "R10": { name: "Knallgas-Reaktion", p: [{c:2,k:"H2"}, {c:1,k:"O2"}, {c:2,k:"H2O"}], div: 2 }
         };
 
         // --- CORE ENGINE ---
@@ -283,10 +284,10 @@
             const k = document.getElementById('molSelect').value; const M = subDB[k].m; const iV = parse(document.getElementById('molInput').value); if(isNaN(iV)) return;
             const vis = document.getElementById('molVisFormula');
             if(mMode === 'n') {
-                vis.innerHTML = `<span class="text-blue-400 font-black">n</span> = <div class="fraction text-white"><span class="fraction-top text-blue-300 font-bold">${fmt(iV)} g</span><span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span></div>`;
+                vis.innerHTML = `<span class="text-blue-400 font-black italic">n</span> = <div class="fraction text-white"><span class="fraction-top text-blue-300 font-bold">${fmt(iV)} g</span><span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span></div>`;
                 document.getElementById('molVisResVal').innerText = fmt((iV/M).toFixed(4)) + " mol";
             } else {
-                vis.innerHTML = `<span class="text-blue-400 font-black">m</span> = <span class="text-blue-300 font-bold">${fmt(iV)} mol</span> · <span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span>`;
+                vis.innerHTML = `<span class="text-blue-400 font-black italic">m</span> = <span class="text-blue-300 font-bold">${fmt(iV)} mol</span> · <span class="text-slate-500 font-bold">${fmt(M.toFixed(2))} g/mol</span>`;
                 document.getElementById('molVisResVal').innerText = fmt((iV*M).toFixed(2)) + " g";
             }
             document.getElementById('molVisResBox').classList.remove('hidden');
@@ -299,7 +300,7 @@
             const grid = document.getElementById('reacGrid'); grid.innerHTML = "";
             r.p.forEach((p, i) => {
                 const cell = document.createElement('div'); cell.className = "flex flex-col gap-2 p-4 bg-white/5 rounded-[2rem] border border-white/10";
-                cell.innerHTML = `<div class="text-xl font-black text-blue-400 text-center">${renderF(p.k)}</div><input type="text" class="lab-m-input w-full p-3 bg-white text-slate-900 rounded-xl text-center font-black outline-none focus:ring-2 focus:ring-blue-500" placeholder="m (g)"><div class="text-center text-[10px] text-slate-500">n = <span class="lab-n-output font-black text-green-400">0,0000</span> mol</div>`;
+                cell.innerHTML = `<div class="text-xl font-black text-blue-400 text-center">${renderF(p.k)}</div><input type="text" class="lab-m-input w-full p-2 bg-white text-slate-900 rounded-xl text-center font-black outline-none focus:ring-2 focus:ring-blue-500" placeholder="m (g)"><div class="text-center text-[10px] text-slate-500">n = <span class="lab-n-output font-black text-green-400">0,0000</span> mol</div>`;
                 grid.appendChild(cell);
             });
         }
@@ -310,7 +311,7 @@
             r.p.forEach((p, i) => { const nRes = nUnit * p.c; if(i !== aI) inps[i].value = fmt((nRes * subDB[p.k].m).toFixed(2)); document.querySelectorAll('.lab-n-output')[i].innerText = fmt(nRes.toFixed(4)); });
         }
 
-        // --- TRAINING (NEW SOLUTION FEATURE) ---
+        // --- TRAINING (LÖSUNGSWEG FEATURE) ---
         function startTrainingSession() {
             const count = parseInt(document.getElementById('globalTaskCount').value); const is2 = document.getElementById('modeToggle').checked;
             sL = []; sI = 0; sScore = 0; const rKeys = Object.keys(reacDB);
@@ -318,7 +319,7 @@
                 if(is2 && Math.random() > 0.4) {
                     const r = reacDB[rKeys[Math.floor(Math.random() * rKeys.length)]]; const v = (Math.random()*15+5).toFixed(1); const pr = r.p[r.div]; const ed = r.p[0];
                     const eqS = r.p.map((p, idx) => (idx === r.div ? " ⟶ " : (idx > 0 ? " + " : "")) + (p.c > 1 ? p.c + " " : "") + p.k).join('');
-                    sL.push({ type:'R', eq: eqS, text: `Wieviel g ${renderF(pr.k)} entstehen aus ${fmt(v)}g ${renderF(ed.k)}?`, edK: ed.k, prK: pr.k, edC: ed.c, prC: pr.c, val: v, ans: (v / subDB[ed.k].m) / ed.c * pr.c * subDB[pr.k].m });
+                    sL.push({ type:'R', eq: eqS, text: `Wie viel g ${renderF(pr.k)} entstehen aus ${fmt(v)}g ${renderF(ed.k)}?`, edK: ed.k, prK: pr.k, edC: ed.c, prC: pr.c, val: v, ans: (v / subDB[ed.k].m) / ed.c * pr.c * subDB[pr.k].m });
                 } else {
                     const k = Object.keys(subDB)[Math.floor(Math.random()*20)]; const s = subDB[k]; const v = (Math.random()*4+1).toFixed(1); const toM = Math.random() > 0.5;
                     sL.push({ type:'S', mode: toM?'n':'m', k: k, val: v, text: toM ? `n von ${fmt(v)}g ${s.name} (${renderF(k)})?` : `m von ${fmt(v)}mol ${s.name} (${renderF(k)})?`, ans: toM ? v/s.m : v*s.m });
@@ -338,17 +339,16 @@
             if(Math.abs(v-c) < 0.25) { sScore++; document.getElementById('tFeedback').innerText = "✅ RICHTIG!"; document.getElementById('tFeedback').className = "text-green-400 font-black"; }
             else { document.getElementById('tFeedback').innerText = "❌ LEIDER FALSCH!"; document.getElementById('tFeedback').className = "text-red-500 font-black"; }
             
-            // Build AI Solution Path
-            let path = `<p class='font-black text-blue-400 mb-2 uppercase text-xs tracking-widest'>Lösungsweg:</p>`;
+            let path = `<p class='font-black text-blue-400 mb-2 uppercase text-[10px] tracking-widest'>Rechengang:</p>`;
             if(q.type === 'S') {
-                if(q.mode === 'n') path += `1. Stoffmenge berechnen: n = m / M<br>n = ${fmt(q.val)}g / ${fmt(subDB[q.k].m.toFixed(2))}g/mol = <b>${fmt(c.toFixed(4))} mol</b>`;
-                else path += `1. Masse berechnen: m = n · M<br>m = ${fmt(q.val)}mol · ${fmt(subDB[q.k].m.toFixed(2))}g/mol = <b>${fmt(c.toFixed(2))} g</b>`;
+                if(q.mode === 'n') path += `1. n = m / M = ${fmt(q.val)}g / ${fmt(subDB[q.k].m.toFixed(2))}g/mol = <b>${fmt(c.toFixed(4))} mol</b>`;
+                else path += `1. m = n · M = ${fmt(q.val)}mol · ${fmt(subDB[q.k].m.toFixed(2))}g/mol = <b>${fmt(c.toFixed(2))} g</b>`;
             } else {
                 const nEd = q.val / subDB[q.edK].m;
-                path += `1. Stoffmenge n(${renderF(q.edK)}) = m/M = ${fmt(q.val)} / ${fmt(subDB[q.edK].m.toFixed(2))} = ${fmt(nEd.toFixed(4))} mol<br>`;
-                path += `2. Molverhältnis: ${q.edC} mol ${renderF(q.edK)} reagieren zu ${q.prC} mol ${renderF(q.prK)}<br>`;
+                path += `1. n(${renderF(q.edK)}) = m/M = ${fmt(q.val)} / ${fmt(subDB[q.edK].m.toFixed(2))} = ${fmt(nEd.toFixed(4))} mol<br>`;
+                path += `2. Stoffmengenverhältnis: ${q.edC} mol reagieren zu ${q.prC} mol<br>`;
                 path += `3. n(${renderF(q.prK)}) = ${fmt(nEd.toFixed(4))} / ${q.edC} · ${q.prC} = ${fmt((nEd/q.edC*q.prC).toFixed(4))} mol<br>`;
-                path += `4. Masse m = n · M = ${fmt((nEd/q.edC*q.prC).toFixed(4))} · ${fmt(subDB[q.prK].m.toFixed(2))} = <b>${fmt(c.toFixed(2))} g</b>`;
+                path += `4. m = n · M = ${fmt((nEd/q.edC*q.prC).toFixed(4))} · ${fmt(subDB[q.prK].m.toFixed(2))} = <b>${fmt(c.toFixed(2))} g</b>`;
             }
             sol.innerHTML = path;
             document.getElementById('tCheckBtn').classList.add('hidden'); document.getElementById('tNextBtn').classList.remove('hidden');
